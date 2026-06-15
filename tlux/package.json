@@ -1,0 +1,10 @@
+{
+  "name": "tlux",
+  "version": "1.0.0",
+  "description": "CLI tool to open localhost:5173 and push project files to a backend API",
+  "bin": {
+    "tlux": "./bin/cli.js"
+  },
+  "type": "module",
+  "license": "MIT"
+}
