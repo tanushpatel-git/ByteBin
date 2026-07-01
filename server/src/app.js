@@ -3,10 +3,10 @@ const cors = require('cors')
 const app = express()
 // Cors setup 
 app.use(cors({
-    origin:"http://localhost:3000",
-    credentials:true,
-    methods:["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders:["Content-Type", "Authorization"],
+    origin: process.env.LOCAL_FRONTEND_URL,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
 }))
 
 
