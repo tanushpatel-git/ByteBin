@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { setName, setEmail, setPassword } from "@/lib/redux/slices/auth/registerSlice";
 import Link from "next/link";
 import { useRegisterMutation } from "@/lib/hooks/useAuth";
-import { FormEvent } from "react";
 
 const cardStyle =
   "border border-[#F3E8DE] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(230,190,160,.08)]";
@@ -18,7 +17,7 @@ const RegisterPage = () => {
   const { name, email, password } = useAppSelector((state) => state.register);
   const registerMutation = useRegisterMutation();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     registerMutation.mutate({ name, email, password });
   };

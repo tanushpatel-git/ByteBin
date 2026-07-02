@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:""
     },
+    role:{
+        type:String,
+        enum:["merchant","navy","coastguard"],
+        default:"coastguard"
+    },
     merchantCode:{
         type:String,
         required : true,

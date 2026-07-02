@@ -1,13 +1,1 @@
-19/06/26-make login and register ui
-20/06/26-genral setup backend for login adn register
-21/06/26-update schema design and change gradient
-22/06/26-create Dashboard ui and fetch my data
-23/06/26-create workspace ui and backend
-24/06/26-Check the vernablities and find the man error but not done well enough work.
-28/06/26-write full workspace code again
-29/06/26-fixing client folder structure
-30/06/26-fixing bug and Vedant's Mistakes
-30/06/26-fix backend
-01/07/26-implement redux
-
-2/07/26-update login and register
+3/jul/2026 -> Done the design and funtionality of the bytebin website
