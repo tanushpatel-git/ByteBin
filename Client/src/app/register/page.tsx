@@ -4,6 +4,8 @@ import { ArrowUpRight, Globe, User, Mail, Eye } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { setName, setEmail, setPassword } from "@/lib/redux/slices/auth/registerSlice";
 import Link from "next/link";
+import { useRegisterMutation } from "@/lib/hooks/useAuth";
+import { FormEvent } from "react";
 
 const cardStyle =
   "border border-[#F3E8DE] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(230,190,160,.08)]";
@@ -14,6 +16,12 @@ const inputStyle =
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const { name, email, password } = useAppSelector((state) => state.register);
+  const registerMutation = useRegisterMutation();
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    registerMutation.mutate({ name, email, password });
+  };
 
   return (
     <main className="min-h-screen bg-[#FFF9F3] p-4 overflow-auto lg:overflow-hidden text-slate-900">
@@ -604,6 +612,7 @@ const RegisterPage = () => {
                 <div className="h-px flex-1 bg-[#F3E8DE]" />
               </div>
 
+              <form onSubmit={handleSubmit}>
               {/* Form inputs */}
               <div className="space-y-4">
                 {/* Full Name */}
@@ -688,10 +697,13 @@ const RegisterPage = () => {
 
               {/* Create account button */}
               <button
-                className="mt-4 h-[52px] w-full rounded-[18px] bg-[#D3ACFF] text-base font-semibold text-white shadow-[0_20px_40px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6]"
+                type="submit"
+                disabled={registerMutation.isPending}
+                className="mt-4 h-[52px] w-full rounded-[18px] bg-[#D3ACFF] text-base font-semibold text-white shadow-[0_20px_40px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6] disabled:opacity-60"
               >
-                Create account
+                {registerMutation.isPending ? "Creating account..." : "Create account"}
               </button>
+              </form>
 
               <p className="mt-4 text-center text-[13px] text-[#716B78]">
                 Already have an account?{" "}
