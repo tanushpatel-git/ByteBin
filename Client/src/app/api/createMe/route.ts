@@ -7,13 +7,8 @@ import { nanoid } from "nanoid";
 export const POST = async (req: NextRequest) => {
     try {
         await connectDb();
-        const merchantCode = nanoid(10); 
+        const merchantCode = nanoid(10);
         const { name, email, password } = await req.json();
-
-        const existing = await User.findOne({ email });
-        if (existing) {
-            return NextResponse.json({ success: false, message: "User already exists" });
-        }
 
         const hashedPassword = await hashPassword(password);
         const user = await User.create({ name, email, password: hashedPassword, merchantCode });

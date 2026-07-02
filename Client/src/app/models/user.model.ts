@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -20,7 +21,8 @@ const userSchema = new mongoose.Schema({
     },
     merchantCode:{
         type:String,
-        required : true
+        required : true,
+        unique : true
     }
 }, {timestamps : true});
 
