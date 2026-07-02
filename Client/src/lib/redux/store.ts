@@ -5,7 +5,7 @@ import loginReducer from "./slices/auth/loginSlice"
 export const store = configureStore({
     reducer: {
         register: registerReducer,
-        login: loginReducer
+        login: loginReducer,
     },
 });
 

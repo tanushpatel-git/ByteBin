@@ -1,9 +1,11 @@
 "use client"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { setEmail, setPassword } from "@/lib/redux/slices/auth/registerSlice";
+import { setEmail, setPassword } from "@/lib/redux/slices/auth/loginSlice";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Globe } from "lucide-react";
 import Link from "next/link";
+import { useLoginMutation } from "@/lib/hooks/useAuth";
+import { FormEvent } from "react";
 
 const cardStyle =
   "border border-[#F3E8DD] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(215,180,140,.08)]";
@@ -12,8 +14,12 @@ const LoginPage = () => {
 
   const dispatch = useAppDispatch()
   const {email, password} = useAppSelector((state) => state.login)
+  const loginMutation = useLoginMutation()
 
-
+  const handleSubmit = (e : FormEvent) => {
+    e.preventDefault()
+    loginMutation.mutate({ email, password })
+  }
 
   return (
     <main className="min-h-screen bg-[#FFF9F2] p-4 overflow-auto lg:overflow-hidden">
@@ -468,6 +474,7 @@ const LoginPage = () => {
                 <div className="h-px flex-1 bg-[#F3E8DD]" />
               </div>
 
+              <form onSubmit={handleSubmit}>
               {/* Email */}
               <div>
                 <label className="mb-2 block text-base font-medium text-slate-700 sm:text-lg">
@@ -502,13 +509,16 @@ const LoginPage = () => {
 
               {/* Sign In */}
               <button
-                className="mt-5 h-[52px] w-full rounded-[20px] bg-[#D3ACFF] text-base font-medium text-white shadow-[0_20px_50px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6] sm:mt-6 sm:text-[18px]">
-                Sign in
+                type="submit"
+                disabled={loginMutation.isPending}
+                className="mt-5 h-[52px] w-full rounded-[20px] bg-[#D3ACFF] text-base font-medium text-white shadow-[0_20px_50px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6] disabled:opacity-60 sm:mt-6 sm:text-[18px]">
+                {loginMutation.isPending ? "Signing in..." : "Sign in"}
               </button>
+              </form>
 
               {/* Footer */}
               <p className="mt-5 text-center text-sm text-slate-500 sm:mt-6 sm:text-base">
-                Don't have an account?
+                Don&apos;t have an account?
                 <Link 
                 href="/register"
                 className="ml-2 font-semibold text-[#D3ACFF] hover:underline cursor-pointer">
