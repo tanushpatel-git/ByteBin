@@ -1,9 +1,9 @@
 "use client"
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { ArrowUpRight, Globe, User, Mail, Eye } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { setName, setEmail, setPassword } from "@/lib/redux/slices/auth/registerSlice";
+import Link from "next/link";
 
 const cardStyle =
   "border border-[#F3E8DE] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(230,190,160,.08)]";
@@ -12,7 +12,6 @@ const inputStyle =
   "h-[46px] w-full rounded-[16px] border border-[#F2E7DD] bg-[#FFFDFB] px-4 pr-12 text-sm font-medium outline-none transition-all text-slate-800 focus:border-[#D3ACFF] focus:shadow-[0_0_0_3px_rgba(211,172,255,0.15)]";
 
 const RegisterPage = () => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const { name, email, password } = useAppSelector((state) => state.register);
 
@@ -690,16 +689,15 @@ const RegisterPage = () => {
               {/* Create account button */}
               <button
                 className="mt-4 h-[52px] w-full rounded-[18px] bg-[#D3ACFF] text-base font-semibold text-white shadow-[0_20px_40px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6]"
-                onClick={() => router.push('/login')}
               >
                 Create account
               </button>
 
               <p className="mt-4 text-center text-[13px] text-[#716B78]">
                 Already have an account?{" "}
-                <a href="#" className="font-semibold text-[#B27FEF]">
+                <Link href="/login" className="font-semibold text-[#B27FEF]">
                   Sign in
-                </a>
+                </Link>
               </p>
             </motion.div>
           </section>

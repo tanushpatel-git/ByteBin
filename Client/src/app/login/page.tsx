@@ -1,13 +1,19 @@
 "use client"
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { setEmail, setPassword } from "@/lib/redux/slices/auth/registerSlice";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { ArrowUpRight, Globe } from "lucide-react";
+import Link from "next/link";
 
 const cardStyle =
   "border border-[#F3E8DD] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(215,180,140,.08)]";
 
 const LoginPage = () => {
-  const router = useRouter();
+
+  const dispatch = useAppDispatch()
+  const {email, password} = useAppSelector((state) => state.login)
+
+
 
   return (
     <main className="min-h-screen bg-[#FFF9F2] p-4 overflow-auto lg:overflow-hidden">
@@ -27,7 +33,7 @@ const LoginPage = () => {
           <section className="hidden lg:block relative px-12 pt-8 overflow-hidden">
             {/* SCALING GRAPHICS CLUSTER */}
             <div className="absolute right-0 top-0 bottom-0 w-[950px] h-[880px] origin-top-right xl:scale-[0.8] 2xl:scale-[0.95] min-[1600px]:scale-100">
-              
+
               {/* TOP LOGO */}
               <div className="absolute left-[48px] top-[32px] flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#D3ACFF] text-white shadow-[0_15px_40px_rgba(211,172,255,.25)]">
@@ -450,7 +456,7 @@ const LoginPage = () => {
                 className="mt-5 flex h-[52px] w-full items-center justify-center gap-4 rounded-[20px] bg-[#081021] text-base font-medium text-white shadow-[0_15px_40px_rgba(8,16,33,.2)] transition-all hover:opacity-95 sm:mt-6 sm:text-[18px]"
               >
                 <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 .5C5.6.5.5 5.7.5 12.1c0 5.2 3.4 9.7 8.1 11.3.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.4-5.5-6 0-1.3.5-2.4 1.3-3.2-.1-.3-.6-1.5.1-3.1 0 0 1.1-.4 3.4 1.3a11.8 11.8 0 0 1 6.2 0c2.3-1.7 3.4-1.3 3.4-1.3.7 1.6.2 2.8.1 3.1.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.7-5.5 6 .4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.7-1.6 8.1-6.1 8.1-11.3C23.5 5.7 18.4.5 12 .5z"/>
+                  <path d="M12 .5C5.6.5.5 5.7.5 12.1c0 5.2 3.4 9.7 8.1 11.3.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.4-5.5-6 0-1.3.5-2.4 1.3-3.2-.1-.3-.6-1.5.1-3.1 0 0 1.1-.4 3.4 1.3a11.8 11.8 0 0 1 6.2 0c2.3-1.7 3.4-1.3 3.4-1.3.7 1.6.2 2.8.1 3.1.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.7-5.5 6 .4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.7-1.6 8.1-6.1 8.1-11.3C23.5 5.7 18.4.5 12 .5z" />
                 </svg>
                 Continue with GitHub
               </button>
@@ -469,6 +475,9 @@ const LoginPage = () => {
                 </label>
                 <input
                   type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => dispatch(setEmail(e.target.value))}
                   placeholder="you@example.com"
                   className="h-[50px] w-full rounded-[20px] border border-[#F3E8DD] bg-[#FFFDFB] px-5 text-base outline-none focus:border-[#D3ACFF] sm:px-7 sm:text-lg"
                 />
@@ -479,9 +488,12 @@ const LoginPage = () => {
                 <label className="mb-2 block text-base font-medium text-slate-700 sm:text-lg">
                   Password
                 </label>
-                  <div className="relative">
+                <div className="relative">
                   <input
+                    autoComplete="password"
                     type="password"
+                    value={password}
+                    onChange={(e) => dispatch(setPassword(e.target.value))}
                     placeholder="••••••••••••"
                     className="h-[50px] w-full rounded-[20px] border border-[#F3E8DD] bg-[#FFFDFB] px-5 text-base outline-none focus:border-[#D3ACFF] sm:px-7 sm:text-lg"
                   />
@@ -489,16 +501,19 @@ const LoginPage = () => {
               </div>
 
               {/* Sign In */}
-              <button className="mt-5 h-[52px] w-full rounded-[20px] bg-[#D3ACFF] text-base font-medium text-white shadow-[0_20px_50px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6] sm:mt-6 sm:text-[18px]">
+              <button
+                className="mt-5 h-[52px] w-full rounded-[20px] bg-[#D3ACFF] text-base font-medium text-white shadow-[0_20px_50px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6] sm:mt-6 sm:text-[18px]">
                 Sign in
               </button>
 
               {/* Footer */}
               <p className="mt-5 text-center text-sm text-slate-500 sm:mt-6 sm:text-base">
                 Don't have an account?
-                <button className="ml-2 font-semibold text-[#D3ACFF] hover:underline cursor-pointer" onClick={() => router.push('/register')}>
+                <Link 
+                href="/register"
+                className="ml-2 font-semibold text-[#D3ACFF] hover:underline cursor-pointer">
                   Create one
-                </button>
+                </Link>
               </p>
             </motion.div>
           </section>
