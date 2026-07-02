@@ -1,380 +1,700 @@
-"use client";
+"use client"
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { ArrowUpRight, Globe, User, Mail, Eye, Hash } from "lucide-react";
 
-import { useState } from "react";
-import {
-  Globe,
-  User,
-  Mail,
-  Eye,
-  EyeOff,
-  ShieldCheck,
-  ArrowUpRight,
-  Star,
-  Plus,
-} from "lucide-react";
-import {FaGithub } from 'react-icons/fa';
+const cardStyle =
+  "border border-[#F3E8DE] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(230,190,160,.08)]";
 
-const repositories = [
-  { name: "bytebin/core", lang: "Next.js", stars: "1.2k" },
-  { name: "bytebin/cli", lang: "TypeScript", stars: "856" },
-  { name: "bytebin/ui", lang: "React", stars: "642" },
-  { name: "bytebin/docs", lang: "MDX", stars: "313" },
-];
-
-const commitBars = [30, 55, 40, 78, 50, 92, 62, 100, 70];
+const inputStyle =
+  "h-[46px] w-full rounded-[16px] border border-[#F2E7DD] bg-[#FFFDFB] px-4 pr-12 text-sm font-medium outline-none transition-all text-slate-800 focus:border-[#D3ACFF] focus:shadow-[0_0_0_3px_rgba(211,172,255,0.15)]";
 
 const RegisterPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [agreed, setAgreed] = useState(false);
+  const router = useRouter();
 
   return (
-    <main className="relative min-h-screen w-full overflow-y-auto bg-[#FBF5EE] lg:h-screen lg:overflow-hidden">
-      {/* Ambient background blobs */}
-      <div
-        className="pointer-events-none absolute -left-24 -top-24 h-[620px] w-[620px] rounded-full blur-[110px]"
-        style={{ backgroundColor: "#F5D7C8", opacity: 0.55 }}
-      />
-      <div
-        className="pointer-events-none absolute -bottom-32 -right-24 h-[640px] w-[640px] rounded-full blur-[110px]"
-        style={{ backgroundColor: "#D3ACFF", opacity: 0.35 }}
-      />
-      <div
-        className="pointer-events-none absolute right-[8%] top-[10%] hidden h-[280px] w-[280px] rounded-full blur-[90px] xl:block"
-        style={{ backgroundColor: "#F5D7C8", opacity: 0.3 }}
-      />
+    <main className="min-h-screen bg-[#FFF9F3] p-4 overflow-auto lg:overflow-hidden text-slate-900">
+      {/* OUTER CONTAINER */}
+      <div className="relative min-h-[calc(100vh-2rem)] lg:h-full overflow-hidden rounded-[32px] border border-[#F3E8DE] bg-[#FFFDF8] shadow-[0_20px_100px_rgba(230,190,160,.06)]">
 
-      {/* Dot grids */}
-      <div className="pointer-events-none absolute left-[300px] top-[52px] hidden grid-cols-3 gap-2.5 xl:grid">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <span key={i} className="h-1 w-1 rounded-full bg-[#C9A7EF]" />
-        ))}
-      </div>
-      <div className="pointer-events-none absolute bottom-10 right-10 hidden grid-cols-4 gap-2 xl:grid">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <span key={i} className="h-1 w-1 rounded-full bg-[#C9A7EF]/70" />
-        ))}
-      </div>
+        {/* Top-Middle 3D Sphere */}
+        <div className="absolute left-[50%] -translate-x-1/2 top-[-70px] w-[180px] h-[180px] rounded-full bg-[radial-gradient(circle_at_30%_30%,#FFEDD5,#FFC8D7_65%,#FFD9C3)] shadow-[inset_0_-10px_20px_rgba(211,172,255,0.15),0_20px_40px_rgba(211,172,255,0.12)] opacity-60 pointer-events-none" />
 
-      {/* Curved connector line */}
-      <svg
-        className="pointer-events-none absolute bottom-[150px] left-[60px] hidden h-[130px] w-[520px] xl:block"
-        viewBox="0 0 520 130"
-        fill="none"
-      >
-        <path
-          d="M0 90 C 150 130, 260 10, 520 60"
-          stroke="#EBAF8F"
-          strokeWidth="1.5"
-          strokeOpacity="0.55"
-        />
-      </svg>
+        {/* Bottom-Left 3D Sphere */}
+        <div className="absolute left-[-40px] bottom-[-60px] w-[160px] h-[160px] rounded-full bg-[radial-gradient(circle_at_30%_30%,#FFEDD5,#FFC8D7_65%,#FFD9C3)] shadow-[inset_0_-10px_20px_rgba(211,172,255,0.15),0_20px_40px_rgba(211,172,255,0.12)] opacity-55 pointer-events-none" />
 
-      <div className="relative mx-auto flex w-full max-w-[1560px] flex-col gap-10 px-6 py-10 sm:px-10 lg:h-screen lg:w-fit lg:grid lg:grid-cols-[minmax(520px,600px)_1px_minmax(360px,400px)] lg:items-center lg:justify-center lg:gap-8 lg:overflow-hidden lg:px-14 lg:py-0 xl:grid-cols-[minmax(520px,600px)_1px_minmax(380px,440px)_1px_minmax(360px,400px)] xl:gap-8">
-        {/* LEFT — HERO */}
-        <section className="flex flex-col justify-center py-6 lg:h-full lg:w-[600px] lg:py-8">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#D3ACFF]">
-              <Globe className="h-5 w-5 text-white" strokeWidth={2.25} />
-            </div>
-            <p className="text-[18px] font-bold tracking-tight text-[#232228]">
-              ByteBin
-            </p>
-          </div>
+        {/* Bottom-Right 3D Sphere */}
+        <div className="absolute right-[-40px] bottom-[-60px] w-[200px] h-[200px] rounded-full bg-[radial-gradient(circle_at_30%_30%,#FFEDD5,#FFC8D7_65%,#FFD9C3)] shadow-[inset_0_-10px_20px_rgba(211,172,255,0.15),0_20px_40px_rgba(211,172,255,0.12)] opacity-55 pointer-events-none" />
 
-          {/* Heading */}
-          <h1 className="mt-8 text-[48px] font-black leading-[0.98] tracking-[-0.02em] text-[#232228] xl:text-[62px]">
-            Your code,
-            <br />
-            Deployed
-            <br />
-            <span className="text-[#B8A0E8]">everywhere</span>
-          </h1>
+        {/* Organic Background Blobs */}
+        <div className="absolute left-[-100px] top-[200px] h-[320px] w-[320px] rounded-full bg-[#FFD9C3]/18 blur-[70px] pointer-events-none" />
+        <div className="absolute right-[-80px] top-[300px] h-[280px] w-[280px] rounded-full bg-[#FFC8D7]/15 blur-[65px] pointer-events-none" />
+        <div className="absolute left-[40%] bottom-[100px] h-[300px] w-[300px] rounded-full bg-[#FFEDD5]/14 blur-[75px] pointer-events-none" />
+        <div className="absolute left-[450px] top-[260px] h-[300px] w-[300px] rounded-full bg-[#FFD7A8]/16 blur-[60px] pointer-events-none" />
 
-          {/* Paragraph */}
-          <p className="mt-5 max-w-[480px] text-[17px] leading-[27px] text-[#6F6878]">
-            ByteBin helps you build, ship and scale modern applications on
-            the edge.
-          </p>
+        {/* GRID */}
+        <div className="grid min-h-full lg:grid-cols-[1.38fr_.82fr]">
+          {/* LEFT SIDE */}
+          <section className="hidden lg:block relative px-12 pt-8 overflow-hidden">
+            {/* SCALING GRAPHICS CLUSTER */}
+            <div className="absolute right-0 top-0 bottom-0 w-[950px] h-[920px] origin-top-right scale-[0.62] xl:scale-[0.8] 2xl:scale-[0.95] min-[1600px]:scale-100">
 
-          {/* Stats row */}
-          <div className="mt-8 flex items-center gap-10">
-            <div>
-              <p className="text-[26px] font-black tracking-tight text-[#232228]">
-                20K+
-              </p>
-              <p className="text-[13px] text-[#716B78]">Developers</p>
-            </div>
-            <span className="h-9 w-px bg-[#E9E1D8]" />
-            <div>
-              <p className="text-[26px] font-black tracking-tight text-[#232228]">
-                150K+
-              </p>
-              <p className="text-[13px] text-[#716B78]">Projects</p>
-            </div>
-            <span className="h-9 w-px bg-[#E9E1D8]" />
-            <div>
-              <p className="text-[26px] font-black tracking-tight text-[#232228]">
-                99.9%
-              </p>
-              <p className="text-[13px] text-[#716B78]">Uptime</p>
-            </div>
-          </div>
-
-          {/* Commit activity card */}
-          <div className="relative mt-9 hidden w-[280px] -rotate-2 rounded-[24px] border border-[#E9E1D8] bg-white p-5 shadow-[0_18px_40px_-18px_rgba(35,34,40,0.18)] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_48px_-16px_rgba(35,34,40,0.22)] sm:block">
-            <div className="flex items-center justify-between">
-              <p className="text-[13px] font-semibold text-[#232228]">
-                Commit Activity
-              </p>
-              <span className="rounded-full bg-[#FBE7DA] px-2 py-0.5 text-[11px] font-semibold text-[#D08A5C]">
-                +42%
-              </span>
-            </div>
-            <p className="mt-0.5 text-[11px] text-[#A9A2AC]">vs last week</p>
-            <div className="mt-4 flex h-14 items-end gap-1.5">
-              {commitBars.map((h, i) => (
-                <div
-                  key={i}
-                  className={`w-2.5 rounded-full ${
-                    i % 3 === 0 ? "bg-[#F0BFA0]" : "bg-[#D3ACFF]"
-                  }`}
-                  style={{ height: `${h}%`, opacity: 0.55 + (h / 100) * 0.45 }}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Trust line */}
-          <div className="mt-7 flex items-center gap-2.5">
-            <ShieldCheck className="h-4 w-4 text-[#A9A2AC]" strokeWidth={2} />
-            <p className="text-[13px] text-[#716B78]">
-              Trusted by developers worldwide
-            </p>
-          </div>
-        </section>
-
-        {/* DIVIDER 1 */}
-        <div className="hidden h-[62%] w-px justify-self-center self-center bg-[#E9E1D8]/70 lg:block" />
-
-        {/* MIDDLE — FLOATING DASHBOARD */}
-        <section className="hidden h-full w-[440px] flex-col justify-center gap-5 xl:flex">
-          {/* Deployments card */}
-          <div className="w-full rounded-[28px] border border-[#E9E1D8] bg-white p-6 shadow-[0_18px_40px_-18px_rgba(35,34,40,0.15)] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_48px_-16px_rgba(35,34,40,0.2)]">
-            <div className="flex items-center justify-between">
-              <p className="text-[16px] font-semibold text-[#232228]">
-                Deployments
-              </p>
-              <span className="flex items-center gap-1.5 rounded-full bg-[#EAF7EE] px-3 py-1 text-[12px] font-semibold text-[#3FA66A]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#3FA66A]" />
-                Live
-              </span>
-            </div>
-            <div className="mt-5 flex items-center gap-3 rounded-2xl bg-[#FCFAF7] p-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F1E4FB]">
-                <Globe className="h-[18px] w-[18px] text-[#B27FEF]" />
+              {/* TOP LOGO */}
+              <div className="absolute left-[48px] top-[32px] flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#D3ACFF] text-white shadow-[0_15px_40px_rgba(211,172,255,.25)]">
+                  <Globe size={22} />
+                </div>
+                <h2 className="text-[22px] font-semibold tracking-[-0.03em] text-[#111827]">
+                  ByteBin
+                </h2>
               </div>
-              <div className="flex-1">
-                <p className="text-[14px] font-semibold text-[#232228]">
-                  api.bytebin.com
+
+              {/* BIG HERO */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 30,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.7,
+                }}
+                className="absolute left-[48px] top-[120px]"
+              >
+                <h1 className="text-[60px] font-semibold leading-[0.95] tracking-[-0.07em] text-[#0F172A]">
+                  Build today.
+                  <br />
+                  Deploy
+                  <br />
+                  <span className="text-[#D3ACFF]">
+                    anywhere.
+                  </span>
+                </h1>
+                <p className="mt-8 max-w-[360px] text-[16px] leading-8 text-slate-500">
+                  The developer platform to ship modern apps at global scale.
                 </p>
-                <p className="text-[12px] text-[#716B78]">Production</p>
+              </motion.div>
+
+              {/* DECORATIVE DOTS (TOP) */}
+              <div className="absolute left-[270px] top-[180px] grid grid-cols-4 gap-3 opacity-30">
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-[4px] w-[4px] rounded-full bg-[#D3ACFF]"
+                  />
+                ))}
               </div>
-              <span className="text-[12px] text-[#A9A2AC]">2m ago</span>
-              <ArrowUpRight className="h-4 w-4 text-[#A9A2AC]" />
-            </div>
-          </div>
 
-          {/* Repositories card */}
-          <div className="w-full rounded-[28px] border border-[#E9E1D8] bg-white p-6 shadow-[0_20px_46px_-18px_rgba(35,34,40,0.18)] transition duration-300 ease-out hover:-translate-y-1 hover:border-[#D3ACFF] hover:shadow-[0_26px_54px_-16px_rgba(35,34,40,0.24)]">
-            <div className="flex items-center justify-between">
-              <p className="text-[16px] font-semibold text-[#232228]">
-                Repositories
-              </p>
-              <button className="flex items-center gap-1.5 rounded-full bg-[#D3ACFF] px-3.5 py-2 text-[12px] font-semibold text-white transition duration-300 ease-out hover:scale-[1.02]">
-                <Plus className="h-3.5 w-3.5" />
-                New Repository
-              </button>
-            </div>
+              {/* TINY STARS */}
+              <div className="absolute left-[200px] top-[140px] text-[#D3ACFF] text-sm opacity-70">✦</div>
+              <div className="absolute left-[520px] top-[90px] text-[#D3ACFF] text-xs opacity-60">✦</div>
+              <div className="absolute left-[750px] top-[320px] text-[#D3ACFF] text-base opacity-50">✦</div>
+              <div className="absolute left-[120px] top-[750px] text-[#D3ACFF] text-xs opacity-55">✦</div>
 
-            <div className="mt-4 flex flex-col divide-y divide-[#F1ECE4]">
-              {repositories.map((repo) => (
-                <div
-                  key={repo.name}
-                  className="flex items-center justify-between py-3 transition duration-300 ease-out hover:bg-[#FCFAF7]"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D3ACFF] text-[11px] font-bold text-white">
-                      BB
-                    </div>
-                    <p className="text-[14px] font-semibold text-[#232228]">
-                      {repo.name}
+              {/* SMALL ROUNDED OUTLINE RECTANGLE */}
+              <div className="absolute left-[430px] top-[42px] h-[170px] w-[92px] rounded-[32px] border border-[#F3E8DE]" />
+
+              {/* TOP-LEFT CURLY ARROW */}
+              <svg className="absolute left-[240px] top-[60px] opacity-40 text-[#D3ACFF]" width="80" height="60" viewBox="0 0 80 60" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 50 C 10 20, 40 10, 50 30 C 60 50, 40 55, 30 40 C 20 25, 45 15, 65 25" />
+                <path d="M53 23 L 65 25 L 61 14" />
+              </svg>
+
+              {/* HAND-DRAWN SQUIGGLE */}
+              <svg className="absolute left-[160px] top-[340px] text-[#D3ACFF] opacity-50" width="70" height="50" viewBox="0 0 70 50" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M5 25 C 15 5, 35 5, 45 25 C 55 45, 65 35, 65 20" />
+              </svg>
+
+              {/* MIDDLE WARM WAVE */}
+              <svg className="absolute left-[450px] top-[390px] text-[#D3ACFF] opacity-80" width="60" height="40" viewBox="0 0 60 40" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <path d="M10 20 C 20 10, 30 30, 40 15 C 50 5, 55 10, 60 15" />
+              </svg>
+
+              {/* TERMINAL GLOW */}
+              <div className="absolute left-[310px] top-[100px] h-[200px] w-[400px] rounded-[40px] bg-[rgba(211,172,255,0.15)] blur-[60px] pointer-events-none" />
+
+              {/* TERMINAL CARD */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  rotate: -2,
+                  y: 40,
+                }}
+                animate={{
+                  opacity: 1,
+                  rotate: -2,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.2,
+                }}
+                className="absolute left-[340px] top-[120px] w-[340px] rounded-[30px] bg-[#141625] p-7 shadow-[0_40px_80px_rgba(20,22,37,.28)]"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-3">
+                    <div className="h-4 w-4 rounded-full bg-[#FF5F57]" />
+                    <div className="h-4 w-4 rounded-full bg-[#FEBC2E]" />
+                    <div className="h-4 w-4 rounded-full bg-[#28C840]" />
+                  </div>
+                  <div className="rounded-full bg-white/10 px-4 py-1 text-xs text-white/70">
+                    bash
+                  </div>
+                </div>
+                <div className="mt-8 space-y-4 font-mono text-[16px] text-slate-100">
+                  <p className="text-[#B9BEE6]">$ npx create-bytebin@latest</p>
+                  <p className="text-[#85F0B9]">✓ Initializing project...</p>
+                  <p className="text-[#85F0B9]">✓ Setting up Edge Functions...</p>
+                  <p className="text-[#85F0B9]">✓ Installing dependencies...</p>
+                  <p className="text-[#85F0B9]">✓ Deploying to global network...</p>
+                  <div className="pt-8">
+                    <p className="text-[#D1D8FF]">Your app is live at:</p>
+                    <p className="mt-3 text-[#BBADFF] text-[15px]">
+                      https://amazing-app.bytebin.app 🎉
                     </p>
                   </div>
-                  <div className="flex items-center gap-4 text-[13px] text-[#716B78]">
-                    <span>{repo.lang}</span>
-                    <span className="flex items-center gap-1">
-                      <Star className="h-3.5 w-3.5" />
-                      {repo.stars}
-                    </span>
+                </div>
+              </motion.div>
+
+              {/* FLOATING LIGHTNING CUBE */}
+              <div className="absolute left-[690px] top-[240px]">
+                <motion.div
+                  animate={{
+                    y: [-6, 6, -6],
+                    rotate: [-4, 4, -4],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className={`flex h-[90px] w-[90px] items-center justify-center rounded-[24px] ${cardStyle}`}
+                >
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D3ACFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="fill-[#D3ACFF]/30">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                </motion.div>
+              </div>
+
+              {/* DEPLOYMENTS CARD */}
+              <div className="absolute left-[250px] top-[410px] h-[200px] w-[330px] rounded-[28px] bg-[radial-gradient(ellipse_at_top,rgba(255,217,195,0.18),transparent_70%)] pointer-events-none" />
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                  rotate: -3,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  rotate: -3,
+                }}
+                transition={{
+                  delay: 0.3,
+                }}
+                className={`absolute left-[270px] top-[430px] w-[290px] rounded-[28px] p-6 z-10 ${cardStyle}`}
+              >
+                <div className="flex items-center justify-between">
+                  <h4 className="font-medium text-[#111827]">Deployments</h4>
+                  <div className="rounded-full bg-[#E8FFF7] px-4 py-2 text-sm font-medium text-[#4FD1A5]">
+                    ● Live
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* DIVIDER 2 */}
-        <div className="hidden h-[62%] w-px justify-self-center self-center bg-[#E9E1D8]/70 xl:block" />
-
-        {/* RIGHT — REGISTER CARD */}
-        <section className="flex w-full items-center justify-center py-6 lg:h-full lg:w-[400px]">
-          <div className="relative w-full max-w-[400px] rounded-[32px] border border-[#E9E1D8] bg-white p-6 shadow-[0_30px_70px_-25px_rgba(35,34,40,0.25)] sm:p-7">
-            <span className="absolute right-6 top-6 h-2.5 w-2.5 rounded-full bg-[#D3ACFF]" />
-
-            <p className="text-[12px] font-semibold tracking-[0.12em] text-[#B27FEF]">
-              WELCOME
-            </p>
-            <h2 className="mt-1 text-[24px] font-black tracking-[-0.02em] text-[#232228]">
-              Create Account
-            </h2>
-            <p className="mt-1.5 text-[13px] leading-[19px] text-[#716B78]">
-              Join ByteBin and organize your development workflow in one
-              beautiful workspace.
-            </p>
-
-            {/* GitHub button */}
-            <button
-              type="button"
-              className="mt-4 flex h-[44px] w-full items-center justify-center gap-2.5 rounded-2xl border border-[#E9E1D8] bg-white text-[14px] font-semibold text-[#232228] transition duration-300 ease-out hover:-translate-y-1 hover:border-[#D3ACFF] hover:shadow-[0_10px_25px_-10px_rgba(35,34,40,0.2)]"
-            >
-              <FaGithub className="h-4 w-4" />
-              Continue with GitHub
-            </button>
-
-            {/* Divider */}
-            <div className="my-3.5 flex items-center gap-4">
-              <span className="h-px flex-1 bg-[#E9E1D8]" />
-              <span className="text-[12px] text-[#716B78]">
-                or continue with email
-              </span>
-              <span className="h-px flex-1 bg-[#E9E1D8]" />
-            </div>
-
-            {/* Form */}
-            <form className="flex flex-col gap-3">
-              <div>
-                <label
-                  htmlFor="fullName"
-                  className="mb-1 block text-[13px] font-semibold text-[#232228]"
-                >
-                  Full Name
-                </label>
-                <div className="relative">
-                  <input
-                    id="fullName"
-                    type="text"
-                    placeholder="Your full name"
-                    className="h-[44px] w-full rounded-2xl border border-[#E8E1D8] bg-[#FCFAF7] pl-4 pr-11 text-[14px] text-[#232228] outline-none transition duration-300 ease-out placeholder:text-[#A9A2AC] focus:border-[#D3ACFF] focus:bg-white"
-                  />
-                  <User className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A9A2AC]" />
+                <div className="mt-8 flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FFF5F0] text-[#D3ACFF]">
+                      <Globe size={20} />
+                    </div>
+                    <div>
+                      <h5 className="font-medium text-slate-900">api.bytebin.com</h5>
+                      <p className="mt-1 text-sm text-slate-400">Production</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-5">
+                    <span className="text-sm text-slate-400">2m ago</span>
+                    <ArrowUpRight className="text-slate-500" size={18} />
+                  </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-1 block text-[13px] font-semibold text-[#232228]"
-                >
-                  Email
-                </label>
-                <div className="relative">
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    className="h-[44px] w-full rounded-2xl border border-[#E8E1D8] bg-[#FCFAF7] pl-4 pr-11 text-[14px] text-[#232228] outline-none transition duration-300 ease-out placeholder:text-[#A9A2AC] focus:border-[#D3ACFF] focus:bg-white"
-                  />
-                  <Mail className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A9A2AC]" />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="password"
-                  className="mb-1 block text-[13px] font-semibold text-[#232228]"
-                >
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Create a strong password"
-                    className="h-[44px] w-full rounded-2xl border border-[#E8E1D8] bg-[#FCFAF7] pl-4 pr-11 text-[14px] text-[#232228] outline-none transition duration-300 ease-out placeholder:text-[#A9A2AC] focus:border-[#D3ACFF] focus:bg-white"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A9A2AC] transition duration-300 ease-out hover:text-[#232228]"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
+              {/* REPOSITORIES CARD */}
+              <div className="absolute left-[400px] top-[460px] h-[340px] w-[500px] rounded-[30px] bg-[radial-gradient(ellipse_at_top_left,rgba(255,200,215,0.14),transparent_70%)] pointer-events-none" />
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.4,
+                }}
+                className={`absolute left-[420px] top-[480px] w-[460px] rounded-[30px] p-6 ${cardStyle}`}
+              >
+                <div className="flex items-center justify-between">
+                  <h4 className="font-medium text-slate-900">Repositories</h4>
+                  <button className="rounded-2xl bg-[#D3ACFF] px-5 py-3 text-sm font-medium text-white shadow-lg">
+                    New Repository
                   </button>
                 </div>
+                <div className="mt-5">
+                  {[
+                    {
+                      repo: "bytebin/core",
+                      tech: "Next.js",
+                      stars: "1.2k",
+                      time: "2m ago",
+                    },
+                    {
+                      repo: "bytebin/cli",
+                      tech: "TypeScript",
+                      stars: "856",
+                      time: "1h ago",
+                    },
+                    {
+                      repo: "bytebin/ui",
+                      tech: "React",
+                      stars: "642",
+                      time: "3h ago",
+                    },
+                    {
+                      repo: "bytebin/docs",
+                      tech: "MDX",
+                      stars: "313",
+                      time: "1d ago",
+                    },
+                  ].map((repo) => (
+                    <div
+                      key={repo.repo}
+                      className="flex items-center justify-between border-b border-[#F3E8DE] py-4 last:border-none"
+                    >
+                      <div className="flex items-center gap-5">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#0F172A] text-xs font-semibold text-white">
+                          BB
+                        </div>
+                        <h5 className="font-medium text-slate-900">{repo.repo}</h5>
+                      </div>
+                      <span className="text-sm text-slate-500">{repo.tech}</span>
+                      <span className="text-sm text-slate-500">☆ {repo.stars}</span>
+                      <span className="text-sm text-slate-400">{repo.time}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
 
-                {/* Password strength */}
-                <div className="mt-1.5 flex items-center gap-2">
-                  <div className="h-1 flex-1 overflow-hidden rounded-full bg-[#F1ECE4]">
-                    <div className="h-full w-[85%] rounded-full bg-[#D3ACFF]" />
+              {/* COMMIT CARD */}
+              <div className="absolute left-[30px] top-[410px] h-[200px] w-[290px] rounded-[30px] bg-[radial-gradient(ellipse_at_top,rgba(215,200,255,0.18),transparent_70%)] pointer-events-none" />
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  rotate: -8,
+                }}
+                animate={{
+                  opacity: 1,
+                  rotate: -8,
+                }}
+                transition={{
+                  delay: 0.5,
+                }}
+                className={`absolute left-[50px] top-[430px] w-[250px] rounded-[30px] p-6 ${cardStyle}`}
+              >
+                <div className="flex items-start justify-between">
+                  <h4 className="font-medium text-slate-900">Commit Activity</h4>
+                  <div>
+                    <div className="rounded-full bg-[#E8FFF7] px-4 py-2 text-sm font-semibold text-[#4FD1A5]">
+                      +42%
+                    </div>
+                    <p className="mt-2 text-xs text-slate-400">vs last week</p>
                   </div>
-                  <span className="text-[12px] font-medium text-[#B27FEF]">
-                    Strong
-                  </span>
+                </div>
+                <div className="mt-10 flex items-end gap-3">
+                  <div className="h-10 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-14 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-8 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-20 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-12 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-18 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-10 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-15 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-18 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-11 w-3 rounded-full bg-[#D3ACFF]" />
+                  <div className="h-20 w-3 rounded-full bg-[#D3ACFF]" />
+                </div>
+              </motion.div>
+
+              {/* RECENT ACTIVITY */}
+              <div className="absolute left-[40px] top-[590px] h-[280px] w-[380px] rounded-[30px] bg-[radial-gradient(ellipse_at_top_left,rgba(255,217,168,0.14),transparent_70%)] pointer-events-none" />
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.6,
+                }}
+                className={`absolute left-[60px] top-[610px] w-[340px] rounded-[30px] p-7 z-10 ${cardStyle}`}
+              >
+                <h4 className="font-medium text-slate-900">Recent Activity</h4>
+                <div className="mt-7 space-y-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex gap-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E8FFF7] text-[#4FD1A5]">
+                        ✓
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-slate-900">Deployed to Production</h5>
+                        <p className="mt-1 text-sm text-slate-500">by vercel-bot</p>
+                      </div>
+                    </div>
+                    <span className="text-sm text-slate-400">2m ago</span>
+                  </div>
+                  <div className="flex items-start justify-between">
+                    <div className="flex gap-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FFF5F0] text-[#D3ACFF]">
+                        ↻
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-slate-900">New Commit</h5>
+                        <p className="mt-1 text-sm text-slate-500">feat: add analytics</p>
+                      </div>
+                    </div>
+                    <span className="text-sm text-slate-400">15m ago</span>
+                  </div>
+                  <div className="flex items-start justify-between">
+                    <div className="flex gap-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FFF4E0] text-[#D3ACFF]">
+                        ⬢
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-slate-900">Preview Deployment</h5>
+                        <p className="mt-1 text-sm text-slate-500">#128 opened</p>
+                      </div>
+                    </div>
+                    <span className="text-sm text-slate-400">1h ago</span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* CONNECTOR CURVES */}
+              <svg
+                className="absolute left-[330px] top-[490px]"
+                width="650"
+                height="280"
+                fill="none"
+              >
+                <path
+                  d="M0 100 C 100 0, 220 0, 320 100"
+                  stroke="#D3ACFF"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M320 100 C 430 200, 520 200, 600 120"
+                  stroke="#D3ACFF"
+                  strokeWidth="2"
+                />
+              </svg>
+
+              {/* GLOBAL EDGE NETWORK (EARTH GLOBE) */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+                className="absolute left-[340px] top-[790px] w-[180px] h-[180px] flex items-center justify-center"
+              >
+                {/* Orbital Ring */}
+                <div className="border border-[#FFD7A8]/60 rounded-full w-[240px] h-[80px] absolute rotate-[15deg] pointer-events-none opacity-50" />
+
+                {/* 3D Planet Sphere */}
+                <div className="w-[140px] h-[140px] rounded-full bg-gradient-to-br from-[#FFEDD5] via-[#FFC8D7] to-[#FFD7A8] relative overflow-hidden shadow-[0_20px_50px_rgba(211,172,255,0.15)] flex items-center justify-center">
+                  <div className="absolute inset-0 border border-white/20 rounded-full scale-90" />
+                  <div className="absolute inset-0 border border-white/10 rounded-full scale-75" />
+                  <svg className="w-full h-full text-white/25 absolute" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="1" fill="none" strokeDasharray="3 3" />
+                    <ellipse cx="50" cy="50" rx="30" ry="40" stroke="currentColor" strokeWidth="1" fill="none" />
+                    <ellipse cx="50" cy="50" rx="15" ry="40" stroke="currentColor" strokeWidth="1" fill="none" />
+                    <line x1="10" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="1" />
+                    <line x1="16" y1="30" x2="84" y2="30" stroke="currentColor" strokeWidth="1" />
+                    <line x1="16" y1="70" x2="84" y2="70" stroke="currentColor" strokeWidth="1" />
+                  </svg>
+                </div>
+
+                {/* Badge */}
+                <div className={`absolute bottom-[-10px] whitespace-nowrap rounded-xl px-4 py-2 text-xs font-semibold text-slate-800 flex items-center gap-1.5 ${cardStyle}`}>
+                  <span className="text-[#4FD1A5] text-[10px]">●</span> Global Edge Network
+                  <span className="text-slate-400">|</span> <span className="text-slate-500 font-medium">15 Regions</span>
+                </div>
+              </motion.div>
+
+              {/* 3D ROUNDED TRIANGLE (Bottom Left) */}
+              <motion.div
+                animate={{
+                  y: [-6, 6, -6],
+                  rotate: [-3, 3, -3],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute left-[38px] top-[800px]"
+              >
+                <svg width="60" height="70" viewBox="0 0 60 70" fill="none">
+                  <defs>
+                    <linearGradient id="coneGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFEDD5" />
+                      <stop offset="100%" stopColor="#FFC8D7" />
+                    </linearGradient>
+                    <linearGradient id="coneGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFD7A8" />
+                      <stop offset="100%" stopColor="#FF8BC1" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M30 10 L 5 55 A 25 10 0 0 0 30 62 Z" fill="url(#coneGradLeft)" />
+                  <path d="M30 10 L 55 55 A 25 10 0 0 1 30 62 Z" fill="url(#coneGradRight)" />
+                </svg>
+              </motion.div>
+
+              {/* FLOATING CUBE */}
+              <motion.div
+                animate={{
+                  y: [-5, 5, -5],
+                  rotate: [0, 6, 0],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className={`absolute left-[680px] top-[780px] flex h-[70px] w-[70px] items-center justify-center rounded-[20px] ${cardStyle}`}
+              >
+                <div className="h-8 w-8 rounded-lg bg-[#D3ACFF]/40 shadow-[0_8px_20px_rgba(211,172,255,0.2)]" />
+              </motion.div>
+
+              {/* BOTTOM LEFT HANDWRITING */}
+              <div className="absolute left-[48px] top-[870px]">
+                <p className="font-serif text-[28px] italic text-[#D3ACFF]">
+                  Fast. Secure. Global.
+                </p>
+                <svg width="190" height="25" fill="none" className="mt-1">
+                  <path
+                    d="M2 18 C 40 8, 90 8, 160 18"
+                    stroke="#D3ACFF"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+
+              {/* SMALL ARROW ICON */}
+              <div className="absolute left-[290px] top-[860px] text-[#D3ACFF] text-[40px] rotate-[20deg]">
+                ↖
+              </div>
+
+              {/* DOT GRID */}
+              <div className="absolute left-[210px] top-[890px] grid grid-cols-4 gap-3 opacity-30">
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-[4px] w-[4px] rounded-full bg-[#D3ACFF]"
+                  />
+                ))}
+              </div>
+
+            </div>
+          </section>
+
+          {/* RIGHT SIDE */}
+          <section className="relative flex h-full items-center justify-center px-4 py-8 sm:py-10 sm:px-8">
+           
+            {/* DOT GRID (RIGHT OF CARD) */}
+            <div className="absolute right-4 top-[240px] grid grid-cols-2 gap-3 opacity-25 pointer-events-none hidden xl:grid">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <div key={i} className="h-[4px] w-[4px] rounded-full bg-[#D3ACFF]" />
+              ))}
+            </div>
+
+            {/* TINY STARS (RIGHT SIDE) */}
+            <div className="absolute right-12 top-[180px] text-[#D3ACFF] text-sm opacity-50 pointer-events-none hidden sm:block">✦</div>
+            <div className="absolute right-20 top-[420px] text-[#D3ACFF] text-xs opacity-40 pointer-events-none hidden sm:block">✦</div>
+
+            {/* Register Card */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                delay: 0.4,
+              }}
+              className="relative w-full max-w-[430px] rounded-[38px] border border-[#F3E8DE] bg-[rgba(255,253,250,0.85)] px-6 py-6 sm:px-10 sm:py-8 shadow-[0_30px_100px_rgba(0,0,0,.06)] backdrop-blur-[20px] mt-6 lg:mt-0"
+            >
+              {/* Floating Smiley 3D Cube */}
+              <motion.div
+                animate={{
+                  y: [-5, 5, -5],
+                  rotate: [0, 5, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute left-[-20px] top-[-60px] w-[80px] h-[80px] rounded-[24px] bg-[#D3ACFF] flex items-center justify-center text-white shadow-[0_20px_50px_rgba(211,172,255,0.25)] border border-white/30"
+              >
+                {/* Smiley Cube Sparks */}
+                <svg className="absolute right-[-10px] top-[-10px] text-[#D3ACFF] opacity-80" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <line x1="12" y1="3" x2="12" y2="7" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                  <line x1="3" y1="12" x2="7" y2="12" />
+                  <line x1="17" y1="12" x2="21" y2="12" />
+                </svg>
+
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                  <line x1="9" y1="9" x2="9.01" y2="9" />
+                  <line x1="15" y1="9" x2="15.01" y2="9" />
+                </svg>
+              </motion.div>
+
+              {/* Warm Glow */}
+              <div className="absolute right-[-70px] top-[300px] h-[220px] w-[220px] rounded-full bg-[#FFC8D7]/20 blur-[50px] pointer-events-none" />
+
+              {/* Squiggle Vector */}
+              <svg className="absolute right-[-30px] top-[-30px] text-[#D3ACFF] opacity-70 pointer-events-none hidden sm:block" width="90" height="70" viewBox="0 0 100 80" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 20 L 30 40 L 50 20 L 70 40 L 90 20" />
+              </svg>
+
+              {/* Heading */}
+              <div className="text-center mt-2 sm:mt-4">
+                <h2 className="text-[28px] sm:text-[32px] font-bold tracking-[-0.04em] text-[#0F172A]">
+                  Create your account 👋
+                </h2>
+                <p className="mt-2 text-sm text-slate-500 sm:mt-3 sm:text-[15px]">
+                  Join thousands of developers building the future.
+                </p>
+              </div>
+
+              {/* Github */}
+              <button className="mt-6 flex h-[48px] w-full items-center justify-center gap-4 rounded-[16px] bg-[#081021] text-base font-medium text-white shadow-[0_12px_30px_rgba(8,16,33,.15)] transition-all hover:opacity-95">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 .5C5.6.5.5 5.7.5 12.1c0 5.2 3.4 9.7 8.1 11.3.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.4-5.5-6 0-1.3.5-2.4 1.3-3.2-.1-.3-.6-1.5.1-3.1 0 0 1.1-.4 3.4 1.3a11.8 11.8 0 0 1 6.2 0c2.3-1.7 3.4-1.3 3.4-1.3.7 1.6.2 2.8.1 3.1.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.7-5.5 6 .4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.7-1.6 8.1-6.1 8.1-11.3C23.5 5.7 18.4.5 12 .5z" />
+                </svg>
+                Continue with GitHub
+              </button>
+
+              {/* Divider */}
+              <div className="my-5 flex items-center gap-4">
+                <div className="h-px flex-1 bg-[#F3E8DE]" />
+                <span className="text-sm text-slate-400">or</span>
+                <div className="h-px flex-1 bg-[#F3E8DE]" />
+              </div>
+
+              {/* Form inputs */}
+              <div className="space-y-4">
+                {/* Full Name */}
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-slate-600">
+                    Full name
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="John Doe"
+                      className={inputStyle}
+                    />
+                    <User className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                  </div>
+                </div>
+
+                {/* Email address */}
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-slate-600">
+                    Email address
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      placeholder="you@example.com"
+                      className={inputStyle}
+                    />
+                    <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                  </div>
+                </div>
+
+                {/* Password */}
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-slate-600">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="password"
+                      placeholder="••••••••••••"
+                      className={inputStyle}
+                    />
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                      <Eye size={18} />
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Checkbox */}
-              <label className="flex items-start gap-3">
-                <input
-                  type="checkbox"
-                  checked={agreed}
-                  onChange={() => setAgreed((prev) => !prev)}
-                  className="mt-0.5 h-4 w-4 accent-[#D3ACFF]"
-                />
-                <span className="text-[13px] leading-[18px] text-[#716B78]">
-                  I agree to the{" "}
-                  <span className="font-semibold text-[#232228]">
-                    Terms of Service
-                  </span>{" "}
-                  and{" "}
-                  <span className="font-semibold text-[#232228]">
-                    Privacy Policy
-                  </span>
-                </span>
-              </label>
+              {/* Password checklist */}
+              <div className="mt-4 grid grid-cols-2 gap-y-2.5 gap-x-4 text-xs font-semibold text-slate-500">
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 rounded-full bg-[#E8FFF7] text-[#4FD1A5] flex items-center justify-center font-bold text-[10px]">
+                    ✓
+                  </div>
+                  <span className="text-[13px] font-medium text-slate-500">At least 8 characters</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 rounded-full bg-[#E8FFF7] text-[#4FD1A5] flex items-center justify-center font-bold text-[10px]">
+                    ✓
+                  </div>
+                  <span className="text-[13px] font-medium text-slate-500">One uppercase letter</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 rounded-full bg-[#E8FFF7] text-[#4FD1A5] flex items-center justify-center font-bold text-[10px]">
+                    ✓
+                  </div>
+                  <span className="text-[13px] font-medium text-slate-500">One lowercase letter</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-3.5 w-3.5 rounded-full border border-[#FF8BC1]" />
+                  <span className="text-[13px] font-medium text-slate-500">One number or symbol</span>
+                </div>
+              </div>
 
-              {/* Submit */}
-              <button
-                type="submit"
-                className="mt-1 flex h-[46px] w-full items-center justify-center rounded-[20px] bg-[#D3ACFF] text-[14px] font-semibold text-white transition duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_15px_35px_-10px_rgba(211,172,255,0.6)]"
+              {/* Create account button */}
+              <button 
+                className="mt-4 h-[52px] w-full rounded-[18px] bg-[#D3ACFF] text-base font-semibold text-white shadow-[0_20px_40px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6]"
+                onClick={() => router.push('/login')}
               >
                 Create account
               </button>
-            </form>
 
-            <p className="mt-4 text-center text-[13px] text-[#716B78]">
-              Already have an account?{" "}
-              <a href="#" className="font-semibold text-[#B27FEF]">
-                Sign in
-              </a>
-            </p>
-          </div>
-        </section>
+              {/* Footer */}
+              <p className="mt-5 text-center text-sm text-slate-500">
+                Already have an account?
+                <span className="ml-1.5 font-semibold text-[#D3ACFF] hover:underline cursor-pointer" onClick={() => router.push('/login')}>
+                  Sign in
+                </span>
+              </p>
+            </motion.div>
+          </section>
+        </div>
       </div>
     </main>
   );

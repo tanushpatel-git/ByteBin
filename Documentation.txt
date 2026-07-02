@@ -9,3 +9,5 @@
 30/06/26-fixing bug and Vedant's Mistakes
 30/06/26-fix backend
 01/07/26-implement redux
+
+2/07/26-update login and register
