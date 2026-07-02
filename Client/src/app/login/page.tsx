@@ -6,6 +6,8 @@ import { ArrowUpRight, Globe } from "lucide-react";
 import Link from "next/link";
 import { useLoginMutation } from "@/lib/hooks/useAuth";
 import { FormEvent } from "react";
+import { signInWithPopup } from "firebase/auth";
+import { auth, githubProvider } from "@/lib/firebase";
 
 const cardStyle =
   "border border-[#F3E8DD] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(215,180,140,.08)]";
@@ -19,6 +21,17 @@ const LoginPage = () => {
   const handleSubmit = (e : FormEvent) => {
     e.preventDefault()
     loginMutation.mutate({ email, password })
+  }
+
+  const handleGithubClick = async () => {
+    try {
+      const result = await signInWithPopup(auth, githubProvider);
+      if (result.user.email){
+        loginMutation.mutate({ email: result.user.email})
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -459,6 +472,7 @@ const LoginPage = () => {
               {/* Github */}
               <button
                 type="button"
+                onClick={handleGithubClick}
                 className="mt-5 flex h-[52px] w-full items-center justify-center gap-4 rounded-[20px] bg-[#081021] text-base font-medium text-white shadow-[0_15px_40px_rgba(8,16,33,.2)] transition-all hover:opacity-95 sm:mt-6 sm:text-[18px]"
               >
                 <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">

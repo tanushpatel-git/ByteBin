@@ -5,6 +5,9 @@ import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { setName, setEmail, setPassword } from "@/lib/redux/slices/auth/registerSlice";
 import Link from "next/link";
 import { useRegisterMutation } from "@/lib/hooks/useAuth";
+import {  signInWithPopup } from "firebase/auth";
+import { auth, githubProvider } from "@/lib/firebase";
+import { FormEvent } from "react";
 
 const cardStyle =
   "border border-[#F3E8DE] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(230,190,160,.08)]";
@@ -17,10 +20,21 @@ const RegisterPage = () => {
   const { name, email, password } = useAppSelector((state) => state.register);
   const registerMutation = useRegisterMutation();
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     registerMutation.mutate({ name, email, password });
   };
+
+  const handleGithubClick = async () => {
+    try {
+      const result = await signInWithPopup(auth, githubProvider);
+      if (result.user.email) {
+        registerMutation.mutate({ name: result.user.displayName || "", email: result.user.email });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <main className="min-h-screen bg-[#FFF9F3] p-4 overflow-auto lg:overflow-hidden text-slate-900">
@@ -597,7 +611,9 @@ const RegisterPage = () => {
               </div>
 
               {/* Github */}
-              <button className="mt-6 flex h-[48px] w-full items-center justify-center gap-4 rounded-[16px] bg-[#081021] text-base font-medium text-white shadow-[0_12px_30px_rgba(8,16,33,.15)] transition-all hover:opacity-95">
+              <button 
+              onClick={handleGithubClick}
+              className="mt-6 flex h-[48px] w-full items-center justify-center gap-4 rounded-[16px] bg-[#081021] text-base font-medium text-white shadow-[0_12px_30px_rgba(8,16,33,.15)] transition-all hover:opacity-95">
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 .5C5.6.5.5 5.7.5 12.1c0 5.2 3.4 9.7 8.1 11.3.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.4-5.5-6 0-1.3.5-2.4 1.3-3.2-.1-.3-.6-1.5.1-3.1 0 0 1.1-.4 3.4 1.3a11.8 11.8 0 0 1 6.2 0c2.3-1.7 3.4-1.3 3.4-1.3.7 1.6.2 2.8.1 3.1.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.7-5.5 6 .4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.7-1.6 8.1-6.1 8.1-11.3C23.5 5.7 18.4.5 12 .5z" />
                 </svg>
@@ -612,96 +628,96 @@ const RegisterPage = () => {
               </div>
 
               <form onSubmit={handleSubmit}>
-              {/* Form inputs */}
-              <div className="space-y-4">
-                {/* Full Name */}
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-slate-600">
-                    Full name
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="John Doe"
-                      className={inputStyle}
-                      value={name}
-                      onChange={(e) => dispatch(setName(e.target.value))}
-                    />
-                    <User className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                {/* Form inputs */}
+                <div className="space-y-4">
+                  {/* Full Name */}
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-slate-600">
+                      Full name
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="John Doe"
+                        className={inputStyle}
+                        value={name}
+                        onChange={(e) => dispatch(setName(e.target.value))}
+                      />
+                      <User className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                    </div>
                   </div>
-                </div>
 
-                {/* Email address */}
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-slate-600">
-                    Email address
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="email"
-                      placeholder="you@example.com"
-                      className={inputStyle}
-                      value={email}
-                      onChange={(e) => dispatch(setEmail(e.target.value))}
-                    />
-                    <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                  {/* Email address */}
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-slate-600">
+                      Email address
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="email"
+                        placeholder="you@example.com"
+                        className={inputStyle}
+                        value={email}
+                        onChange={(e) => dispatch(setEmail(e.target.value))}
+                      />
+                      <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                    </div>
                   </div>
-                </div>
 
-                {/* Password */}
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-slate-600">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="password"
-                      placeholder="••••••••••••"
-                      className={inputStyle}
-                      value={password}
-                      onChange={(e) => dispatch(setPassword(e.target.value))}
-                    />
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                      <Eye size={18} />
+                  {/* Password */}
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-slate-600">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="password"
+                        placeholder="••••••••••••"
+                        className={inputStyle}
+                        value={password}
+                        onChange={(e) => dispatch(setPassword(e.target.value))}
+                      />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                        <Eye size={18} />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Password checklist */}
-              <div className="mt-4 grid grid-cols-2 gap-y-2.5 gap-x-4 text-xs font-semibold text-slate-500">
-                <div className="flex items-center gap-2">
-                  <div className="h-4 w-4 rounded-full bg-[#E8FFF7] text-[#4FD1A5] flex items-center justify-center font-bold text-[10px]">
-                    ✓
+                {/* Password checklist */}
+                <div className="mt-4 grid grid-cols-2 gap-y-2.5 gap-x-4 text-xs font-semibold text-slate-500">
+                  <div className="flex items-center gap-2">
+                    <div className="h-4 w-4 rounded-full bg-[#E8FFF7] text-[#4FD1A5] flex items-center justify-center font-bold text-[10px]">
+                      ✓
+                    </div>
+                    <span className="text-[13px] font-medium text-slate-500">At least 8 characters</span>
                   </div>
-                  <span className="text-[13px] font-medium text-slate-500">At least 8 characters</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="h-4 w-4 rounded-full bg-[#E8FFF7] text-[#4FD1A5] flex items-center justify-center font-bold text-[10px]">
-                    ✓
+                  <div className="flex items-center gap-2">
+                    <div className="h-4 w-4 rounded-full bg-[#E8FFF7] text-[#4FD1A5] flex items-center justify-center font-bold text-[10px]">
+                      ✓
+                    </div>
+                    <span className="text-[13px] font-medium text-slate-500">One uppercase letter</span>
                   </div>
-                  <span className="text-[13px] font-medium text-slate-500">One uppercase letter</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="h-4 w-4 rounded-full bg-[#E8FFF7] text-[#4FD1A5] flex items-center justify-center font-bold text-[10px]">
-                    ✓
+                  <div className="flex items-center gap-2">
+                    <div className="h-4 w-4 rounded-full bg-[#E8FFF7] text-[#4FD1A5] flex items-center justify-center font-bold text-[10px]">
+                      ✓
+                    </div>
+                    <span className="text-[13px] font-medium text-slate-500">One lowercase letter</span>
                   </div>
-                  <span className="text-[13px] font-medium text-slate-500">One lowercase letter</span>
+                  <div className="flex items-center gap-2">
+                    <div className="h-3.5 w-3.5 rounded-full border border-[#FF8BC1]" />
+                    <span className="text-[13px] font-medium text-slate-500">One number or symbol</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="h-3.5 w-3.5 rounded-full border border-[#FF8BC1]" />
-                  <span className="text-[13px] font-medium text-slate-500">One number or symbol</span>
-                </div>
-              </div>
 
-              {/* Create account button */}
-              <button
-                type="submit"
-                disabled={registerMutation.isPending}
-                className="mt-4 h-[52px] w-full rounded-[18px] bg-[#D3ACFF] text-base font-semibold text-white shadow-[0_20px_40px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6] disabled:opacity-60"
-              >
-                {registerMutation.isPending ? "Creating account..." : "Create account"}
-              </button>
+                {/* Create account button */}
+                <button
+                  type="submit"
+                  disabled={registerMutation.isPending}
+                  className="mt-4 h-[52px] w-full rounded-[18px] bg-[#D3ACFF] text-base font-semibold text-white shadow-[0_20px_40px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6] disabled:opacity-60"
+                >
+                  {registerMutation.isPending ? "Creating account..." : "Create account"}
+                </button>
               </form>
 
               <p className="mt-4 text-center text-[13px] text-[#716B78]">
