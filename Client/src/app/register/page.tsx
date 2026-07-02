@@ -1,7 +1,9 @@
 "use client"
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { ArrowUpRight, Globe, User, Mail, Eye, Hash } from "lucide-react";
+import { ArrowUpRight, Globe, User, Mail, Eye } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { setName, setEmail, setPassword } from "@/lib/redux/slices/auth/registerSlice";
 
 const cardStyle =
   "border border-[#F3E8DE] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(230,190,160,.08)]";
@@ -11,6 +13,8 @@ const inputStyle =
 
 const RegisterPage = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { name, email, password } = useAppSelector((state) => state.register);
 
   return (
     <main className="min-h-screen bg-[#FFF9F3] p-4 overflow-auto lg:overflow-hidden text-slate-900">
@@ -513,7 +517,7 @@ const RegisterPage = () => {
 
           {/* RIGHT SIDE */}
           <section className="relative flex h-full items-center justify-center px-4 py-8 sm:py-10 sm:px-8">
-           
+
             {/* DOT GRID (RIGHT OF CARD) */}
             <div className="absolute right-4 top-[240px] grid grid-cols-2 gap-3 opacity-25 pointer-events-none hidden xl:grid">
               {Array.from({ length: 10 }).map((_, i) => (
@@ -613,6 +617,8 @@ const RegisterPage = () => {
                       type="text"
                       placeholder="John Doe"
                       className={inputStyle}
+                      value={name}
+                      onChange={(e) => dispatch(setName(e.target.value))}
                     />
                     <User className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                   </div>
@@ -628,6 +634,8 @@ const RegisterPage = () => {
                       type="email"
                       placeholder="you@example.com"
                       className={inputStyle}
+                      value={email}
+                      onChange={(e) => dispatch(setEmail(e.target.value))}
                     />
                     <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                   </div>
@@ -643,6 +651,8 @@ const RegisterPage = () => {
                       type="password"
                       placeholder="••••••••••••"
                       className={inputStyle}
+                      value={password}
+                      onChange={(e) => dispatch(setPassword(e.target.value))}
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                       <Eye size={18} />
@@ -678,19 +688,18 @@ const RegisterPage = () => {
               </div>
 
               {/* Create account button */}
-              <button 
+              <button
                 className="mt-4 h-[52px] w-full rounded-[18px] bg-[#D3ACFF] text-base font-semibold text-white shadow-[0_20px_40px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6]"
                 onClick={() => router.push('/login')}
               >
                 Create account
               </button>
 
-              {/* Footer */}
-              <p className="mt-5 text-center text-sm text-slate-500">
-                Already have an account?
-                <span className="ml-1.5 font-semibold text-[#D3ACFF] hover:underline cursor-pointer" onClick={() => router.push('/login')}>
+              <p className="mt-4 text-center text-[13px] text-[#716B78]">
+                Already have an account?{" "}
+                <a href="#" className="font-semibold text-[#B27FEF]">
                   Sign in
-                </span>
+                </a>
               </p>
             </motion.div>
           </section>
