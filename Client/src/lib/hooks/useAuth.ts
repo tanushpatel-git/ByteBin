@@ -6,7 +6,7 @@ export function useLoginMutation() {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (data: { email: string; password: string }) =>
+    mutationFn: (data: { email: string; password?: string }) =>
       api.post("/api/login", data).then((res) => res.data.user),
     onSuccess: () => {
       router.push("/");
@@ -21,7 +21,7 @@ export function useRegisterMutation() {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (data: { name: string; email: string; password: string }) =>
+    mutationFn: (data: { name: string; email: string; password?: string }) =>
       api.post("/api/createMe", data).then((res) => res.data.user),
     onSuccess: () => {
       router.push("/");

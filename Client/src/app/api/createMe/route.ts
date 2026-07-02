@@ -8,13 +8,18 @@ export const POST = async (req: NextRequest) => {
     try {
         await connectDb();
         const merchantCode = nanoid(10);
-        const { name, email, password } = await req.json();
+        const { name, email, password }: { name: string; email: string; password?: string } = await req.json();
 
-        const hashedPassword = await hashPassword(password);
-        const user = await User.create({ name, email, password: hashedPassword, merchantCode });
+        let user;
+        if (password){
+            const hashedPassword = await hashPassword(password!);
+            user = await User.create({ name, email, password: hashedPassword, merchantCode });
+        }else{
+            user = await User.create({ name, email, merchantCode });
+        }
 
-        const token = signToken({ userId: user._id.toString(), email: user.email });
-        const response = NextResponse.json({ success: true, user: { id: user._id, name: user.name, email: user.email } });
+        const token = signToken({ userId: user._id.toString(), role: user.role });
+        const response = NextResponse.json({ success: true, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
         response.cookies.set("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
