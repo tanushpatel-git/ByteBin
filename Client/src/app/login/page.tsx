@@ -12,7 +12,7 @@ const LoginPage = () => {
   return (
     <main className="min-h-screen bg-[#FFF9F2] p-4 overflow-auto lg:overflow-hidden">
       {/* OUTER CONTAINER */}
-      <div className="relative min-h-[calc(100vh-2rem)] lg:h-full overflow-hidden rounded-[32px] border border-[#F3E8DD] bg-[#FFFDF9] shadow-[0_20px_100px_rgba(215,180,140,.06)]">
+      <div className="relative max-h-[calc(100vh-1rem)] lg:h-full overflow-hidden rounded-[32px] border border-[#F3E8DD] bg-[#FFFDF9] shadow-[0_20px_100px_rgba(215,180,140,.06)]">
         {/* BACKGROUND BLOBS */}
         <div className="absolute left-[-120px] top-[420px] h-[280px] w-[280px] rounded-full bg-[#FFD9B0]/35 blur-[60px]" />
         <div className="absolute right-[-120px] top-[380px] h-[320px] w-[320px] rounded-full bg-[#FFC8D6]/30 blur-[70px]" />
@@ -26,7 +26,7 @@ const LoginPage = () => {
           {/* LEFT SIDE */}
           <section className="hidden lg:block relative px-12 pt-8 overflow-hidden">
             {/* SCALING GRAPHICS CLUSTER */}
-            <div className="absolute right-0 top-0 bottom-0 w-[950px] h-[920px] origin-top-right scale-[0.62] xl:scale-[0.8] 2xl:scale-[0.95] min-[1600px]:scale-100">
+            <div className="absolute right-0 top-0 bottom-0 w-[950px] h-[880px] origin-top-right xl:scale-[0.8] 2xl:scale-[0.95] min-[1600px]:scale-100">
               
               {/* TOP LOGO */}
               <div className="absolute left-[48px] top-[32px] flex items-center gap-3">
@@ -486,19 +486,6 @@ const LoginPage = () => {
                     className="h-[50px] w-full rounded-[20px] border border-[#F3E8DD] bg-[#FFFDFB] px-5 text-base outline-none focus:border-[#D3ACFF] sm:px-7 sm:text-lg"
                   />
                 </div>
-              </div>
-
-              {/* Bottom Row */}
-              <div className="mt-5 flex items-center justify-between sm:mt-6">
-                <label className="flex items-center gap-2 cursor-pointer sm:gap-3">
-                  <input type="checkbox" className="rounded border-[#F3E8DD] text-[#D3ACFF] focus:ring-[#D3ACFF]" />
-                  <span className="text-sm text-slate-500 sm:text-base">
-                    Remember me
-                  </span>
-                </label>
-                <button className="text-sm font-medium text-[#D3ACFF] hover:underline sm:text-base">
-                  Forgot password?
-                </button>
               </div>
 
               {/* Sign In */}
