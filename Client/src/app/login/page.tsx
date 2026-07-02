@@ -1,4 +1,6 @@
 "use client"
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { setEmail, setPassword } from "@/lib/redux/slices/auth/registerSlice";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Globe } from "lucide-react";
 import Link from "next/link";
@@ -7,6 +9,11 @@ const cardStyle =
   "border border-[#F3E8DD] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(215,180,140,.08)]";
 
 const LoginPage = () => {
+
+  const dispatch = useAppDispatch()
+  const {email, password} = useAppSelector((state) => state.login)
+
+
 
   return (
     <main className="min-h-screen bg-[#FFF9F2] p-4 overflow-auto lg:overflow-hidden">
@@ -468,6 +475,9 @@ const LoginPage = () => {
                 </label>
                 <input
                   type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => dispatch(setEmail(e.target.value))}
                   placeholder="you@example.com"
                   className="h-[50px] w-full rounded-[20px] border border-[#F3E8DD] bg-[#FFFDFB] px-5 text-base outline-none focus:border-[#D3ACFF] sm:px-7 sm:text-lg"
                 />
@@ -480,7 +490,10 @@ const LoginPage = () => {
                 </label>
                 <div className="relative">
                   <input
+                    autoComplete="password"
                     type="password"
+                    value={password}
+                    onChange={(e) => dispatch(setPassword(e.target.value))}
                     placeholder="••••••••••••"
                     className="h-[50px] w-full rounded-[20px] border border-[#F3E8DD] bg-[#FFFDFB] px-5 text-base outline-none focus:border-[#D3ACFF] sm:px-7 sm:text-lg"
                   />

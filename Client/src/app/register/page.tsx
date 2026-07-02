@@ -687,12 +687,11 @@ const RegisterPage = () => {
               </div>
 
               {/* Create account button */}
-              <Link
-                href="/register"
+              <button
                 className="mt-4 h-[52px] w-full rounded-[18px] bg-[#D3ACFF] text-base font-semibold text-white shadow-[0_20px_40px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6]"
               >
                 Create account
-              </Link>
+              </button>
 
               <p className="mt-4 text-center text-[13px] text-[#716B78]">
                 Already have an account?{" "}
