@@ -8,7 +8,7 @@ import {
 } from "recharts";
 
 interface DeploymentsChartProps {
-    data: any[];
+    data: Record<string, unknown>[];
 }
 
 export const DeploymentsChart = ({ data }: DeploymentsChartProps) => {

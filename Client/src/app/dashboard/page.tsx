@@ -117,7 +117,7 @@ export default function Dashboard() {
                                 Good morning, Developer! <span className="text-3xl">👋</span>
                             </h1>
                             <p className="text-[15px] text-[var(--text-muted)] mt-1.5 font-medium">
-                                Here's what's happening with your projects today.
+                                Here&apos;s what&apos;s happening with your projects today.
                             </p>
                         </FadeIn>
 
@@ -294,7 +294,7 @@ export default function Dashboard() {
                         <FadeIn delay={0.45} className="mb-8">
                             <SectionHeader title="Active repositories" action="View all" />
                             <div className="grid grid-cols-4 gap-4">
-                                {activeRepositories.map((repo, i) => (
+                                {activeRepositories.map((repo) => (
                                     <div
                                         key={repo.name}
                                         className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-[16px] p-4 hover:shadow-[0_8px_30px_rgba(0,0,0,.04)] hover:-translate-y-[2px] transition-all duration-300 cursor-pointer"

@@ -80,6 +80,8 @@ export const TimelineEvent = ({
                         <Image
                             key={i}
                             src={`https://api.dicebear.com/7.x/notionists/svg?seed=${i}&backgroundColor=F4ECFF`}
+                            width={24}
+                            height={24}
                             className="w-6 h-6 rounded-full border-2 border-[var(--bg-card)] -ml-1.5 first:ml-0 bg-[var(--accent-light)]"
                             alt="avatar"
                         />
