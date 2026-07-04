@@ -5,9 +5,11 @@ import {
   readFileSync,
   existsSync,
   statSync,
+  writeFileSync,
+  mkdirSync,
 } from "node:fs";
 
-import { join, relative } from "node:path";
+import { join, relative, dirname } from "node:path";
 
 import { execSync } from "node:child_process";
 
@@ -19,15 +21,36 @@ import { homedir } from "node:os";
 // ===============================
 
 const DEFAULT_API_URL =
-  "http://localhost:8001/api/push/execute";
+  "http://localhost:8008/api/push/execute";
 
 const DEFAULT_FRONTEND_URL =
-  "http://localhost:5173";
+  "http://localhost:3000";
 
 const IGNORED_DIRS = new Set([
   "node_modules",
   ".git",
+  ".next",
+  ".pnp",
+  ".yarn",
+  "coverage",
+  "out",
+  "build",
+  ".vercel",
 ]);
+
+const IGNORED_FILE_PATTERNS = [
+  name => name === ".DS_Store",
+  name => name === "next-env.d.ts",
+  name => name === ".env",
+  name => name.startsWith(".env."),
+  name => name.endsWith(".pem"),
+  name => name.endsWith(".tsbuildinfo"),
+  name => name.startsWith(".pnp."),
+  name => name.startsWith("npm-debug.log"),
+  name => name.startsWith("yarn-debug.log"),
+  name => name.startsWith("yarn-error.log"),
+  name => name.startsWith(".pnpm-debug.log"),
+];
 
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB limit per file
 
@@ -43,10 +66,13 @@ function parseArgs() {
 
   const extra = {};
 
+  const positional = [];
+
   for (let i = 1; i < args.length; i++) {
     const arg = args[i];
 
     if (!arg.startsWith("--")) {
+      positional.push(arg);
       continue;
     }
 
@@ -64,6 +90,7 @@ function parseArgs() {
   return {
     command,
     extra,
+    positional,
   };
 }
 
@@ -202,7 +229,18 @@ function walkFiles(
     );
 
 
-    // Ignore specific directories
+    // Ignore by file name/pattern
+
+    if (
+      IGNORED_FILE_PATTERNS.some(
+        fn => fn(entry.name)
+      )
+    ) {
+
+      continue;
+
+    }
+
 
     if (
       entry.isDirectory() &&
@@ -220,13 +258,18 @@ function walkFiles(
     }
 
 
-    // Error on other directories
+    // Recurse into other directories
 
     if (entry.isDirectory()) {
-      console.error(
-        `Error: '${entry.name}' is a directory. Only files can be sent.`
+
+      walkFiles(
+        fullPath,
+        baseDir,
+        files
       );
-      process.exit(1);
+
+      continue;
+
     }
 
 
@@ -286,10 +329,166 @@ function walkFiles(
 
 
 // ===============================
+// Staging
+// ===============================
+
+const STAGING_DIR = ".byte";
+const STAGING_FILE = "index.json";
+
+function getStagingPath() {
+  return join(process.cwd(), STAGING_DIR, STAGING_FILE);
+}
+
+function addCommand(paths) {
+  const baseDir = process.cwd();
+
+  if (paths.length === 0) {
+    console.error("Usage: byte add <path> [<path> ...]");
+    console.error("       byte add .");
+    process.exit(1);
+  }
+
+  let staged = [];
+
+  if (paths.length === 1 && paths[0] === ".") {
+    staged = Object.keys(
+      walkFiles(baseDir, baseDir)
+    );
+  } else {
+    for (const p of paths) {
+      const fullPath = join(baseDir, p);
+
+      if (!existsSync(fullPath)) {
+        console.error(
+          `Error: '${p}' does not exist`
+        );
+        process.exit(1);
+      }
+
+      const stats = statSync(fullPath);
+
+      if (stats.isDirectory()) {
+        staged.push(
+          ...Object.keys(
+            walkFiles(
+              fullPath,
+              baseDir
+            )
+          )
+        );
+      } else {
+        if (
+          IGNORED_FILE_PATTERNS.some(
+            fn => fn(p)
+          )
+        ) {
+          console.warn(
+            `Warning: '${p}' is ignored, skipping`
+          );
+          continue;
+        }
+
+        if (
+          stats.size >
+          MAX_FILE_SIZE_BYTES
+        ) {
+          console.error(
+            `Error: '${p}' exceeds the ${MAX_FILE_SIZE_BYTES / (1024 * 1024)} MB file size limit`
+          );
+          process.exit(1);
+        }
+
+        const relPath = relative(
+          baseDir,
+          fullPath
+        );
+
+        try {
+          readFileSync(
+            fullPath,
+            "utf8"
+          );
+          staged.push(relPath);
+        } catch {
+          console.warn(
+            `Warning: '${p}' is not a readable text file, skipping`
+          );
+        }
+      }
+    }
+  }
+
+  if (staged.length === 0) {
+    console.log("No files staged.");
+    return;
+  }
+
+  const stagingPath = getStagingPath();
+  mkdirSync(dirname(stagingPath), { recursive: true });
+
+  writeFileSync(
+    stagingPath,
+    JSON.stringify(
+      { files: staged },
+      null,
+      2
+    )
+  );
+
+  console.log(
+    `Staged ${staged.length} file(s)`
+  );
+}
+
+
+// ===============================
 // Push Code
 // ===============================
 
 async function pushCode(extra) {
+
+  const stagingPath =
+    getStagingPath();
+
+  if (
+    !existsSync(stagingPath)
+  ) {
+
+    console.error(
+      "No files staged."
+    );
+
+    console.error(
+      "Run 'byte add .' to stage all files, or 'byte add <path>' to stage specific files."
+    );
+
+    process.exit(1);
+
+  }
+
+  const staging =
+    readJson(stagingPath);
+
+  if (
+    !staging ||
+    !Array.isArray(
+      staging.files
+    ) ||
+    staging.files.length === 0
+  ) {
+
+    console.error(
+      "No files staged."
+    );
+
+    console.error(
+      "Run 'byte add .' to stage all files."
+    );
+
+    process.exit(1);
+
+  }
+
 
   const config =
     loadConfig();
@@ -317,29 +516,76 @@ async function pushCode(extra) {
   );
 
 
-  const files =
-    walkFiles(
-      baseDir,
-      baseDir
-    );
+  const files = {};
+
+  for (const filePath of
+    staging.files
+  ) {
+
+    const fullPath =
+      join(baseDir, filePath);
+
+    if (
+      !existsSync(fullPath)
+    ) {
+
+      console.warn(
+        `Warning: '${filePath}' no longer exists, skipping`
+      );
+
+      continue;
+
+    }
+
+    try {
+
+      const stats =
+        statSync(fullPath);
+
+      if (
+        stats.size >
+        MAX_FILE_SIZE_BYTES
+      ) {
+
+        console.warn(
+          `Warning: '${filePath}' exceeds size limit, skipping`
+        );
+
+        continue;
+
+      }
+
+      files[filePath] =
+        readFileSync(
+          fullPath,
+          "utf8"
+        );
+
+    } catch {
+
+      console.warn(
+        `Warning: '${filePath}' is not readable, skipping`
+      );
+
+    }
+
+  }
 
   const fileCount =
     Object.keys(files).length;
 
-
   if (fileCount === 0) {
 
     console.log(
-      "No files found."
+      "No files to push."
     );
 
     return;
 
   }
 
-
   console.log(
-    `Found ${fileCount} files`
+    `Pushing ${fileCount} file(s)`
   );
 
 
@@ -439,11 +685,31 @@ function showHelp() {
   console.log("");
 
   console.log(
+    "  add ."
+  );
+
+  console.log(
+    "      Stage all project files"
+  );
+
+  console.log("");
+
+  console.log(
+    "  add <path> [<path> ...]"
+  );
+
+  console.log(
+    "      Stage specific files or directories"
+  );
+
+  console.log("");
+
+  console.log(
     "  push [--api url]"
   );
 
   console.log(
-    "      Push project files to backend"
+    "      Push staged files to backend"
   );
 
   console.log("");
@@ -454,6 +720,14 @@ function showHelp() {
 
   console.log(
     "byte run"
+  );
+
+  console.log(
+    "byte add ."
+  );
+
+  console.log(
+    "byte add src/main.js src/utils.js"
   );
 
   console.log(
@@ -496,6 +770,7 @@ function showHelp() {
 const {
   command,
   extra,
+  positional,
 } = parseArgs();
 
 
@@ -505,6 +780,15 @@ switch (command) {
 
     openBrowser(
       DEFAULT_FRONTEND_URL
+    );
+
+    break;
+
+
+  case "add":
+
+    addCommand(
+      positional
     );
 
     break;

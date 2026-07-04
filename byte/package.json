@@ -1,7 +1,7 @@
 {
   "name": "byte",
   "version": "1.0.0",
-  "description": "CLI tool to open localhost:5173 and push project files to a backend API",
+  "description": "CLI tool to open byte bin and push project files to a backend API",
   "bin": {
     "byte": "./bin/cli.js"
   },
