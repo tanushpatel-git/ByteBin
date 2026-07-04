@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const execute = require('./routes/execute.route')
 const app = express()
 // Cors setup 
 app.use(cors({
@@ -16,6 +17,8 @@ app.use(express.urlencoded({extended:true}))
 
 
 // routers
+app.use('/api/push' , execute);
+
 
 
 
