@@ -20,11 +20,13 @@ const RegisterPage = () => {
   const { name, email, password } = useAppSelector((state) => state.register);
   const registerMutation = useRegisterMutation();
 
+  // Form thier the function manage the submit things. Tanstack
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    registerMutation.mutate({ name, email, password });
+    registerMutation.mutate({ name, email, password }); 
   };
 
+  // Github Sign In.
   const handleGithubClick = async () => {
     try {
       const result = await signInWithPopup(auth, githubProvider);
