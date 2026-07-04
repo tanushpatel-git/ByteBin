@@ -7,7 +7,7 @@ export const POST = async (req: NextRequest) => {
     try {
         await connectDb();
         const { email, password } = await req.json();
-
+        
         const user = await User.findOne({ email });
         if (!user) {
             return NextResponse.json({ success: false, message: "Invalid credentials" }, { status: 401 });
