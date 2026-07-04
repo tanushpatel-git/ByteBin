@@ -1,1 +1,50 @@
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: 'General Sans', sans-serif;
+  --color-bg-base: var(--bg-base);
+  --color-bg-card: var(--bg-card);
+  --color-border-subtle: var(--border-subtle);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+}
+
+@layer base {
+  :root {
+    --bg-base: #FFFDFB;
+    --bg-card: #FFFFFF;
+    --border-subtle: #F1E8DE;
+    --text-main: #171717;
+    --text-muted: #6B7280;
+    --accent: #D3ACFF;
+    --accent-hover: #c296ff;
+    --accent-light: #F4ECFF;
+    --success: #22C55E;
+    --success-bg: #f0fdf4;
+  }
+
+  .dark {
+    --bg-base: #13111C;
+    --bg-card: #1C1A27;
+    --border-subtle: #2D2B3B;
+    --text-main: #FFFFFF;
+    --text-muted: #9CA3AF;
+    --accent: #9D4EDD;
+    --accent-hover: #8B5CF6;
+    --accent-light: #2A1B43;
+    --success: #34D399;
+    --success-bg: #064E3B;
+  }
+
+  body {
+    font-family: 'General Sans', sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-main);
+  }
+}
