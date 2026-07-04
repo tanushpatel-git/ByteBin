@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 export const TimelineEvent = ({
@@ -76,7 +77,7 @@ export const TimelineEvent = ({
             {avatars && (
                 <div className="flex items-center mt-3">
                     {[1, 2, 3].map((i) => (
-                        <img
+                        <Image
                             key={i}
                             src={`https://api.dicebear.com/7.x/notionists/svg?seed=${i}&backgroundColor=F4ECFF`}
                             className="w-6 h-6 rounded-full border-2 border-[var(--bg-card)] -ml-1.5 first:ml-0 bg-[var(--accent-light)]"

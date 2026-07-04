@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import {
     Activity,
     Bell,
@@ -30,49 +32,49 @@ export const Sidebar = () => {
                     <p className="px-3 text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-3">
                         Overview
                     </p>
-                    <a
-                        href="#"
+                    <Link
+                        href="/dashboard"
                         className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[var(--accent)]/10 text-[var(--accent)] font-medium text-[13px] transition-all"
                     >
                         <Activity className="w-[18px] h-[18px]" />
                         Dashboard
                         <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                    </a>
-                    <a
-                        href="#"
+                    </Link>
+                    <Link
+                        href="/dashboard/repositories"
                         className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
                     >
                         <FolderKanban className="w-[18px] h-[18px] group-hover:text-[var(--accent)] transition-colors" />
                         Repositories
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                         href="#"
                         className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
                     >
                         <Rocket className="w-[18px] h-[18px] group-hover:text-[var(--accent)] transition-colors" />
                         Deployments
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                         href="#"
                         className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
                     >
                         <Server className="w-[18px] h-[18px] group-hover:text-[var(--accent)] transition-colors" />
                         Infrastructure
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="space-y-1">
                     <p className="px-3 text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-3">
                         Settings
                     </p>
-                    <a
+                    <Link
                         href="#"
                         className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
                     >
                         <Users className="w-[18px] h-[18px] group-hover:text-[var(--accent)] transition-colors" />
                         Team Members
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                         href="#"
                         className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group flex-1"
                     >
@@ -81,7 +83,7 @@ export const Sidebar = () => {
                         <div className="ml-auto w-5 h-5 rounded-md bg-[var(--bg-card)] border border-[var(--border-subtle)] flex items-center justify-center text-[9px] text-[var(--text-muted)] group-hover:border-[var(--accent)]/30 transition-colors">
                             ⌘,
                         </div>
-                    </a>
+                    </Link>
                 </div>
             </nav>
 
@@ -116,9 +118,11 @@ export const Sidebar = () => {
             {/* User Profile */}
             <div className="p-5 border-t border-[var(--border-subtle)]/50">
                 <div className="flex items-center gap-3 cursor-pointer group">
-                    <img
+                    <Image
                         src="https://api.dicebear.com/7.x/notionists/svg?seed=Felix&backgroundColor=F4ECFF"
                         alt="User"
+                        width={36}
+                        height={36}
                         className="w-9 h-9 rounded-full bg-[var(--accent-light)] border border-[var(--border-subtle)] group-hover:border-[var(--accent)]/50 transition-colors"
                     />
                     <div className="flex-1">
