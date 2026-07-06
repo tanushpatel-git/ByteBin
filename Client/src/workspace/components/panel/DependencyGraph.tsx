@@ -1,6 +1,6 @@
 import { Network } from "lucide-react";
-import { DEPENDENCIES } from "./constants";
-import { getDependencyStatusColor } from "./utils";
+import { DEPENDENCIES } from "../data/constants";
+import { getDependencyStatusColor } from "../utils";
 
 export function DependencyGraph() {
   const counts = {

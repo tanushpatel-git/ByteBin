@@ -1,6 +1,6 @@
 import { GitCommit, CheckCircle2, Clock, XCircle } from "lucide-react";
-import type { Commit } from "./types";
-import { cn } from "./utils";
+import type { Commit } from "../types";
+import { cn } from "../utils";
 
 interface CommitItemProps {
   commit: Commit;

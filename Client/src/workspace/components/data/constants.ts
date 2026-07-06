@@ -5,7 +5,7 @@ import type {
   Workspace,
   Dependency,
   CodeLine,
-} from "./types";
+} from "../types";
 
 export const WORKSPACES: Workspace[] = [
   { id: "1", name: "bytebin-core", plan: "pro", initials: "BC" },

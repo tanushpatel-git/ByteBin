@@ -1,6 +1,6 @@
 import { GitCommit } from "lucide-react";
 import { CommitItem } from "./CommitItem";
-import { COMMITS } from "./constants";
+import { COMMITS } from "../data/constants";
 
 export function CommitHistory() {
   return (
