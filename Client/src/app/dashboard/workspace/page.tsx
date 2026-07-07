@@ -1,4 +1,4 @@
-import WorkspacePage from "@/workspace/page";
+import WorkspacePage from "@/app/workspace/page";
 
 export default function WorkspaceRoute() {
   return <WorkspacePage />;
