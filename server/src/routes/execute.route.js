@@ -11,7 +11,7 @@ router.post("/execute", async (req, res) => {
       return res.status(400).json({ message: "No files provided" });
     }
 
-    const [commitMessage, prDescription] = await Promise.all([
+    const [commitMessage, prDescription] = await Promise.all([   
       generateCommitMessage(files),
       generatePRDescription(files),
     ]);
