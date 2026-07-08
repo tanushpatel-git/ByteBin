@@ -49,15 +49,15 @@ export function Footer() {
               The premium developer platform for building, deploying, and scaling modern applications.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-[#6B7280] hover:text-[#18181B] transition-colors">
+              <Link href="#" className="text-[#6B7280] hover:text-[#18181B] transition-colors">
                 <FaTwitter size={20} />
-              </a>
-              <a href="#" className="text-[#6B7280] hover:text-[#18181B] transition-colors">
+              </Link>
+              <Link href="#" className="text-[#6B7280] hover:text-[#18181B] transition-colors">
                 <FaGithub size={20} />
-              </a>
-              <a href="#" className="text-[#6B7280] hover:text-[#18181B] transition-colors">
+              </Link>
+              <Link href="#" className="text-[#6B7280] hover:text-[#18181B] transition-colors">
                 <FaLinkedin size={20} />
-              </a>
+              </Link>
             </div>
           </div>
 
