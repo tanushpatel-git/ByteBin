@@ -29,7 +29,7 @@ export const Sidebar = () => {
             {/* Navigation */}
             <nav className="flex-1 px-5 py-6 space-y-7 overflow-y-auto scrollbar-hide">
                 <div className="space-y-1">
-                    <p className="px-3 text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-3">
+                    <p className="px-3 text-[10px] font-bold text-(--text-muted) uppercase tracking-wider mb-3">
                         Overview
                     </p>
                     <Link
@@ -49,14 +49,14 @@ export const Sidebar = () => {
                     </Link>
                     <Link
                         href="#"
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
+                        className="flex items-center uppercase font-bold gap-3 px-3 py-2.5 rounded-xl text-(--text-muted) hover:bg-(--bg-card) hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
                     >
                         <Rocket className="w-[18px] h-[18px] group-hover:text-[var(--accent)] transition-colors" />
                         Deployments
                     </Link>
                     <Link
                         href="#"
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
+                        className="flex items-center uppercase font-bold gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
                     >
                         <Server className="w-[18px] h-[18px] group-hover:text-[var(--accent)] transition-colors" />
                         Infrastructure
@@ -69,14 +69,14 @@ export const Sidebar = () => {
                     </p>
                     <Link
                         href="#"
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
+                        className="flex items-center uppercase font-bold gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group"
                     >
                         <Users className="w-[18px] h-[18px] group-hover:text-[var(--accent)] transition-colors" />
                         Team Members
                     </Link>
                     <Link
                         href="#"
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group flex-1"
+                        className="flex items-center uppercase font-bold gap-3 px-3 py-2.5 rounded-xl text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)] font-medium text-[13px] transition-all group flex-1"
                     >
                         <Settings className="w-[18px] h-[18px] group-hover:text-[var(--accent)] transition-colors" />
                         Project Settings
