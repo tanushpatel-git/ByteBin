@@ -1,13 +1,13 @@
 "use client"
 import { motion } from "framer-motion";
-import { ArrowUpRight, Globe, User, Mail, Eye } from "lucide-react";
+import { ArrowUpRight, Eye, EyeOff, Globe, Mail, User } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { setName, setEmail, setPassword } from "@/lib/redux/slices/auth/registerSlice";
 import Link from "next/link";
 import { useRegisterMutation } from "@/lib/hooks/useAuth";
 import {  signInWithPopup } from "firebase/auth";
 import { auth, githubProvider } from "@/lib/firebase";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 const cardStyle =
   "border border-[#F3E8DE] bg-[#FFFDFB] shadow-[0_20px_80px_rgba(230,190,160,.08)]";
@@ -19,6 +19,7 @@ const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const { name, email, password } = useAppSelector((state) => state.register);
   const registerMutation = useRegisterMutation();
+  const [showPassword, setShowPassword] = useState(false);
 
   // Form thier the function manage the submit things. Tanstack
   const handleSubmit = (e: FormEvent) => {
@@ -673,15 +674,19 @@ const RegisterPage = () => {
                     </label>
                     <div className="relative">
                       <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="••••••••••••"
                         className={inputStyle}
                         value={password}
                         onChange={(e) => dispatch(setPassword(e.target.value))}
                       />
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                        <Eye size={18} />
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                      >
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
                     </div>
                   </div>
                 </div>

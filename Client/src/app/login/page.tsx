@@ -2,10 +2,10 @@
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { setEmail, setPassword } from "@/lib/redux/slices/auth/loginSlice";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Globe } from "lucide-react";
+import { ArrowUpRight, Eye, EyeOff, Globe } from "lucide-react";
 import Link from "next/link";
 import { useLoginMutation } from "@/lib/hooks/useAuth";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { signInWithPopup } from "firebase/auth";
 import { auth, githubProvider } from "@/lib/firebase";
 
@@ -17,6 +17,7 @@ const LoginPage = () => {
   const dispatch = useAppDispatch()
   const {email, password} = useAppSelector((state) => state.login)
   const loginMutation = useLoginMutation()
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = (e : FormEvent) => {
     e.preventDefault()
@@ -512,12 +513,19 @@ const LoginPage = () => {
                 <div className="relative">
                   <input
                     autoComplete="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => dispatch(setPassword(e.target.value))}
                     placeholder="••••••••••••"
-                    className="h-[50px] w-full rounded-[20px] border border-[#F3E8DD] bg-[#FFFDFB] px-5 text-base outline-none focus:border-[#D3ACFF] sm:px-7 sm:text-lg"
+                    className="h-[50px] w-full rounded-[20px] border border-[#F3E8DD] bg-[#FFFDFB] px-5 pr-12 text-base outline-none focus:border-[#D3ACFF] sm:px-7 sm:text-lg"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
                 </div>
               </div>
 
