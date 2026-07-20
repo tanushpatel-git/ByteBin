@@ -9,7 +9,7 @@ export function useLoginMutation() {
     mutationFn: (data: { email: string; password?: string }) =>
       api.post("/api/login", data).then((res) => res.data.user),
     onSuccess: () => {
-      router.push("/");
+      router.push("/dashboard");
     },
     onError: (error) => {
       console.log(error);
@@ -24,7 +24,7 @@ export function useRegisterMutation() {
     mutationFn: (data: { name: string; email: string; password?: string }) =>
       api.post("/api/createMe", data).then((res) => res.data.user),
     onSuccess: () => {
-      router.push("/");
+      router.push("/dashboard");
     },
     onError: (error) => {
       console.log(error);
