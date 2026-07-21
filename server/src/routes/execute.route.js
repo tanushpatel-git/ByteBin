@@ -11,10 +11,14 @@ router.post("/execute", async (req, res) => {
       return res.status(400).json({ message: "No files provided" });
     }
 
-    const [commitMessage, prDescription] = await Promise.all([   
-      generateCommitMessage(files),
-      generatePRDescription(files),
-    ]);
+    for (const [path, content] of Object.entries(files)) {
+      if (typeof content !== 'string') {
+        return res.status(400).json({ message: `Invalid content for file: ${path}` });
+      }
+    }
+
+    const commitMessage = await generateCommitMessage(files);
+    const prDescription = await generatePRDescription(files);
 
     const push = await Push.create({ files, cwd, commitMessage, prDescription });
 

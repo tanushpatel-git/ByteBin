@@ -1,3 +1,9 @@
+function withTimeout(ms = 30000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  return { signal: controller.signal, [Symbol.dispose]() { clearTimeout(timer); } };
+}
+
 function getProviders() {
   return [
     {
@@ -17,37 +23,52 @@ function getProviders() {
 }
 
 async function callGemini(provider, prompt) {
-  const res = await fetch(`${provider.url}?key=${provider.key}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-    }),
-  });
+  const timeout = withTimeout();
+  try {
+    const res = await fetch(provider.url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': provider.key,
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+      }),
+      signal: timeout.signal,
+    });
 
-  if (!res.ok) throw new Error(`${provider.name} error ${res.status}: ${await res.text()}`);
+    if (!res.ok) throw new Error(`${provider.name} error ${res.status}: ${await res.text()}`);
 
-  const data = await res.json();
-  return data.candidates[0].content.parts[0].text.trim();
+    const data = await res.json();
+    return data.candidates[0].content.parts[0].text.trim();
+  } finally {
+    timeout[Symbol.dispose]();
+  }
 }
 
 async function callOpenAI(provider, prompt) {
-  const res = await fetch(provider.url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${provider.key}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: provider.model,
-      messages: [{ role: 'user', content: prompt }],
-    }),
-  });
+  const timeout = withTimeout();
+  try {
+    const res = await fetch(provider.url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${provider.key}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: provider.model,
+        messages: [{ role: 'user', content: prompt }],
+      }),
+      signal: timeout.signal,
+    });
 
-  if (!res.ok) throw new Error(`${provider.name} error ${res.status}: ${await res.text()}`);
+    if (!res.ok) throw new Error(`${provider.name} error ${res.status}: ${await res.text()}`);
 
-  const data = await res.json();
-  return data.choices[0].message.content.trim();
+    const data = await res.json();
+    return data.choices[0].message.content.trim();
+  } finally {
+    timeout[Symbol.dispose]();
+  }
 }
 
 async function callWithFallback(prompt) {
