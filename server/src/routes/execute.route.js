@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Push = require('../models/Push.model');
-const { generateCommitMessage, generatePRDescription } = require('../lib/gemini');
+const { generateCommitMessage, generatePRDescription } = require('../lib/code-analysis-models');
 
 router.post("/execute", async (req, res) => {
   try {
