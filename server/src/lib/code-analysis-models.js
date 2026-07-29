@@ -1,4 +1,4 @@
-function withTimeout(ms = 30000) {
+function withTimeout(ms = 10000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), ms);
   return { signal: controller.signal, [Symbol.dispose]() { clearTimeout(timer); } };
