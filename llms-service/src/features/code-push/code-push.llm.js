@@ -1,7 +1,8 @@
 const axios = require('axios');
-const { TIMEOUTS } = require('../../lib/timeout');
 
-function withTimeout(ms = TIMEOUTS.llm) {
+const LLM_TIMEOUT_MS = 30 * 1000;
+
+function withTimeout(ms = LLM_TIMEOUT_MS) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), ms);
   return { signal: controller.signal, [Symbol.dispose]() { clearTimeout(timer); } };
