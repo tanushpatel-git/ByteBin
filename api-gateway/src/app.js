@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const { timeoutMiddleware } = require('./lib/timeout')
 const codePush = require('./features/code-push/code-push.route')
 const app = express()
 // Cors setup 
@@ -14,6 +15,9 @@ app.use(cors({
 // json middleware
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+
+// global request timeout
+app.use(timeoutMiddleware())
 
 
 // routers

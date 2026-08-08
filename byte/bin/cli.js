@@ -28,6 +28,8 @@ const DEFAULT_API_URL =
 const DEFAULT_FRONTEND_URL =
   "http://localhost:3000";
 
+const PUSH_TIMEOUT_MS = 150 * 1000; // 150s global cap for the push chain (2 LLM calls + fallback)
+
 const IGNORED_DIRS = new Set([
   "node_modules",
   ".git",
@@ -608,6 +610,9 @@ async function pushCode(extra) {
             "application/json",
 
         },
+
+        timeout:
+          PUSH_TIMEOUT_MS,
 
       });
 

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { TIMEOUTS } = require('../../lib/timeout');
 
 const LLMS_SERVICE_URL = process.env.LLMS_SERVICE_URL || 'http://localhost:8009';
 
@@ -6,6 +7,7 @@ const executePush = async (req, res) => {
   try {
     const upstream = await axios.post(`${LLMS_SERVICE_URL}/api/push/execute`, req.body, {
       validateStatus: () => true,
+      timeout: TIMEOUTS.internal,
     });
 
     return res.status(upstream.status).json(upstream.data);

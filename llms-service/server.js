@@ -1,10 +1,13 @@
 const app = require("./src/app")
+const { applyServerTimeouts } = require("./src/lib/timeout")
 require('dotenv').config({ quiet: true })
 const connectDb = require("./src/lib/mongoDb")
 
 connectDb()
 const PORT = process.env.PORT || 8009
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`LLMs service is running on port ${PORT}`)
 })
+
+applyServerTimeouts(server)

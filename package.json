@@ -1,0 +1,12 @@
+{
+  "name": "bytebin",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -n gateway,llms,client -c cyan,magenta,green \"npm run dev --prefix api-gateway\" \"npm run dev --prefix llms-service\" \"npm run dev --prefix client\"",
+    "start": "concurrently -k -n gateway,llms,client -c cyan,magenta,green \"npm start --prefix api-gateway\" \"npm start --prefix llms-service\" \"npm start --prefix client\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
