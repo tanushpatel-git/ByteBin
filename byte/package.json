@@ -6,5 +6,8 @@
     "byte": "./bin/cli.js"
   },
   "type": "module",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.19.0"
+  }
 }

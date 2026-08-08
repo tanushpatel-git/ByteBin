@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 function withTimeout(ms = 10000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), ms);
@@ -25,22 +27,22 @@ function getProviders() {
 async function callGemini(provider, prompt) {
   const timeout = withTimeout();
   try {
-    const res = await fetch(provider.url, {
-      method: 'POST',
+    const res = await axios.post(provider.url, {
+      contents: [{ parts: [{ text: prompt }] }],
+    }, {
       headers: {
         'Content-Type': 'application/json',
         'x-goog-api-key': provider.key,
       },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-      }),
       signal: timeout.signal,
     });
 
-    if (!res.ok) throw new Error(`${provider.name} error ${res.status}: ${await res.text()}`);
-
-    const data = await res.json();
-    return data.candidates[0].content.parts[0].text.trim();
+    return res.data.candidates[0].content.parts[0].text.trim();
+  } catch (err) {
+    if (err.response) {
+      throw new Error(`${provider.name} error ${err.response.status}: ${JSON.stringify(err.response.data)}`);
+    }
+    throw new Error(`${provider.name} error: ${err.message}`);
   } finally {
     timeout[Symbol.dispose]();
   }
@@ -49,23 +51,23 @@ async function callGemini(provider, prompt) {
 async function callOpenAI(provider, prompt) {
   const timeout = withTimeout();
   try {
-    const res = await fetch(provider.url, {
-      method: 'POST',
+    const res = await axios.post(provider.url, {
+      model: provider.model,
+      messages: [{ role: 'user', content: prompt }],
+    }, {
       headers: {
         Authorization: `Bearer ${provider.key}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        model: provider.model,
-        messages: [{ role: 'user', content: prompt }],
-      }),
       signal: timeout.signal,
     });
 
-    if (!res.ok) throw new Error(`${provider.name} error ${res.status}: ${await res.text()}`);
-
-    const data = await res.json();
-    return data.choices[0].message.content.trim();
+    return res.data.choices[0].message.content.trim();
+  } catch (err) {
+    if (err.response) {
+      throw new Error(`${provider.name} error ${err.response.status}: ${JSON.stringify(err.response.data)}`);
+    }
+    throw new Error(`${provider.name} error: ${err.message}`);
   } finally {
     timeout[Symbol.dispose]();
   }
