@@ -15,6 +15,8 @@ import { execSync } from "node:child_process";
 
 import { homedir } from "node:os";
 
+import axios from "axios";
+
 
 // ===============================
 // Constants
@@ -592,9 +594,13 @@ async function pushCode(extra) {
   try {
 
     const response =
-      await fetch(apiUrl, {
+      await axios.post(apiUrl, {
 
-        method: "POST",
+        files,
+
+        cwd: baseDir,
+
+      }, {
 
         headers: {
 
@@ -603,30 +609,7 @@ async function pushCode(extra) {
 
         },
 
-        body: JSON.stringify({
-
-          files,
-
-          cwd: baseDir,
-
-        }),
-
       });
-
-
-    if (!response.ok) {
-
-      throw new Error(
-
-        `HTTP ${response.status}: ${response.statusText}`
-
-      );
-
-    }
-
-
-    const result =
-      await response.json();
 
 
     console.log(
@@ -642,7 +625,9 @@ async function pushCode(extra) {
     );
 
     console.error(
-      error.message
+      error.response
+        ? `HTTP ${error.response.status}: ${error.response.statusText}`
+        : error.message
     );
 
     process.exit(1);

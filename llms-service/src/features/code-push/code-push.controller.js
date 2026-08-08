@@ -1,9 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const Push = require('../models/Push.model');
-const { generateCommitMessage, generatePRDescription } = require('../lib/code-analysis-models');
+const Push = require('./code-push.model');
+const { generateCommitMessage, generatePRDescription } = require('./code-push.llm');
 
-router.post("/execute", async (req, res) => {
+const executePush = async (req, res) => {
   try {
     const { files, cwd } = req.body;
 
@@ -35,6 +33,6 @@ router.post("/execute", async (req, res) => {
     console.error("Push error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
-});
+};
 
-module.exports = router;
+module.exports = { executePush };
