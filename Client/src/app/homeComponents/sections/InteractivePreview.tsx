@@ -25,24 +25,24 @@ export function InteractivePreview() {
 
         {/* Interactive UI Container */}
         <Reveal delay={0.1}>
-          <div className="relative mx-auto max-w-5xl h-[600px] bg-white rounded-[32px] shadow-[0_40px_100px_rgba(0,0,0,0.05)] border border-[#ECE3D8] overflow-hidden flex flex-col">
+          <div className="relative mx-auto max-w-5xl min-h-[500px] md:h-[600px] bg-white rounded-[24px] md:rounded-[32px] shadow-[0_40px_100px_rgba(0,0,0,0.05)] border border-[#ECE3D8] overflow-hidden flex flex-col">
             {/* Top Bar */}
-            <div className="h-14 border-b border-[#ECE3D8] flex items-center px-4 justify-between bg-white/50 backdrop-blur-sm z-10">
-              <div className="flex gap-2">
+            <div className="h-14 border-b border-[#ECE3D8] flex items-center px-4 justify-between bg-white/50 backdrop-blur-sm z-10 gap-2">
+              <div className="flex gap-2 shrink-0">
                 <div className="w-3 h-3 rounded-full bg-[#ECE3D8]" />
                 <div className="w-3 h-3 rounded-full bg-[#ECE3D8]" />
                 <div className="w-3 h-3 rounded-full bg-[#ECE3D8]" />
               </div>
-              <div className="flex items-center gap-4 bg-[#FBF5EE] px-4 py-1.5 rounded-full border border-[#ECE3D8]">
-                <Search size={14} className="text-[#6B7280]" />
-                <span className="text-[12px] font-medium text-[#6B7280]">bytebin / nextjs-commerce</span>
+              <div className="flex items-center gap-2 sm:gap-4 bg-[#FBF5EE] px-3 sm:px-4 py-1.5 rounded-full border border-[#ECE3D8] max-w-xs truncate">
+                <Search size={14} className="text-[#6B7280] shrink-0" />
+                <span className="text-[11px] sm:text-[12px] font-medium text-[#6B7280] truncate">bytebin / nextjs-commerce</span>
               </div>
-              <div className="w-16" />
+              <div className="w-4 sm:w-16 shrink-0" />
             </div>
 
-            <div className="flex flex-1 overflow-hidden">
+            <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
               {/* Sidebar Tabs */}
-              <div className="w-64 border-r border-[#ECE3D8] bg-[#FBF5EE]/50 p-4 flex flex-col gap-2">
+              <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-[#ECE3D8] bg-[#FBF5EE]/50 p-3 md:p-4 flex md:flex-col gap-1.5 md:gap-2 overflow-x-auto md:overflow-visible shrink-0 no-scrollbar">
                 {[
                   { id: "repo", icon: Folder, label: "Repository Tree" },
                   { id: "commits", icon: GitCommit, label: "Commit History" },
@@ -60,7 +60,7 @@ export function InteractivePreview() {
                       whileTap={{ scale: 0.98 }}
                       transition={{ duration: 0.15 }}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all text-left",
+                        "flex items-center gap-2 md:gap-3 px-3 py-2 rounded-xl text-[12px] md:text-[13px] font-medium transition-all text-left whitespace-nowrap shrink-0 md:shrink",
                         isActive
                           ? "bg-white shadow-sm border border-[#ECE3D8] text-[#18181B]"
                           : "text-[#6B7280] hover:text-[#18181B] hover:bg-white/50"

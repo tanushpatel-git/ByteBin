@@ -131,28 +131,28 @@ export function Hero() {
           {/* Right Floating Product Preview */}
           <m.div
             variants={scaleVariant}
-            className="relative lg:h-[600px] w-full flex items-center justify-center lg:justify-end perspective-1000"
+            className="relative h-[480px] sm:h-[550px] lg:h-[600px] w-full flex items-center justify-center lg:justify-end perspective-1000 overflow-hidden lg:overflow-visible"
           >
-            <div className="relative w-full max-w-[500px] h-full flex flex-col items-center justify-center">
+            <div className="relative w-full max-w-[500px] h-full flex flex-col items-center justify-center scale-[0.82] sm:scale-90 md:scale-100 origin-center">
               
               {/* Terminal Window */}
-              <ParallaxLayer mouseX={mouseX} mouseY={mouseY} movementX={14} movementY={14} className="absolute z-30 top-10 right-0">
+              <ParallaxLayer mouseX={mouseX} mouseY={mouseY} movementX={14} movementY={14} className="absolute z-30 top-4 sm:top-10 right-0 sm:right-2">
                 <Floating duration={8} yOffset={8} delay={0.2} rotation={-1}>
                   <HeroTerminal />
                 </Floating>
               </ParallaxLayer>
 
               {/* Repository Card */}
-              <ParallaxLayer mouseX={mouseX} mouseY={mouseY} movementX={8} movementY={8} className="absolute z-20 top-[40%] -left-4 md:-left-12">
+              <ParallaxLayer mouseX={mouseX} mouseY={mouseY} movementX={8} movementY={8} className="absolute z-20 top-[38%] left-0 sm:-left-6 md:-left-12">
                 <Floating duration={9} yOffset={10} delay={1.5} rotation={1.5}>
                   <HeroRepoCard />
                 </Floating>
               </ParallaxLayer>
 
               {/* Deployment Card */}
-              <ParallaxLayer mouseX={mouseX} mouseY={mouseY} movementX={24} movementY={24} className="absolute z-10 bottom-10 right-4">
+              <ParallaxLayer mouseX={mouseX} mouseY={mouseY} movementX={24} movementY={24} className="absolute z-10 bottom-4 sm:bottom-10 right-2 sm:right-4">
                 <Floating duration={7} yOffset={6} delay={0.8} rotation={-0.5}>
-                  <div className="w-[280px] bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-[#ECE3D8] p-5">
+                  <div className="w-[260px] sm:w-[280px] bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-[#ECE3D8] p-4 sm:p-5">
                     <h3 className="text-[#6B7280] font-medium text-[12px] mb-3 uppercase tracking-wider">Latest Deployment</h3>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="relative flex items-center justify-center w-3 h-3">

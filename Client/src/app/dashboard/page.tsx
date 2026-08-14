@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import {
     Search,
     FolderKanban,
@@ -20,6 +22,7 @@ import {
     Monitor,
     GitBranch,
     Sun,
+    Menu,
 } from "lucide-react";
 
 import { Sidebar } from "./components/Sidebar";
@@ -40,26 +43,36 @@ import {
 } from "./data/dashboard";
 
 export default function Dashboard() {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
     return (
         <div className="flex h-screen bg-[var(--bg-base)] text-[var(--text-main)] font-sans selection:bg-[var(--accent-light)] selection:text-[var(--accent)] overflow-hidden transition-colors duration-300">
             {/* Background Blobs */}
             <div className="fixed top-[-5%] left-[-5%] w-[30%] h-[30%] rounded-full bg-[#FFDCC8]/20 blur-[100px] pointer-events-none" />
             <div className="fixed top-[15%] right-[-5%] w-[30%] h-[30%] rounded-full bg-[var(--accent)]/15 blur-[100px] pointer-events-none" />
 
-            <Sidebar />
+            <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
             <main className="flex-1 flex flex-col h-screen overflow-y-auto overflow-x-hidden scrollbar-hide">
                 {/* Topbar */}
-                <header className="flex items-center justify-between px-8 py-3.5 sticky top-0 bg-[var(--bg-base)]/80 backdrop-blur-xl z-40 border-b border-[var(--border-subtle)]/50 transition-colors duration-300">
-                    <div className="flex-1 max-w-[320px]">
-                        <div className="relative group">
+                <header className="flex items-center justify-between px-4 sm:px-8 py-3.5 sticky top-0 bg-[var(--bg-base)]/80 backdrop-blur-xl z-30 border-b border-[var(--border-subtle)]/50 transition-colors duration-300 gap-2">
+                    <div className="flex items-center gap-2 flex-1 max-w-[400px]">
+                        <button
+                            onClick={() => setSidebarOpen(true)}
+                            className="lg:hidden p-2 rounded-xl text-[var(--text-main)] hover:bg-[var(--bg-card)] border border-[var(--border-subtle)] shrink-0 shadow-sm"
+                            aria-label="Open menu"
+                        >
+                            <Menu className="w-4 h-4" />
+                        </button>
+
+                        <div className="relative group w-full">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[15px] h-[15px] text-[var(--text-muted)] group-focus-within:text-[var(--accent)] transition-colors" />
                             <input
                                 type="text"
                                 placeholder="Search anything..."
                                 className="w-full pl-9 pr-3 py-1.5 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-full text-[13px] outline-none focus:border-[var(--accent)] focus:ring-4 focus:ring-[var(--accent)]/10 transition-all shadow-sm placeholder:text-[var(--text-muted)] text-[var(--text-main)]"
                             />
-                            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-1">
                                 <kbd className="px-1 py-0.5 text-[9px] font-medium text-[var(--text-muted)] bg-[var(--accent-light)] rounded">
                                     ⌘
                                 </kbd>
@@ -70,8 +83,8 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <div className="flex items-center bg-[var(--bg-card)] border border-[var(--border-subtle)] p-0.5 rounded-full shadow-sm">
+                    <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+                        <div className="hidden md:flex items-center bg-[var(--bg-card)] border border-[var(--border-subtle)] p-0.5 rounded-full shadow-sm">
                             <span className="px-2.5 text-[12px] text-[var(--text-muted)]">In:</span>
                             <button className="px-3 py-1 rounded-full bg-[var(--accent-light)] text-[var(--accent)] text-[12px] font-medium transition-all">
                                 All
@@ -109,20 +122,20 @@ export default function Dashboard() {
                 </header>
 
                 {/* Content */}
-                <div className="p-8 max-w-[1400px] w-full mx-auto relative z-10 flex gap-6">
-                    <div className="flex-1 space-y-6">
+                <div className="p-4 sm:p-6 lg:p-8 max-w-[1400px] w-full mx-auto relative z-10 flex flex-col xl:flex-row gap-6">
+                    <div className="flex-1 space-y-6 min-w-0">
                         {/* Header */}
                         <FadeIn yOffset={10} className="mb-2">
-                            <h1 className="text-[36px] font-bold text-[var(--text-main)] tracking-tight leading-tight flex items-center gap-3">
-                                Good morning, Developer! <span className="text-3xl">👋</span>
+                            <h1 className="text-[26px] sm:text-[32px] md:text-[36px] font-bold text-[var(--text-main)] tracking-tight leading-tight flex items-center gap-2 sm:gap-3">
+                                Good morning, Developer! <span className="text-2xl sm:text-3xl">👋</span>
                             </h1>
-                            <p className="text-[15px] text-[var(--text-muted)] mt-1.5 font-medium">
+                            <p className="text-[13px] sm:text-[15px] text-[var(--text-muted)] mt-1.5 font-medium">
                                 Here&apos;s what&apos;s happening with your projects today.
                             </p>
                         </FadeIn>
 
                         {/* Metrics */}
-                        <div className="grid grid-cols-4 gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                             <MetricCard
                                 icon={<FolderKanban className="w-4 h-4 text-[var(--accent)]" />}
                                 title="Repositories"
@@ -157,13 +170,13 @@ export default function Dashboard() {
                             />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                             {/* Deployments Chart */}
                             <FadeIn delay={0.25} className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-sm hover:shadow-[0_8px_30px_rgba(0,0,0,.04)] transition-all duration-300">
                                 <SectionHeader title="Deployments" action="View all" />
                                 <div className="flex items-center justify-between mb-5">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-[var(--accent-light)] flex items-center justify-center">
+                                        <div className="w-10 h-10 rounded-xl bg-[var(--accent-light)] flex items-center justify-center shrink-0">
                                             <svg
                                                 viewBox="0 0 24 24"
                                                 fill="none"
@@ -223,7 +236,7 @@ export default function Dashboard() {
                             </FadeIn>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                             {/* Recent Commits */}
                             <FadeIn delay={0.35} className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-sm hover:shadow-[0_8px_30px_rgba(0,0,0,.04)] transition-all duration-300">
                                 <SectionHeader title="Recent commits" action="View all" />
@@ -231,9 +244,9 @@ export default function Dashboard() {
                                     {recentCommits.map((commit) => (
                                         <div
                                             key={commit.id}
-                                            className="flex items-center justify-between group"
+                                            className="flex items-center justify-between group gap-2"
                                         >
-                                            <div className="flex items-start gap-3">
+                                            <div className="flex items-start gap-3 min-w-0">
                                                 <div className="w-8 h-8 rounded-xl bg-[var(--accent-light)] flex items-center justify-center shrink-0">
                                                     {commit.author.includes("bot") ? (
                                                         <Monitor className="w-3.5 h-3.5 text-[var(--accent)]" />
@@ -241,8 +254,8 @@ export default function Dashboard() {
                                                         <GitCommit className="w-3.5 h-3.5 text-[var(--accent)]" />
                                                     )}
                                                 </div>
-                                                <div>
-                                                    <p className="text-[13px] font-medium text-[var(--text-main)] mb-0.5 group-hover:text-[var(--accent)] transition-colors cursor-pointer line-clamp-1">
+                                                <div className="min-w-0">
+                                                    <p className="text-[13px] font-medium text-[var(--text-main)] mb-0.5 group-hover:text-[var(--accent)] transition-colors cursor-pointer truncate">
                                                         {commit.message}
                                                     </p>
                                                     <div className="flex items-center gap-1.5 text-[11px] text-[var(--text-muted)]">
@@ -252,7 +265,7 @@ export default function Dashboard() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <CheckCircle2 className="w-3.5 h-3.5 text-[var(--success)]" />
+                                            <CheckCircle2 className="w-3.5 h-3.5 text-[var(--success)] shrink-0" />
                                         </div>
                                     ))}
                                 </div>
@@ -293,18 +306,18 @@ export default function Dashboard() {
                         {/* Active Repositories */}
                         <FadeIn delay={0.45} className="mb-8">
                             <SectionHeader title="Active repositories" action="View all" />
-                            <div className="grid grid-cols-4 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                 {activeRepositories.map((repo) => (
                                     <div
                                         key={repo.name}
                                         className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-[16px] p-4 hover:shadow-[0_8px_30px_rgba(0,0,0,.04)] hover:-translate-y-[2px] transition-all duration-300 cursor-pointer"
                                     >
                                         <div className="flex items-center gap-2.5 mb-3">
-                                            <div className="w-7 h-7 rounded-[10px] bg-[var(--accent-light)] flex items-center justify-center text-[10px] font-bold text-[var(--accent)]">
+                                            <div className="w-7 h-7 rounded-[10px] bg-[var(--accent-light)] flex items-center justify-center text-[10px] font-bold text-[var(--accent)] shrink-0">
                                                 BB
                                             </div>
-                                            <div>
-                                                <h4 className="text-[13px] font-semibold text-[var(--text-main)] line-clamp-1">
+                                            <div className="min-w-0">
+                                                <h4 className="text-[13px] font-semibold text-[var(--text-main)] truncate">
                                                     {repo.name}
                                                 </h4>
                                                 <div className="flex items-center gap-1.5 mt-0.5">
@@ -333,8 +346,8 @@ export default function Dashboard() {
                     </div>
 
                     {/* Right Panel */}
-                    <div className="w-[280px] shrink-0 space-y-5">
-                        <FadeIn delay={0.25} xOffset={20} yOffset={0} className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-sm">
+                    <div className="w-full xl:w-[280px] shrink-0 space-y-5 flex flex-col md:flex-row xl:flex-col gap-5 xl:gap-0">
+                        <FadeIn delay={0.25} xOffset={20} yOffset={0} className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-sm flex-1 xl:flex-initial">
                             <div className="flex items-center justify-between mb-4">
                                 <button className="w-7 h-7 flex items-center justify-center rounded-[10px] hover:bg-gray-50 text-[var(--text-main)]">
                                     <ChevronRight className="w-3.5 h-3.5 rotate-180" />
@@ -391,7 +404,7 @@ export default function Dashboard() {
                             </div>
                         </FadeIn>
 
-                        <FadeIn delay={0.35} xOffset={20} yOffset={0} className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-sm">
+                        <FadeIn delay={0.35} xOffset={20} yOffset={0} className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-sm flex-1 xl:flex-initial">
                             <div className="flex items-center justify-between mb-5">
                                 <div className="flex items-center gap-1.5">
                                     <span className="font-semibold text-[var(--text-main)] text-[13px]">Today</span>
@@ -455,3 +468,4 @@ export default function Dashboard() {
         </div>
     );
 }
+
