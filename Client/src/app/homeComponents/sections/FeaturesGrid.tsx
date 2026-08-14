@@ -3,7 +3,7 @@
 import { FolderKanban, Rocket, Zap, Users, GitMerge, BarChart2 } from "lucide-react";
 import { m } from "framer-motion";
 import { SpotlightCard } from "../motion/SpotlightCard";
-import { Reveal } from "../motion/Reveal"; 
+import { Reveal } from "../motion/Reveal";  
 
 export function FeaturesGrid() {
   const features = [
