@@ -3,7 +3,7 @@ const { generateCommitMessage, generatePRDescription } = require('./code-push.ll
 
 const executePush = async (req, res) => {
   try {
-    const { files, cwd } = req.body;
+    const { files, cwd, id } = req.body;
 
     if (!files || Object.keys(files).length === 0) {
       return res.status(400).json({ message: "No files provided" });
@@ -18,12 +18,13 @@ const executePush = async (req, res) => {
     const commitMessage = await generateCommitMessage(files);
     const prDescription = await generatePRDescription(files);
 
-    const push = await Push.create({ files, cwd, commitMessage, prDescription });
+    const push = await Push.create({ files, cwd, pushId: id, commitMessage, prDescription });
 
     return res.status(201).json({
       message: "Code pushed successfully",
       push: {
         id: push._id,
+        pushId: push.pushId,
         commitMessage,
         prDescription,
         fileCount: Object.keys(files).length,

@@ -9,6 +9,10 @@ const pushSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  pushId: {
+    type: String,
+    default: '',
+  },
   commitMessage: {
     type: String,
     default: '',

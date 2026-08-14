@@ -11,6 +11,10 @@ import {
 
 import { join, relative, dirname } from "node:path";
 
+import { createInterface } from "node:readline/promises";
+
+import { stdin, stdout } from "node:process";
+
 import { execSync } from "node:child_process";
 
 import { homedir } from "node:os";
@@ -593,6 +597,36 @@ async function pushCode(extra) {
   );
 
 
+  let pushId = extra.id;
+
+  if (!pushId) {
+
+    const rl = createInterface({
+      input: stdin,
+      output: stdout,
+    });
+
+    pushId = (
+      await rl.question(
+        "Enter a push ID: "
+      )
+    ).trim();
+
+    rl.close();
+
+  }
+
+  if (!pushId) {
+
+    console.error(
+      "Push ID is required."
+    );
+
+    process.exit(1);
+
+  }
+
+
   try {
 
     const response =
@@ -601,6 +635,8 @@ async function pushCode(extra) {
         files,
 
         cwd: baseDir,
+
+        id: pushId,
 
       }, {
 
@@ -695,11 +731,11 @@ function showHelp() {
   console.log("");
 
   console.log(
-    "  push [--api url]"
+    "  push [--id value]"
   );
 
   console.log(
-    "      Push staged files to backend"
+    "      Push staged files to backend (prompts for a push ID)"
   );
 
   console.log("");
