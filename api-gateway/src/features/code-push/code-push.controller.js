@@ -12,11 +12,17 @@ const executePush = async (req, res) => {
 
     return res.status(upstream.status).json(upstream.data);
   } catch (error) {
-    console.error("Push proxy error:", error);
+    console.error("Push proxy error:", error.response ? error.response.data : error.message);
+    
+    // Extract message from the error, if possible
+    const errorMessage = error.response && error.response.data && error.response.data.message
+      ? error.response.data.message
+      : "Internal server error";
+
+    console.log("Push proxy error:", errorMessage);
+    
     return res.status(500).json({ message: "Internal server error" });
   }
 };
 
 module.exports = { executePush };
-
-

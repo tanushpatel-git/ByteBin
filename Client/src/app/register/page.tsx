@@ -24,6 +24,9 @@ const RegisterPage = () => {
   // Form thier the function manage the submit things. Tanstack
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      return;
+    }
     registerMutation.mutate({ name, email, password }); 
   };
 
@@ -720,7 +723,7 @@ const RegisterPage = () => {
                 {/* Create account button */}
                 <button
                   type="submit"
-                  disabled={registerMutation.isPending}
+                  disabled={registerMutation.isPending || !name.trim() || !email.trim() || !password.trim()}
                   className="mt-4 h-[52px] w-full rounded-[18px] bg-[#D3ACFF] text-base font-semibold text-white shadow-[0_20px_40px_rgba(211,172,255,.25)] transition-all hover:bg-[#B888E6] disabled:opacity-60"
                 >
                   {registerMutation.isPending ? "Creating account..." : "Create account"}
