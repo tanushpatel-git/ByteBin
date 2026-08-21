@@ -2,10 +2,13 @@ const forwardAuth = (req, res, next) => {
     const token = req.cookies?.token;
 
     if (token) {
-        req.headers.authorization = `Bearer ${token}`;
+        next();
+    }else{
+        return res.status(400).json({
+            status:400,
+            message:"You are not Authorization
+        });
     }
-
-    next();
 };
 
 module.exports = forwardAuth;
