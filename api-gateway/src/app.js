@@ -4,6 +4,9 @@ const codePush = require('./features/code-push/code-push.route')
 const blogRoutes = require("./features/blog/blog.routes");
 const app = express()
 const cookieParser = require('cookie-parser')
+
+app.use(cookieParser());
+
 // Cors setup 
 app.use(cors({
     origin: process.env.LOCAL_FRONTEND_URL,
@@ -21,10 +24,5 @@ app.use(cookieParser())
 // routers
 app.use('/api/push' , codePush);
 app.use("/api/blogs", blogRoutes);
-
-
-
-
-
 
 module.exports = app
