@@ -76,7 +76,7 @@ const updateblog = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const upstream = await axios.put(
+        const upstream = await axios.patch(
             `${BLOG_SERVICE_URL}/api/blogs/${id}`,
             req.body,
             {

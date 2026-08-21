@@ -6,7 +6,7 @@ const forwardAuth = (req, res, next) => {
     }else{
         return res.status(400).json({
             status:400,
-            message:"You are not Authorization
+            message:"You are not Authorization",
         });
     }
 };

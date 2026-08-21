@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently -k -n gateway,llms -c cyan,magenta \"npm run dev --prefix api-gateway\" \"npm run dev --prefix llms-service\"",
-    "start": "concurrently -k -n gateway,llms -c cyan,magenta \"npm start --prefix api-gateway\" \"npm start --prefix llms-service\""
+    "dev": "concurrently -k -n gateway,llms,blog -c cyan,magenta,yellow \"npm run dev --prefix api-gateway\" \"npm run dev --prefix llms-service\" \"npm run dev --prefix blog-service\"",
+    "start": "concurrently -k -n gateway,llms,blog -c cyan,magenta,yellow \"npm start --prefix api-gateway\" \"npm start --prefix llms-service\" \"npm start --prefix blog-service\""
   },
   "devDependencies": {
     "concurrently": "^9.0.0"

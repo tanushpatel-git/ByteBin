@@ -1,6 +1,6 @@
+require('dotenv').config({ quiet: true })
 const express = require("express")
 const app = require("./src/app")
-require('dotenv').config({ quiet: true })
 
 const PORT = process.env.PORT || 8000
 

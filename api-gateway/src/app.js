@@ -18,11 +18,10 @@ app.use(cors({
 
 // json middleware
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }))
 
 // routers
-app.use('/api/push' , codePush);
+app.use('/api/push', codePush);
 app.use("/api/blogs", blogRoutes);
 
 module.exports = app
