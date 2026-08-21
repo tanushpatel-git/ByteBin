@@ -10,7 +10,7 @@ const createblog = async (req, res) => {
             req.body,
             {
                 headers: {
-                    Authorization: req.headers.authorization,
+                    Authorization: `Bearer ${req.cookies.token}`,
                 },
                 validateStatus: () => true,
             }
@@ -32,7 +32,7 @@ const getblogs = async (req, res) => {
             `${BLOG_SERVICE_URL}/api/blogs`,
             {
                 headers: {
-                    Authorization: req.headers.authorization,
+                    Authorization: `Bearer ${req.cookies.token}`,
                 },
                 validateStatus: () => true,
             }
@@ -56,7 +56,7 @@ const getblog = async (req, res) => {
             `${BLOG_SERVICE_URL}/api/blogs/${id}`,
             {
                 headers: {
-                    Authorization: req.headers.authorization,
+                    Authorization: `Bearer ${req.cookies.token}`,
                 },
                 validateStatus: () => true,
             }
@@ -81,7 +81,7 @@ const updateblog = async (req, res) => {
             req.body,
             {
                 headers: {
-                    Authorization: req.headers.authorization,
+                    Authorization: `Bearer ${req.cookies.token}`,
                 },
                 validateStatus: () => true,
             }
@@ -105,7 +105,7 @@ const deleteblog = async (req, res) => {
             `${BLOG_SERVICE_URL}/api/blogs/${id}`,
             {
                 headers: {
-                    Authorization: req.headers.authorization,
+                    Authorization: `Bearer ${req.cookies.token}`,
                 },
                 validateStatus: () => true,
             }
