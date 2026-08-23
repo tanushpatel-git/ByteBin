@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const codePush = require('./features/code-push/code-push.route')
 const blogRoutes = require("./features/blog/blog.routes");
+const commentRoutes = require("./features/comments/comment.routes");
 const app = express()
 const cookieParser = require('cookie-parser')
 
@@ -18,11 +19,11 @@ app.use(cors({
 
 // json middleware
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }))
 
 // routers
-app.use('/api/push' , codePush);
+app.use('/api/push', codePush);
 app.use("/api/blogs", blogRoutes);
+app.use("/api/comments", commentRoutes);
 
 module.exports = app
