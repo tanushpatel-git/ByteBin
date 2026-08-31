@@ -1,6 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import api from "@/lib/axios";
+
+export function useUser() {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: () => api.get("/api/me").then((res) => res.data.user),
+    retry: false,
+  });
+}
 
 export function useLoginMutation() {
   const router = useRouter();
@@ -31,3 +39,4 @@ export function useRegisterMutation() {
     },
   });
 }
+

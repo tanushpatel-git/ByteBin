@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const blogsApi = axios.create({
-  baseURL: "/api/blog",
+  baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8008"}/api/blogs`,
   timeout: 15000,
   headers: {
     "Content-Type": "application/json",
@@ -47,6 +47,25 @@ export interface BlogsResponse {
   message?: string;
 }
 
+export interface Comment {
+  _id: string;
+  blog: string;
+  author: {
+    _id: string;
+    name: string;
+  } | null;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CommentsResponse {
+  success: boolean;
+  comments: Comment[];
+  nextCursor?: string | null;
+  hasMore: boolean;
+}
+
 export const getBlogs = async (): Promise<BlogsResponse> => {
   const response = await blogsApi.get("/");
   return response.data;
@@ -69,6 +88,61 @@ export const updateBlog = async (id: string, data: UpdateBlogData): Promise<Blog
 
 export const deleteBlog = async (id: string): Promise<BlogsResponse> => {
   const response = await blogsApi.delete(`/${id}`);
+  return response.data;
+};
+
+// Comments APIs
+export const getComments = async (
+  blogId: string,
+  cursor?: string
+): Promise<CommentsResponse> => {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8008"}/api/comments/${blogId}`,
+    {
+      params: { cursor },
+      withCredentials: true,
+    }
+  );
+  return response.data;
+};
+
+export const createComment = async (
+  blogId: string,
+  content: string
+): Promise<{ success: boolean; comment: Comment }> => {
+  const response = await axios.post(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8008"}/api/comments/${blogId}`,
+    { content },
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+};
+
+export const updateComment = async (
+  commentId: string,
+  content: string
+): Promise<{ success: boolean; comment: Comment }> => {
+  const response = await axios.patch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8008"}/api/comments/${commentId}`,
+    { content },
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+};
+
+export const deleteComment = async (
+  commentId: string
+): Promise<{ success: boolean }> => {
+  const response = await axios.delete(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8008"}/api/comments/${commentId}`,
+    {
+      withCredentials: true,
+    }
+  );
   return response.data;
 };
 

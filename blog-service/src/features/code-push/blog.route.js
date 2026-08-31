@@ -1,6 +1,6 @@
 const blogcontroller = require("./blog.controller");
 const { Router } = require("express");
-const authMiddleware=require("./auth.middleware")
+const authMiddleware = require("./auth.middleware")
 const router = Router();
 
 router.post("/", authMiddleware, blogcontroller.createblog);
