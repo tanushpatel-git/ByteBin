@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { useLoader } from "./useLoader";
 import { Preloader } from "./Preloader";
 import { LazyMotion, domAnimation } from "framer-motion";
@@ -15,7 +16,7 @@ const LoaderContext = createContext<LoaderContextType | undefined>(undefined);
 export function useLoaderContext() {
   const context = useContext(LoaderContext);
   if (!context) {
-    throw new Error("useLoaderContext must be used within a LoaderProvider");
+    return { isLoaderComplete: true, shouldUnmountLoader: true };
   }
   return context;
 }
@@ -25,7 +26,13 @@ interface LoaderProviderProps {
 }
 
 export function LoaderProvider({ children }: LoaderProviderProps) {
-  const loaderState = useLoader(3500); // 3.5s total duration
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+  const loaderState = useLoader(isHomePage ? 3500 : 0);
+
+  if (!isHomePage) {
+    return <>{children}</>;
+  }
 
   return (
     <LoaderContext.Provider value={loaderState}>
@@ -41,3 +48,4 @@ export function LoaderProvider({ children }: LoaderProviderProps) {
     </LoaderContext.Provider>
   );
 }
+
