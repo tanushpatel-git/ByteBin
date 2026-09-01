@@ -4,6 +4,7 @@ import Image from "next/image";
 import {
     Activity,
     Bell,
+    BookOpen,
     ChevronRight,
     FolderKanban,
     Rocket,

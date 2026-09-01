@@ -48,3 +48,22 @@
     color: var(--text-main);
   }
 }
+
+/* ─── Blog Card Hover Labels ──────────────────────────────────────────── */
+/* Index number: hidden below, slides up on hover */
+.blog-card .blog-card__index {
+  transform: translateY(110%);
+  transition: transform 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.blog-card:hover .blog-card__index {
+  transform: translateY(0%);
+}
+
+/* Author label: hidden above, slides down on hover */
+.blog-card .blog-card__author {
+  transform: translateY(-110%);
+  transition: transform 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.blog-card:hover .blog-card__author {
+  transform: translateY(0%);
+}

@@ -3,12 +3,11 @@ const axios = require("axios");
 const BLOG_SERVICE_URL =
     process.env.BLOG_SERVICE_URL || "http://localhost:8010";
 
-
-
-const createblog = async (req, res) => {
+const createComment = async (req, res) => {
     try {
+        const { blogId } = req.params;
         const upstream = await axios.post(
-            `${BLOG_SERVICE_URL}/api/blogs`,
+            `${BLOG_SERVICE_URL}/api/comments/${blogId}`,
             req.body,
             {
                 headers: {
@@ -20,7 +19,7 @@ const createblog = async (req, res) => {
 
         return res.status(upstream.status).json(upstream.data);
     } catch (error) {
-        console.error("Blog create proxy error:", error);
+        console.error("Comment create proxy error:", error);
 
         return res.status(500).json({
             success: false,
@@ -29,11 +28,13 @@ const createblog = async (req, res) => {
     }
 };
 
-const getblogs = async (req, res) => {
+const getComments = async (req, res) => {
     try {
+        const { blogId } = req.params;
         const upstream = await axios.get(
-            `${BLOG_SERVICE_URL}/api/blogs`,
+            `${BLOG_SERVICE_URL}/api/comments/${blogId}`,
             {
+                params: req.query,
                 headers: {
                     Authorization: `Bearer ${req.cookies.token}`,
                 },
@@ -43,7 +44,7 @@ const getblogs = async (req, res) => {
 
         return res.status(upstream.status).json(upstream.data);
     } catch (error) {
-        console.error("Blog get proxy error:", error);
+        console.error("Comment get proxy error:", error);
 
         return res.status(500).json({
             success: false,
@@ -52,36 +53,11 @@ const getblogs = async (req, res) => {
     }
 };
 
-const getblog = async (req, res) => {
+const updateComment = async (req, res) => {
     try {
-        const { id } = req.params;
-        const upstream = await axios.get(
-            `${BLOG_SERVICE_URL}/api/blogs/${id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${req.cookies.token}`,
-                },
-                validateStatus: () => true,
-            }
-        );
-
-        return res.status(upstream.status).json(upstream.data);
-    } catch (error) {
-        console.error("Blog get proxy error:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error",
-        });
-    }
-};
-
-const updateblog = async (req, res) => {
-    try {
-        const { id } = req.params;
-
+        const { commentId } = req.params;
         const upstream = await axios.patch(
-            `${BLOG_SERVICE_URL}/api/blogs/${id}`,
+            `${BLOG_SERVICE_URL}/api/comments/${commentId}`,
             req.body,
             {
                 headers: {
@@ -93,7 +69,7 @@ const updateblog = async (req, res) => {
 
         return res.status(upstream.status).json(upstream.data);
     } catch (error) {
-        console.error("Blog update proxy error:", error);
+        console.error("Comment update proxy error:", error);
 
         return res.status(500).json({
             success: false,
@@ -102,11 +78,11 @@ const updateblog = async (req, res) => {
     }
 };
 
-const deleteblog = async (req, res) => {
+const deleteComment = async (req, res) => {
     try {
-        const { id } = req.params;
-            const upstream = await axios.delete(
-            `${BLOG_SERVICE_URL}/api/blogs/${id}`,
+        const { commentId } = req.params;
+        const upstream = await axios.delete(
+            `${BLOG_SERVICE_URL}/api/comments/${commentId}`,
             {
                 headers: {
                     Authorization: `Bearer ${req.cookies.token}`,
@@ -117,7 +93,7 @@ const deleteblog = async (req, res) => {
 
         return res.status(upstream.status).json(upstream.data);
     } catch (error) {
-        console.error("Blog delete proxy error:", error);
+        console.error("Comment delete proxy error:", error);
 
         return res.status(500).json({
             success: false,
@@ -127,9 +103,8 @@ const deleteblog = async (req, res) => {
 };
 
 module.exports = {
-    createblog,
-    getblogs,
-    getblog,
-    updateblog,
-    deleteblog,
+    createComment,
+    getComments,
+    updateComment,
+    deleteComment,
 };

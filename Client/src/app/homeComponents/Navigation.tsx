@@ -23,7 +23,7 @@ export function Navigation() {
     { name: "Solutions", href: "#" },
     { name: "Pricing", href: "#" },
     { name: "Docs", href: "#" },
-    { name: "Blog", href: "#" },
+    { name: "Blog", href: "/blog" },
   ];
 
   return (

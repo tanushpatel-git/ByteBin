@@ -9,12 +9,12 @@ const {
     deleteblog,
 } = require("./blog.controller");
 
-const forwardAuth = require("./forwardAuth");
 
-router.post("/", forwardAuth, createblog);
-router.get("/", forwardAuth, getblogs);
-router.get("/:id", forwardAuth, getblog);
-router.patch("/:id", forwardAuth, updateblog);
-router.delete("/:id", forwardAuth, deleteblog);
 
-module.exports = router;
+router.post("/", createblog);      // no need for authentication 
+router.get("/", getblogs);           // no need for authentication
+router.get("/:id", getblog);           // no need for authentication
+router.patch("/:id", updateblog);       // need for authentication
+router.delete("/:id", deleteblog);     // need for authentication
+
+module.exports = router;     
