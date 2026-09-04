@@ -29,6 +29,9 @@ import axios from "axios";
 const DEFAULT_API_URL =
   "http://localhost:8008/api/push/execute";
 
+const DEFAULT_UPDATE_URL =
+  "http://localhost:8008/api/update/execute";
+
 const DEFAULT_FRONTEND_URL =
   "http://localhost:3000";
 
@@ -453,7 +456,15 @@ function addCommand(paths) {
 // Push Code
 // ===============================
 
-async function pushCode(extra) {
+async function pushCode(extra, positional) {
+
+  const pathParts = (positional[0] || "")
+    .split("/")
+    .map(p => p.trim())
+    .filter(Boolean);
+
+  const mainFileName = pathParts[1] || null;
+  const subFileName = pathParts[2] || null;
 
   const stagingPath =
     getStagingPath();
@@ -634,9 +645,13 @@ async function pushCode(extra) {
 
         files,
 
-        cwd: baseDir,
+        cwd: baseDir, 
 
-        id: pushId,
+        userId: pushId,
+
+        mainFileName,
+
+        subFileName,
 
       }, {
 
@@ -663,6 +678,247 @@ async function pushCode(extra) {
 
     console.error(
       "Push failed:"
+    );
+
+    console.error(
+      error.response
+        ? `HTTP ${error.response.status}: ${error.response.statusText}`
+        : error.message
+    );
+
+    process.exit(1);
+
+  }
+
+}
+
+
+// ===============================
+// Update Code
+// ===============================
+
+async function updateCode(extra, positional) {
+
+  const pathParts = (positional[0] || "")
+    .split("/")
+    .map(p => p.trim())
+    .filter(Boolean);
+
+  const mainFileName = pathParts[1] || null;
+  const subFileName = pathParts[2] || null;
+
+  const stagingPath =
+    getStagingPath();
+
+  if (
+    !existsSync(stagingPath)
+  ) {
+
+    console.error(
+      "No files staged."
+    );
+
+    console.error(
+      "Run 'byte add .' to stage all files, or 'byte add <path>' to stage specific files."
+    );
+
+    process.exit(1);
+
+  }
+
+  const staging =
+    readJson(stagingPath);
+
+  if (
+    !staging ||
+    !Array.isArray(
+      staging.files
+    ) ||
+    staging.files.length === 0
+  ) {
+
+    console.error(
+      "No files staged."
+    );
+
+    console.error(
+      "Run 'byte add .' to stage all files."
+    );
+
+    process.exit(1);
+
+  }
+
+
+  const config =
+    loadConfig();
+
+  const apiUrl =
+
+    extra.api ||
+
+    process.env.BYTE_API ||
+
+    config.apiUrl ||
+
+    DEFAULT_UPDATE_URL;
+
+
+  const baseDir =
+    process.cwd();
+
+  console.log(
+    `Updating code from:\n${baseDir}`
+  );
+
+  console.log(
+    `API: ${apiUrl}`
+  );
+
+
+  const files = {};
+
+  for (const filePath of
+    staging.files
+  ) {
+
+    const fullPath =
+      join(baseDir, filePath);
+
+    if (
+      !existsSync(fullPath)
+    ) {
+
+      console.warn(
+        `Warning: '${filePath}' no longer exists, skipping`
+      );
+
+      continue;
+
+    }
+
+    try {
+
+      const stats =
+        statSync(fullPath);
+
+      if (
+        stats.size >
+        MAX_FILE_SIZE_BYTES
+      ) {
+
+        console.warn(
+          `Warning: '${filePath}' exceeds size limit, skipping`
+        );
+
+        continue;
+
+      }
+
+      files[filePath] =
+        readFileSync(
+          fullPath,
+          "utf8"
+        );
+
+    } catch {
+
+      console.warn(
+        `Warning: '${filePath}' is not readable, skipping`
+      );
+
+    }
+
+  }
+
+  const fileCount =
+    Object.keys(files).length;
+
+  if (fileCount === 0) {
+
+    console.log(
+      "No files to update."
+    );
+
+    return;
+
+  }
+
+  console.log(
+    `Updating ${fileCount} file(s)`
+  );
+
+
+  let userId = extra.id;
+
+  if (!userId) {
+
+    const rl = createInterface({
+      input: stdin,
+      output: stdout,
+    });
+
+    userId = (
+      await rl.question(
+        "Enter a user ID: "
+      )
+    ).trim();
+
+    rl.close();
+
+  }
+
+  if (!userId) {
+
+    console.error(
+      "User ID is required."
+    );
+
+    process.exit(1);
+
+  }
+
+
+  try {
+
+    const response =
+      await axios.put(apiUrl, {
+
+        files,
+
+        cwd: baseDir, 
+
+        userId,
+
+        mainFileName,
+
+        subFileName,
+
+      }, {
+
+        headers: {
+
+          "Content-Type":
+            "application/json",
+
+        },
+
+        timeout:
+          PUSH_TIMEOUT_MS,
+
+      });
+
+
+    console.log(
+      "Update successful"
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Update failed:"
     );
 
     console.error(
@@ -715,7 +971,7 @@ function showHelp() {
   );
 
   console.log(
-    "      Stage all project files"
+    "    Stage all project files"
   );
 
   console.log("");
@@ -736,6 +992,16 @@ function showHelp() {
 
   console.log(
     "      Push staged files to backend (prompts for a push ID)"
+  );
+
+  console.log("");
+
+  console.log(
+    "  update [--id value]"
+  );
+
+  console.log(
+    "      Update staged files on backend (prompts for a user ID)"
   );
 
   console.log("");
@@ -762,6 +1028,10 @@ function showHelp() {
 
   console.log(
     "  byte push --api http://localhost:5000/api/push/execute"
+  );
+
+  console.log(
+    "  byte update Bytebin/project-alpha --id 507f1f77bcf86cd1862439011"
   );
 
   console.log("");
@@ -823,7 +1093,18 @@ switch (command) {
   case "push":
 
     await pushCode(
-      extra
+      extra,
+      positional
+    );
+
+    break;
+
+
+  case "update":
+
+    await updateCode(
+      extra,
+      positional
     );
 
     break;

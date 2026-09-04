@@ -1,0 +1,8 @@
+{
+  "files": [
+    ".gitignore",
+    "bin/cli.js",
+    "package-lock.json",
+    "package.json"
+  ]
+}
