@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { executePush } = require('./code-push.controller');
-const { validatePush } = require('./code-push.middleware');
+const { executeUpdate } = require('./code-update.controller');
+const { validateUpdate } = require('./code-update.middleware');
 
 /**
  * @openapi
- * /api/push/execute:
- *   post:
+ * /api/update/execute:
+ *   put:
  *     tags: [Code]
- *     summary: Push code to a repo
- *     description: Pushes a full set of files to a repo (or sub file) and generates a commit message and PR description via LLM. Replaces the stored files for the repo/sub file.
+ *     summary: Update code in a repo
+ *     description: Updates files, cwd, commitMessage, or prDescription on a repo (or sub file). If files are provided and no commitMessage/prDescription is supplied, they are generated via LLM.
  *     requestBody:
  *       required: true
  *       content:
@@ -17,7 +17,7 @@ const { validatePush } = require('./code-push.middleware');
  *           schema:
  *             type: object
  *             required:
- *               - files
+ *               - mainFileName
  *             properties:
  *               userId:
  *                 type: string
@@ -26,29 +26,33 @@ const { validatePush } = require('./code-push.middleware');
  *               id:
  *                 type: string
  *                 description: MongoDB ObjectId of the repo owner (alternative to userId)
- *               files:
- *                 type: object
- *                 additionalProperties:
- *                   type: string
- *                 description: Map of relative file path to file content
- *                 example:
- *                   src/index.js: console.log('hi')
- *                   package.json: "{}"
- *               cwd:
- *                 type: string
- *                 description: Working directory (used to derive mainFileName when not provided)
- *                 example: /repos/Bytebin/project-alpha
  *               mainFileName:
  *                 type: string
  *                 description: Name of the main repo/file
  *                 example: project-alpha
  *               subFileName:
  *                 type: string
- *                 description: Name of the sub file to push to (optional)
+ *                 description: Name of the sub file to update (optional)
  *                 example: src
+ *               files:
+ *                 type: object
+ *                 additionalProperties:
+ *                   type: string
+ *                 description: Map of relative file path to file content
+ *               cwd:
+ *                 type: string
+ *                 description: Working directory
+ *                 example: /repos/Bytebin/project-alpha
+ *               commitMessage:
+ *                 type: string
+ *                 description: Commit message (generated via LLM if omitted and files provided)
+ *                 example: "fix: update configurations"
+ *               prDescription:
+ *                 type: string
+ *                 description: PR description (generated via LLM if omitted and files provided)
  *     responses:
- *       201:
- *         description: Code pushed successfully
+ *       200:
+ *         description: Code updated successfully
  *         content:
  *           application/json:
  *             schema:
@@ -56,22 +60,24 @@ const { validatePush } = require('./code-push.middleware');
  *               properties:
  *                 message:
  *                   type: string
- *                 push:
+ *                 update:
  *                   type: object
  *                   properties:
  *                     commitMessage:
  *                       type: string
+ *                       nullable: true
  *                     prDescription:
  *                       type: string
+ *                       nullable: true
  *                     fileCount:
  *                       type: integer
  *       400:
- *         description: Validation failed (missing/invalid user id or files)
+ *         description: Validation failed (missing user id, mainFileName, files, or nothing to update)
  *       404:
  *         description: Repo or sub file not found
  *       500:
  *         description: Internal Server Error
  */
-router.post("/execute", validatePush, executePush);
+router.put('/execute', validateUpdate, executeUpdate);
 
 module.exports = router;

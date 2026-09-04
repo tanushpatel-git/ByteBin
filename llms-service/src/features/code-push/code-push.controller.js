@@ -1,30 +1,63 @@
-const Push = require('./code-push.model');
 const { generateCommitMessage, generatePRDescription } = require('./code-push.llm');
+const RepoDesign = require('../../model/repoDesign.model');
 
 const executePush = async (req, res) => {
   try {
-    const { files, cwd, id } = req.body;
+    const { userId, id, files, cwd, mainFileName: main, subFileName: sub } = req.body;
+    const ownerId = userId || id;
+    const mainFileName = main ?? (cwd ? cwd.split('/')[1] : '');
+    const subFileName = sub ?? undefined;
 
-    if (!files || Object.keys(files).length === 0) {
-      return res.status(400).json({ message: "No files provided" });
+    let commitMessage = 'Update code files';
+    let prDescription = 'Automated code push.';
+
+    try {
+      commitMessage = (await generateCommitMessage(files)) || commitMessage;
+      prDescription = (await generatePRDescription(files)) || prDescription;
+    } catch (llmError) {
+      console.error('[Push] LLM unavailable, using fallback text:', llmError.message);
     }
 
-    for (const [path, content] of Object.entries(files)) {
-      if (typeof content !== 'string') {
-        return res.status(400).json({ message: `Invalid content for file: ${path}` });
-      }
+    let repo;
+    let missing;
+
+    if (subFileName) {
+      repo = await RepoDesign.findOneAndUpdate(
+        { ownerId, main_url: mainFileName, 'collections_files.sub_url': subFileName },
+        {
+          $set: {
+            'collections_files.$.files': files,
+            'collections_files.$.cwd': cwd || '',
+            'collections_files.$.commitMessage': commitMessage,
+            'collections_files.$.prDescription': prDescription,
+          }
+        },
+        { new: true }
+      );
+      missing = `Repo not found for main file: ${mainFileName} and sub file: ${subFileName}`;
+    } else {
+      repo = await RepoDesign.findOneAndUpdate(
+        { ownerId, main_url: mainFileName },
+        {
+          $set: {
+            files,
+            cwd: cwd || '',
+            commitMessage,
+            prDescription,
+          }
+        },
+        { new: true }
+      );
+      missing = `Repo not found for main file: ${mainFileName}`;
     }
 
-    const commitMessage = await generateCommitMessage(files);
-    const prDescription = await generatePRDescription(files);
-
-    const push = await Push.create({ files, cwd, pushId: id, commitMessage, prDescription });
+    if (!repo) {
+      return res.status(404).json({ message: missing });
+    }
 
     return res.status(201).json({
       message: "Code pushed successfully",
       push: {
-        id: push._id,
-        pushId: push.pushId,
         commitMessage,
         prDescription,
         fileCount: Object.keys(files).length,
