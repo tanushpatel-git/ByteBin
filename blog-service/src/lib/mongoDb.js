@@ -1,4 +1,3 @@
-const dns = require("dns")
 const mongoose = require("mongoose");
 const connectDb = async () => {
     try {
@@ -6,7 +5,6 @@ const connectDb = async () => {
         if (!url) {
             console.log("want url");
         }
-        dns.setServers(["8.8.8.8", "1.1.1.1"]);
         await mongoose.connect(url);
         console.log("connectmongodb")
     }
