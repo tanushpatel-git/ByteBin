@@ -18,8 +18,8 @@ const staggerContainer: Variants = {
 
 const itemVariant: Variants = {
   hidden: { opacity: 0, y: -10 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { type: "spring", stiffness: 300, damping: 24 }
   },
@@ -57,7 +57,7 @@ export function Navigation() {
     { name: "Solutions", href: "#" },
     { name: "Pricing", href: "#" },
     { name: "Docs", href: "#" },
-    { name: "Blog", href: "#" },
+    { name: "Blog", href: "/blog" },
   ];
 
   return (
