@@ -1,4 +1,5 @@
-import { Sparkles } from "lucide-react";
+import { ArrowRight, Play, Sparkles } from "lucide-react";
+import Button from "./Button";
 
 export default function Hero() {
   return (
@@ -25,6 +26,17 @@ export default function Hero() {
           <br className="hidden sm:block" />
           and get more done — all in one place.
         </p>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <Button>
+            Get Started Free <ArrowRight size={14} />
+          </Button>
+
+          <Button variant="outline">
+            <Play size={14} fill="currentColor" />
+            Watch Demo
+          </Button>
+        </div>
       </div>
     </section>
   );
