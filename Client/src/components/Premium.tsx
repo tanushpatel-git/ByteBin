@@ -12,6 +12,11 @@ export default function Premium() {
             <br />
             With Our Advanced Features.
           </h2>
+
+          <p className="mt-3 max-w-sm text-[11px] leading-5 text-[#78819e]">
+            Get more control, more insights, and more productivity with our
+            premium plan.
+          </p>
         </div>
       </div>
     </section>
