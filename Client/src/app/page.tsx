@@ -1,3 +1,6 @@
+import Hero from "@/components/Hero";
+import Navbar from "@/components/Navbar";
+
 export default function Page() {
   return (
     <div className="min-h-screen overflow-x-clip bg-white text-[#101d4d]">
@@ -16,7 +19,10 @@ export default function Page() {
         >
           <div className="absolute inset-0 bg-white/30" />
         </div>
-        <div className="relative z-10"></div>
+        <div className="relative z-10">
+          <Navbar />
+          <Hero />
+        </div>
       </div>
     </div>
   );
