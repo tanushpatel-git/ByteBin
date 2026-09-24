@@ -3,16 +3,22 @@ const testimonials = [
     quote:
       "TaskGo has completely transformed how our team works. It's simple, powerful and super easy to use!",
     name: "Sarah Johnson",
+    role: "Product Manager",
+    image: "https://i.pravatar.cc/100?img=47",
   },
   {
     quote:
       "The best task management tool we've used. The collaboration features are outstanding!",
     name: "Michael Chen",
+    role: "Engineering Lead",
+    image: "https://i.pravatar.cc/100?img=12",
   },
   {
     quote:
       "Clean interface, great features, and excellent support. TaskGo is a game changer for our team.",
     name: "Emily Carter",
+    role: "Marketing Director",
+    image: "https://i.pravatar.cc/100?img=32",
   },
 ];
 
@@ -44,9 +50,26 @@ export default function Testimonials() {
                 {testimonial.quote}
               </p>
 
-              <p className="mt-4 text-[9px] font-bold text-[#182557]">
-                {testimonial.name}
-              </p>
+              <div className="mt-4 flex items-center gap-2">
+                <img
+                  src={testimonial.image}
+                  className="h-8 w-8 rounded-full"
+                  alt=""
+                />
+
+                <div>
+                  <p className="text-[9px] font-bold text-[#182557]">
+                    {testimonial.name}
+                  </p>
+                  <p className="text-[8px] text-[#8991ad]">
+                    {testimonial.role}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-2 text-[9px] tracking-widest text-[#ffb83d]">
+                ★★★★★
+              </div>
             </div>
           ))}
         </div>
