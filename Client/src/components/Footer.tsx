@@ -37,6 +37,16 @@ export default function Footer() {
             ))}
           </div>
         </div>
+
+        <div className="flex flex-col items-center justify-between gap-3 pt-4 text-[8px] text-[#8a91aa] md:flex-row">
+          <p>© 2025 TaskGo. All rights reserved.</p>
+
+          <div className="flex gap-5">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
       </div>
     </footer>
   );
