@@ -67,7 +67,7 @@ export default function Navbar() {
   return (
     <header
       id="navbar"
-      className="fixed left-0 top-0 z-20 w-full transition-transform duration-300"
+      className="fixed left-0 top-0 z-20 w-full border-b border-white/40 bg-white/30 backdrop-blur-md shadow-sm transition-transform duration-300"
     >
       <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between px-6">
         <Logo />
