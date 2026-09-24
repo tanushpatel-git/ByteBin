@@ -29,7 +29,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="relative -mt-200 z-10 bg-white">
+      <div className="relative -mt-250 z-10 bg-white">
         <Features />
         <Premium />
         <CTA />
