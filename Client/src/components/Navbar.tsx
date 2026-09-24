@@ -21,7 +21,25 @@ export default function Navbar() {
       header.style.transform = "translateY(0)";
     };
 
+    let lastScrollY = window.scrollY;
+
+    const handleNativeScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        hide();
+      } else if (currentScrollY < lastScrollY) {
+        show();
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleNativeScroll, { passive: true });
+
     const detachLenis = onLenis((lenis) => {
+      window.removeEventListener("scroll", handleNativeScroll);
+
       const handleLenisScroll = () => {
         if (lenis.direction === 1 && lenis.scroll > 100) {
           hide();
@@ -34,11 +52,15 @@ export default function Navbar() {
 
       return () => {
         lenis.off("scroll", handleLenisScroll);
+        window.addEventListener("scroll", handleNativeScroll, {
+          passive: true,
+        });
       };
     });
 
     return () => {
       detachLenis();
+      window.removeEventListener("scroll", handleNativeScroll);
     };
   }, []);
 
