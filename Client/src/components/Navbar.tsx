@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowRight, Menu } from "lucide-react";
 import Button from "./Button";
 import Logo from "./Logo";
@@ -6,7 +8,10 @@ const navLinks = ["Home", "Features", "Pricing", "About", "Blog"];
 
 export default function Navbar() {
   return (
-    <header className="relative z-20">
+    <header
+      id="navbar"
+      className="fixed left-0 top-0 z-20 w-full transition-transform duration-300"
+    >
       <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between px-6">
         <Logo />
 
