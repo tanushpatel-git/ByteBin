@@ -1,3 +1,5 @@
+import { ArrowRight } from "lucide-react";
+
 export default function CTA() {
   return (
     <section className="px-6 py-4">
@@ -14,7 +16,16 @@ export default function CTA() {
           </p>
         </div>
 
-        <div className="relative text-center"></div>
+        <div className="relative text-center">
+          <button className="flex items-center gap-2 rounded-full bg-white px-7 py-3 text-[10px] font-bold text-[#5c4ee7]">
+            Get Started Free
+            <ArrowRight size={12} />
+          </button>
+
+          <p className="mt-2 text-[8px] text-white/70">
+            No credit card required.
+          </p>
+        </div>
       </div>
     </section>
   );
