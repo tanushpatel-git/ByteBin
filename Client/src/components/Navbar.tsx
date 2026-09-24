@@ -12,7 +12,16 @@ export default function Navbar() {
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
-      lastScrollY = window.scrollY;
+      const currentScrollY = window.scrollY;
+      const header = document.getElementById("navbar");
+
+      if (!header) return;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        header.style.transform = "translateY(-100%)";
+      }
+
+      lastScrollY = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
