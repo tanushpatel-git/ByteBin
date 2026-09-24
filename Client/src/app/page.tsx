@@ -23,8 +23,8 @@ export default function Page() {
         >
           <div className="absolute inset-0 bg-white/30" />
         </div>
+        <Navbar />
         <div className="relative z-10">
-          <Navbar />
           <Hero />
         </div>
       </div>
