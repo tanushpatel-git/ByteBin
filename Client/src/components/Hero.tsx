@@ -11,6 +11,14 @@ export default function Hero() {
           <Sparkles size={13} />
           Work Smarter, Not Harder
         </div>
+
+        <h1 className="text-4xl font-extrabold leading-[1.1] tracking-[-1.5px] text-[#122052] sm:text-5xl md:text-[52px]">
+          Simplify Task Management
+          <br />
+          <span className="bg-gradient-to-r from-[#6251ed] to-[#7657f5] bg-clip-text text-transparent">
+            Boost Productivity
+          </span>
+        </h1>
       </div>
     </section>
   );
