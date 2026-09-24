@@ -7,6 +7,12 @@ export default function Features() {
           <br />
           Seamless Task Management
         </h2>
+
+        <p className="mx-auto mt-2 max-w-lg text-[12px] leading-5 text-[#78819f]">
+          Powerful features designed to help you stay organized,
+          <br />
+          collaborate better, and achieve more.
+        </p>
       </div>
     </section>
   );
