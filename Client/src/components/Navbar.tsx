@@ -1,4 +1,5 @@
-import { Menu } from "lucide-react";
+import { ArrowRight, Menu } from "lucide-react";
+import Button from "./Button";
 import Logo from "./Logo";
 
 const navLinks = ["Home", "Features", "Pricing", "About", "Blog"];
@@ -24,6 +25,15 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
+
+        <div className="hidden items-center gap-5 md:flex">
+          <button className="text-[12px] font-medium text-[#273463]">
+            Login
+          </button>
+          <Button>
+            Get Started Free <ArrowRight size={14} />
+          </Button>
+        </div>
 
         <button className="md:hidden">
           <Menu />
