@@ -1,16 +1,103 @@
+"use client";
+
 import { ArrowRight, Play, Sparkles } from "lucide-react";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "./Button";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const avatars = [47, 12, 32, 5];
 
 export default function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
   const dashboardWrapperRef = useRef<HTMLDivElement>(null);
   const dashboardRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const hero = heroRef.current;
+    const wrapper = dashboardWrapperRef.current;
+    const dashboard = dashboardRef.current;
+
+    if (!hero || !wrapper || !dashboard) return;
+
+    const ctx = gsap.context(() => {
+      /*
+       * Pin the dashboard wrapper for its FULL scroll range so the next
+       * section arrives the moment the pin releases (no dead gap).
+       */
+      ScrollTrigger.create({
+        trigger: wrapper,
+        start: "top 20%",
+        end: "bottom bottom",
+        pin: true,
+        pinSpacing: true,
+      });
+
+      gsap.fromTo(
+        dashboard,
+        {
+          scale: 1,
+          y: 0,
+        },
+        {
+          scale: () => {
+            const viewportWidth = window.innerWidth;
+
+            if (viewportWidth < 640) {
+              return 1.05;
+            }
+
+            if (viewportWidth < 1024) {
+              return 1.18;
+            }
+
+            return 1.35;
+          },
+
+          y: -100,
+
+          ease: "none",
+
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top 20%",
+            end: "top -80%",
+            scrub: 1.5,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        dashboard,
+        {
+          boxShadow: "0px 30px 80px rgba(93,81,230,0.20)",
+        },
+        {
+          boxShadow: "0px 45px 120px rgba(93,81,230,0.28)",
+
+          ease: "none",
+
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top 20%",
+            end: "top -60%",
+            scrub: 1.5,
+          },
+        }
+      );
+    }, hero);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
 
   return (
     <section
       id="home"
+      ref={heroRef}
       className="relative px-6 pt-10 text-center"
     >
       <div className="mx-auto max-w-4xl">
