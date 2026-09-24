@@ -1,9 +1,13 @@
 import { ArrowRight, Play, Sparkles } from "lucide-react";
+import { useRef } from "react";
 import Button from "./Button";
 
 const avatars = [47, 12, 32, 5];
 
 export default function Hero() {
+  const dashboardWrapperRef = useRef<HTMLDivElement>(null);
+  const dashboardRef = useRef<HTMLDivElement>(null);
+
   return (
     <section
       id="home"
@@ -53,6 +57,20 @@ export default function Hero() {
           </div>
           <span className="text-[11px] text-[#69749b]">
             Trusted by 10,000+ teams worldwide
+          </span>
+        </div>
+      </div>
+
+      <div
+        ref={dashboardWrapperRef}
+        className="relative mx-auto mt-16 h-[200vh] w-full max-w-[1400px]"
+      >
+        <div
+          ref={dashboardRef}
+          className="relative mx-auto flex h-[550px] w-full max-w-[1000px] items-center justify-center overflow-hidden rounded-2xl border border-white bg-gradient-to-br from-[#e8e6ff] to-[#fafaff] shadow-[0_30px_80px_rgba(93,81,230,0.20)] will-change-transform"
+        >
+          <span className="text-[14px] font-semibold text-[#8a92ac]">
+            Tanush Gonna be Place the image here in future.
           </span>
         </div>
       </div>
