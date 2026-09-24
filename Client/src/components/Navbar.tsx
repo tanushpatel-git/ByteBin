@@ -9,18 +9,26 @@ const navLinks = ["Home", "Features", "Pricing", "About", "Blog"];
 
 export default function Navbar() {
   useEffect(() => {
+    const header = document.getElementById("navbar");
+    if (!header) return;
+
+    const hide = () => {
+      header.style.transform = "translateY(-100%)";
+    };
+
+    const show = () => {
+      header.style.transform = "translateY(0)";
+    };
+
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const header = document.getElementById("navbar");
-
-      if (!header) return;
 
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        header.style.transform = "translateY(-100%)";
-      } else {
-        header.style.transform = "translateY(0)";
+        hide();
+      } else if (currentScrollY < lastScrollY) {
+        show();
       }
 
       lastScrollY = currentScrollY;
