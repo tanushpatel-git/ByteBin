@@ -1,5 +1,6 @@
 import CTA from "@/components/CTA";
 import Features from "@/components/Features";
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Premium from "@/components/Premium";
@@ -34,6 +35,7 @@ export default function Page() {
         <Premium />
         <Testimonials />
         <CTA />
+        <Footer />
       </div>
     </div>
   );
