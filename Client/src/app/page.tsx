@@ -1,5 +1,7 @@
+import Features from "@/components/Features";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
+import Premium from "@/components/Premium";
 
 export default function Page() {
   return (
@@ -23,6 +25,11 @@ export default function Page() {
           <Navbar />
           <Hero />
         </div>
+      </div>
+
+      <div className="relative -mt-200 z-10 bg-white">
+        <Features />
+        <Premium />
       </div>
     </div>
   );
