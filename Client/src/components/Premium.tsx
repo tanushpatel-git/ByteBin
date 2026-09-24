@@ -1,3 +1,5 @@
+import { ArrowRight, Zap } from "lucide-react";
+
 export default function Premium() {
   return (
     <section className="px-6 py-8">
@@ -17,6 +19,27 @@ export default function Premium() {
             Get more control, more insights, and more productivity with our
             premium plan.
           </p>
+
+          <button className="mt-5 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#6252ef] to-[#7658f6] px-5 py-3 text-[10px] font-bold text-white shadow-lg shadow-[#6252ef]/20">
+            Explore Premium Plans
+            <ArrowRight size={13} />
+          </button>
+        </div>
+
+        <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+          <div className="rounded-lg border border-white bg-white p-4 shadow-sm">
+            <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#eeedff] text-[#6456ed]">
+              <Zap size={14} />
+            </div>
+
+            <h3 className="text-[10px] font-bold text-[#182557]">
+              Advanced Analytics
+            </h3>
+
+            <p className="mt-1 text-[8px] leading-4 text-[#8991ac]">
+              Get detailed reports and productivity insights.
+            </p>
+          </div>
         </div>
       </div>
     </section>
