@@ -1,5 +1,12 @@
 import Logo from "./Logo";
 
+const socialLinks = [
+  { label: "in", ariaLabel: "LinkedIn" },
+  { label: "𝕏", ariaLabel: "Twitter" },
+  { label: "◎", ariaLabel: "Instagram" },
+  { label: "▶", ariaLabel: "YouTube" },
+];
+
 const footerLinks = ["Home", "Features", "Pricing", "About", "Blog"];
 
 export default function Footer() {
@@ -16,6 +23,19 @@ export default function Footer() {
               </a>
             ))}
           </nav>
+
+          <div className="flex items-center gap-2">
+            {socialLinks.map((social) => (
+              <a
+                key={social.ariaLabel}
+                href="#"
+                aria-label={social.ariaLabel}
+                className="flex h-6 w-6 items-center justify-center rounded-full border border-[#e3e5ef] text-[8px] font-bold text-[#65708f] transition hover:border-[#6657ee] hover:text-[#6657ee]"
+              >
+                {social.label}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
