@@ -3,8 +3,9 @@
 import { ArrowRight, Menu } from "lucide-react";
 import { useEffect } from "react";
 import { onLenis } from "@/lib/lenis";
-import Button from "./Button";
-import Logo from "./Logo";
+import Button from "@/components/atoms/Button";
+import Logo from "@/components/atoms/Logo";
+import NavLinks from "@/components/molecules/NavLinks";
 
 const navLinks = ["Home", "Features", "Pricing", "About", "Blog"];
 
@@ -72,21 +73,7 @@ export default function Navbar() {
       <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between px-6">
         <Logo />
 
-        <nav className="hidden items-center gap-9 md:flex">
-          {navLinks.map((item, index) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className={`relative text-[12px] font-medium ${index === 0 ? "text-[#5d50ed]" : "text-[#273463]"
-                }`}
-            >
-              {item}
-              {index === 0 && (
-                <span className="absolute -bottom-4 left-0 h-[2px] w-full bg-[#6556f3]" />
-              )}
-            </a>
-          ))}
-        </nav>
+        <NavLinks links={navLinks} activeIndex={0} />
 
         <div className="hidden items-center gap-5 md:flex">
           <button className="text-[12px] font-medium text-[#273463]">

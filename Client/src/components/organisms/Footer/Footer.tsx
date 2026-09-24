@@ -1,4 +1,6 @@
-import Logo from "./Logo";
+import Logo from "@/components/atoms/Logo";
+import NavLinks from "@/components/molecules/NavLinks";
+import SocialLinks from "@/components/molecules/SocialLinks";
 
 const socialLinks = [
   { label: "in", ariaLabel: "LinkedIn" },
@@ -16,26 +18,9 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-5 border-b border-[#eceef5] pb-5 md:flex-row">
           <Logo />
 
-          <nav className="flex gap-7 text-[9px] text-[#65708f]">
-            {footerLinks.map((link) => (
-              <a key={link} href={`#${link.toLowerCase()}`}>
-                {link}
-              </a>
-            ))}
-          </nav>
+          <NavLinks links={footerLinks} variant="footer" />
 
-          <div className="flex items-center gap-2">
-            {socialLinks.map((social) => (
-              <a
-                key={social.ariaLabel}
-                href="#"
-                aria-label={social.ariaLabel}
-                className="flex h-6 w-6 items-center justify-center rounded-full border border-[#e3e5ef] text-[8px] font-bold text-[#65708f] transition hover:border-[#6657ee] hover:text-[#6657ee]"
-              >
-                {social.label}
-              </a>
-            ))}
-          </div>
+          <SocialLinks links={socialLinks} />
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 pt-4 text-[8px] text-[#8a91aa] md:flex-row">

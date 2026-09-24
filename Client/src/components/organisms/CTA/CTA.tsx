@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Button from "@/components/atoms/Button";
 
 export default function CTA() {
   return (
@@ -17,10 +18,10 @@ export default function CTA() {
         </div>
 
         <div className="relative text-center">
-          <button className="flex items-center gap-2 rounded-full bg-white px-7 py-3 text-[10px] font-bold text-[#5c4ee7]">
+          <Button variant="light">
             Get Started Free
             <ArrowRight size={12} />
-          </button>
+          </Button>
 
           <p className="mt-2 text-[8px] text-white/70">
             No credit card required.

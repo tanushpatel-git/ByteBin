@@ -4,11 +4,11 @@ import { ArrowRight, Play, Sparkles } from "lucide-react";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Button from "./Button";
+import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
+import AvatarStack from "@/components/molecules/AvatarStack";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const avatars = [47, 12, 32, 5];
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -101,10 +101,10 @@ export default function Hero() {
       className="relative px-6 pt-[112px] text-center"
     >
       <div className="mx-auto max-w-4xl">
-        <div className="mx-auto mb-5 flex w-fit items-center gap-2 rounded-full bg-[#f0efff] px-4 py-2 text-[11px] font-semibold text-[#6254eb]">
+        <Badge className="mx-auto mb-5">
           <Sparkles size={13} />
           Work Smarter, Not Harder
-        </div>
+        </Badge>
 
         <h1 className="text-4xl font-extrabold leading-[1.1] tracking-[-1.5px] text-[#122052] sm:text-5xl md:text-[52px]">
           Simplify Task Management
@@ -132,16 +132,7 @@ export default function Hero() {
         </div>
 
         <div className="mt-5 flex items-center justify-center gap-3">
-          <div className="flex -space-x-2">
-            {avatars.map((id) => (
-              <img
-                key={id}
-                src={`https://i.pravatar.cc/60?img=${id}`}
-                className="h-7 w-7 rounded-full border-2 border-white"
-                alt=""
-              />
-            ))}
-          </div>
+          <AvatarStack />
           <span className="text-[11px] text-[#69749b]">
             Trusted by 10,000+ teams worldwide
           </span>
