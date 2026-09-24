@@ -1,12 +1,24 @@
 "use client";
 
 import { ArrowRight, Menu } from "lucide-react";
+import { useEffect } from "react";
 import Button from "./Button";
 import Logo from "./Logo";
 
 const navLinks = ["Home", "Features", "Pricing", "About", "Blog"];
 
 export default function Navbar() {
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      lastScrollY = window.scrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header
       id="navbar"
