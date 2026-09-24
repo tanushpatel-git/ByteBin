@@ -5,7 +5,6 @@ import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { registerLenis, unregisterLenis } from "@/lib/lenis";
-import { registerLenis, unregisterLenis } from "@/lib/lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,8 +27,6 @@ export default function SmoothScroll({
     };
 
     registerLenis(lenis);
-
-registerLenis(lenis);
 
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
