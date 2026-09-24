@@ -2,6 +2,7 @@
 
 import { ArrowRight, Menu } from "lucide-react";
 import { useEffect } from "react";
+import { onLenis } from "@/lib/lenis";
 import Button from "./Button";
 import Logo from "./Logo";
 
@@ -20,22 +21,25 @@ export default function Navbar() {
       header.style.transform = "translateY(0)";
     };
 
-    let lastScrollY = window.scrollY;
+    const detachLenis = onLenis((lenis) => {
+      const handleLenisScroll = () => {
+        if (lenis.direction === 1 && lenis.scroll > 100) {
+          hide();
+        } else if (lenis.direction === -1) {
+          show();
+        }
+      };
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      lenis.on("scroll", handleLenisScroll);
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        hide();
-      } else if (currentScrollY < lastScrollY) {
-        show();
-      }
+      return () => {
+        lenis.off("scroll", handleLenisScroll);
+      };
+    });
 
-      lastScrollY = currentScrollY;
+    return () => {
+      detachLenis();
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
