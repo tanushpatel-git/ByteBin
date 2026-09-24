@@ -1,6 +1,8 @@
 import { ArrowRight, Play, Sparkles } from "lucide-react";
 import Button from "./Button";
 
+const avatars = [47, 12, 32, 5];
+
 export default function Hero() {
   return (
     <section
@@ -36,6 +38,22 @@ export default function Hero() {
             <Play size={14} fill="currentColor" />
             Watch Demo
           </Button>
+        </div>
+
+        <div className="mt-5 flex items-center justify-center gap-3">
+          <div className="flex -space-x-2">
+            {avatars.map((id) => (
+              <img
+                key={id}
+                src={`https://i.pravatar.cc/60?img=${id}`}
+                className="h-7 w-7 rounded-full border-2 border-white"
+                alt=""
+              />
+            ))}
+          </div>
+          <span className="text-[11px] text-[#69749b]">
+            Trusted by 10,000+ teams worldwide
+          </span>
         </div>
       </div>
     </section>
