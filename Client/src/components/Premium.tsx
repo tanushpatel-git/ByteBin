@@ -1,4 +1,44 @@
-import { ArrowRight, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  Bell,
+  Cloud,
+  Settings,
+  Sparkles,
+  Zap,
+} from "lucide-react";
+
+const premiumFeatures = [
+  {
+    icon: Zap,
+    title: "Advanced Analytics",
+    description: "Get detailed reports and productivity insights.",
+  },
+  {
+    icon: Sparkles,
+    title: "Automations",
+    description: "Save time with smart workflows.",
+  },
+  {
+    icon: Cloud,
+    title: "File & Document Management",
+    description: "Store and share files easily and securely.",
+  },
+  {
+    icon: Settings,
+    title: "Custom Workspaces",
+    description: "Create spaces for different projects and teams.",
+  },
+  {
+    icon: Bell,
+    title: "Priority Support",
+    description: "Get help when you need it, 24/7.",
+  },
+  {
+    icon: Sparkles,
+    title: "Integrations",
+    description: "Connect with your favorite tools and apps.",
+  },
+];
 
 export default function Premium() {
   return (
@@ -27,19 +67,28 @@ export default function Premium() {
         </div>
 
         <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-          <div className="rounded-lg border border-white bg-white p-4 shadow-sm">
-            <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#eeedff] text-[#6456ed]">
-              <Zap size={14} />
-            </div>
+          {premiumFeatures.map((feature) => {
+            const Icon = feature.icon;
 
-            <h3 className="text-[10px] font-bold text-[#182557]">
-              Advanced Analytics
-            </h3>
+            return (
+              <div
+                key={feature.title}
+                className="rounded-lg border border-white bg-white p-4 shadow-sm"
+              >
+                <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#eeedff] text-[#6456ed]">
+                  <Icon size={14} />
+                </div>
 
-            <p className="mt-1 text-[8px] leading-4 text-[#8991ac]">
-              Get detailed reports and productivity insights.
-            </p>
-          </div>
+                <h3 className="text-[10px] font-bold text-[#182557]">
+                  {feature.title}
+                </h3>
+
+                <p className="mt-1 text-[8px] leading-4 text-[#8991ac]">
+                  {feature.description}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
