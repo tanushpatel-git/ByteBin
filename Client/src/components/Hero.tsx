@@ -19,6 +19,12 @@ export default function Hero() {
             Boost Productivity
           </span>
         </h1>
+
+        <p className="mx-auto mt-4 max-w-xl text-[14px] leading-6 text-[#68739b]">
+          TaskGo helps you organize your work, collaborate with your team
+          <br className="hidden sm:block" />
+          and get more done — all in one place.
+        </p>
       </div>
     </section>
   );
