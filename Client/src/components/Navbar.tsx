@@ -19,6 +19,8 @@ export default function Navbar() {
 
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         header.style.transform = "translateY(-100%)";
+      } else {
+        header.style.transform = "translateY(0)";
       }
 
       lastScrollY = currentScrollY;
