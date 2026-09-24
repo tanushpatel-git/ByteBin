@@ -1,7 +1,9 @@
+import CTA from "@/components/CTA";
 import Features from "@/components/Features";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Premium from "@/components/Premium";
+import Testimonials from "@/components/Testimonials";
 
 export default function Page() {
   return (
@@ -30,6 +32,8 @@ export default function Page() {
       <div className="relative -mt-200 z-10 bg-white">
         <Features />
         <Premium />
+        <Testimonials />
+        <CTA />
       </div>
     </div>
   );
