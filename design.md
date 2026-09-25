@@ -56,3 +56,11 @@ Use CSS custom properties in `client/src/app/globals.css` as the implementation 
 
 Write in a friendly, direct maker voice. Describe ByteBin as a practical set of tools for working with repositories, code updates, AI assistance, and publishing. Avoid generic productivity claims, inflated promises, and filler marketing language.
 
+## Implementation map
+
+- Homepage composition: `client/src/components/templates/HomeTemplate/HomeTemplate.tsx`
+- Theme tokens, typography, responsive layout, and component styling: `client/src/app/globals.css`
+- Root metadata and font setup: `client/src/app/layout.tsx`
+- Public assets: `client/public/assets/`
+
+When extending the site, update this guide if the palette, typography, interaction patterns, or brand direction materially changes.
