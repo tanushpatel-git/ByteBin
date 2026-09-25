@@ -1,29 +1,28 @@
-# ByteBin visual design
+# ByteBin website design
 
-This file is the source of truth for the ByteBin website theme. The homepage is inspired by the supplied Susan Kare portfolio screenshot: a sky-blue backdrop, bold editorial typography, tiny desktop-style details, pixel motifs, and warm paper sections. Carry the visual language forward without copying the reference's identity or exact layout.
+This guide defines the current ByteBin homepage visual system and interaction patterns. The page follows the supplied developer-platform reference: a warm light canvas, bold navy display type, bright lime accents, lavender UI panels, and compact product interface previews. It keeps ByteBin's identity and product story.
 
-## Brand character
+## Brand direction
 
-- **Playful, resourceful, maker-first.** ByteBin should feel like a small independent toolbox made by people who enjoy making things.
-- **Editorial, not corporate.** Use strong statements, concise copy, asymmetry, and generous breathing room.
-- **Retro computer details, modern usability.** Pixel-inspired motifs and window chrome can decorate the interface; navigation and controls remain clear and accessible.
+- **Clear, capable, and maker-friendly.** Explain useful code tools in plain language.
+- **Bold but approachable.** Use expressive headings and vivid accents, balanced with calm surfaces and readable body text.
+- **Product first.** Show the repo, code, and review workflow directly in interface previews.
 
-## Palette
+## Color tokens
 
 | Token | Value | Use |
 | --- | --- | --- |
-| Sky | `#ACD8EA` | Primary canvas and hero |
-| Ink | `#121719` | Main text, rules, and high-contrast controls |
-| Paper | `#F2EFE6` | Editorial story panels |
-| Soft paper | `#E8E5DA` | Tool list backgrounds |
-| Blue | `#83C5DF` | Interface highlights |
-| Coral | `#E45E3B` | Emphasis and small status accents |
-| Pixel gold | `#E9B83F` | Decorative pixel art |
-| Preview peach | `#F3D9C8` | Workspace preview panel |
-| Muted | `#52636A` | Supporting text |
+| Warm canvas | `#FBFAF5` | Main page background |
+| Navy ink | `#091D43` | Headings, controls, and primary text |
+| Lime | `#D7FF35` | Primary actions and emphasis |
+| Lavender | `#E9E3FF` | Workflow panels and soft UI backgrounds |
+| Purple | `#7658F6` | AI details and secondary accents |
+| Coral | `#FF9079` | Feature-card variation |
+| Preview navy | `#071A3B` | Code editor preview |
+| Warm white | `#FFFEFA` | Card and interface surfaces |
+| Muted slate | `#617089` | Supporting copy and metadata |
 
-Use CSS custom properties in `client/src/app/globals.css` as the implementation tokens. Keep large color fields calm; reserve coral and gold for small emphasis.
-
+Tokens and page-level styling live in `client/src/app/landing.css`; global resets live in `client/src/app/globals.css`.
 ## Type and hierarchy
 
 - Use the existing Geist Sans / Geist Mono fonts where practical, with system sans fallbacks.
