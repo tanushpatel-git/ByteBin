@@ -134,6 +134,14 @@ export default function HomeTemplate() {
         <p className="drawer-footnote">GO MAKE SOMETHING GOOD. <span>✳</span></p>
       </motion.nav>}
       </AnimatePresence>
+      <header className="bb-nav">
+        <a className="bb-mark" href="#home" aria-label="ByteBin home"><span>BB</span> BYTEBIN</a>
+        <nav aria-label="Main navigation">
+          <a href="#tools">THE TOOLKIT</a><a href="#story">OUR IDEA</a><a href="#updates">UPDATES</a>
+        </nav>
+        <a className="bb-nav-cta" href="#tools">OPEN THE TOOLKIT <ArrowUpRight size={14} /></a>
+      </header>
+
     </main>
   );
 }
