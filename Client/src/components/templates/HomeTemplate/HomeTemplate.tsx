@@ -71,5 +71,14 @@ export default function HomeTemplate() {
     return () => context.revert();
   }, [reduceMotion]);
 
+  const closeMenu = () => {
+    const detachLenis = onLenis((lenis) => {
+      lenis.start();
+      return () => {};
+    });
+    detachLenis();
+    setMenuOpen(false);
+  };
+
   return <main className="bb-page" id="home" />;
 }
