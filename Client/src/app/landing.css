@@ -65,3 +65,9 @@
 .lm-watch-link { display: inline-flex; align-items: center; gap: 9px; color: var(--lm-ink); font-size: 11px; font-weight: 700; }
 .lm-watch-link > span { width: 31px; height: 31px; display: grid; place-items: center; border: 1px solid #b8c1ce; border-radius: 50%; transition: background .2s, color .2s; }
 .lm-watch-link:hover > span { background: var(--lm-ink); color: white; }
+.lm-hero-proof { display: flex; align-items: center; gap: 11px; margin-top: 21px; }
+.lm-proof-dots { display: flex; padding-left: 3px; }
+.lm-proof-dots span { width: 25px; height: 25px; display: grid; place-items: center; margin-left: -3px; border: 2px solid var(--lm-bg); border-radius: 50%; background: #c5b4ff; color: var(--lm-ink); font-size: 7px; font-weight: 900; }
+.lm-proof-dots span:nth-child(2) { background: #ffba9f; }.lm-proof-dots span:nth-child(3) { background: #b4dfff; }.lm-proof-dots span:nth-child(4) { background: var(--lm-ink); color: white; }
+.lm-hero-proof p { margin: 0; color: var(--lm-muted); font-size: 10px; }
+
