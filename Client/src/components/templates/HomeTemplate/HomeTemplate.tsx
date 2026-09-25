@@ -158,7 +158,7 @@ export default function HomeTemplate() {
             <div className="bb-window-main">
               <div className="bb-window-heading"><div><small>YOUR WORKSPACE</small><h2>Good things<br />are in progress.</h2></div><span className="pixel-star">✳</span></div>
               <div className="repo-card"><div className="repo-icon"><GitBranch size={16} /></div><div><strong>little-project</strong><small>main · updated just now</small></div><span className="repo-live">● LIVE</span></div>
-              <div className="code-card"><div className="code-top"><span><Terminal size={13} /> quick-push.js</span><span>•••</span></div><pre><code><i>01</i> <b>const</b> idea = <em>&quot;something good&quot;</em>;<br /><i>02</i> <b>await</b> bytebin.push(idea);<br /><i>03</i> <label>// ship it, see what happens</label></code></pre></div>
+              <div className="code-card"><div className="code-top"><span><Terminal size={13} /> quick-push.js</span><span>•••</span></div><pre><code><i>01</i> <b>const</b> idea = <em>&quot;something good&quot;</em>;<br /><i>02</i> <b>await</b> bytebin.push(idea);<br /><i>03</i> <label>{"// ship it, see what happens"}</label></code></pre></div>
               <div className="window-footer"><span>✦ &nbsp; READY WHEN YOU ARE</span><span>⌘ K</span></div>
             </div>
           </div>
