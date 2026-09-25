@@ -1,9 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowDownRight, ArrowUpRight, Code2, GitBranch, Menu, Terminal, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { onLenis } from "@/lib/lenis";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDownRight, ArrowUpRight, Code2, GitBranch, Terminal } from "lucide-react";
+import { useRef } from "react";
+import Header from "@/components/organisms/Landing/Header";
 
 const tools = ["REPO EXPLORER", "CODE PUSH", "AI ASSIST", "BLOG ENGINE"];
 
@@ -23,82 +23,13 @@ function Reveal({ children, className = "", delay = 0 }: { children: React.React
 }
 
 export default function HomeTemplate() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [showFloatNav, setShowFloatNav] = useState(false);
   const reduceMotion = useReducedMotion();
   const previewStageRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
 
-  const closeMenu = () => {
-    const detachLenis = onLenis((lenis) => {
-      lenis.start();
-      return () => {};
-    });
-    detachLenis();
-    setMenuOpen(false);
-  };
-
-  useEffect(() => {
-    const updateFloatNav = () => {
-      const shouldShow = window.scrollY >= 100;
-      setShowFloatNav(shouldShow);
-      if (!shouldShow) setMenuOpen(false);
-    };
-
-    updateFloatNav();
-    window.addEventListener("scroll", updateFloatNav, { passive: true });
-    return () => window.removeEventListener("scroll", updateFloatNav);
-  }, []);
-
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
-    };
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", closeOnEscape);
-    const detachLenis = onLenis((lenis) => {
-      lenis.stop();
-      return () => lenis.start();
-    });
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", closeOnEscape);
-      detachLenis();
-    };
-  }, [menuOpen]);
-
   return (
     <main className="bb-page" id="home">
-      <div className={`bb-float-nav${showFloatNav ? " is-visible" : ""}${menuOpen ? " is-menu-open" : ""}`}>
-        <button className="bb-menu-button" type="button" aria-label={menuOpen ? "Close page navigation" : "Open page navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <X size={17} /> : <Menu size={17} />}
-        </button>
-      </div>
-      <AnimatePresence>
-      {menuOpen && <motion.div key="menu-backdrop" className="bb-drawer-backdrop" aria-hidden="true" onClick={() => setMenuOpen(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.28 }} />}
-      {menuOpen && <motion.nav key="menu-drawer" className="bb-menu-drawer" aria-label="Quick navigation" aria-modal="true" role="dialog" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={reduceMotion ? { duration: 0 } : { duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
-        <div className="drawer-topline"><a className="bb-mark" href="#home" onClick={closeMenu}><span>BB</span> BYTEBIN</a><span>MENU / 01</span></div>
-        <p className="drawer-kicker">A LITTLE DIRECTION</p>
-        <h2>WHERE TO<br />NEXT<span>?</span></h2>
-        <div className="drawer-links">
-          <a href="#home" onClick={closeMenu}><span>01</span> HOME <ArrowUpRight size={18}/></a>
-          <a href="#story" onClick={closeMenu}><span>02</span> OUR IDEA <ArrowUpRight size={18}/></a>
-          <a href="#tools" onClick={closeMenu}><span>03</span> THE TOOLKIT <ArrowUpRight size={18}/></a>
-          <a href="#updates" onClick={closeMenu}><span>04</span> A NOTE TO MAKERS <ArrowUpRight size={18}/></a>
-        </div>
-        <p className="drawer-footnote">GO MAKE SOMETHING GOOD. <span>✳</span></p>
-      </motion.nav>}
-      </AnimatePresence>
-      <header className="bb-nav">
-        <a className="bb-mark" href="#home" aria-label="ByteBin home"><span>BB</span> BYTEBIN</a>
-        <nav aria-label="Main navigation">
-          <a href="#tools">THE TOOLKIT</a><a href="#story">OUR IDEA</a><a href="#updates">UPDATES</a>
-        </nav>
-        <a className="bb-nav-cta" href="#tools">OPEN THE TOOLKIT <ArrowUpRight size={14} /></a>
-      </header>
+      <Header />
 
       <section className="bb-hero" aria-labelledby="hero-title">
         <motion.div className="bb-hero-copy" initial={reduceMotion ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={reduceMotion ? { duration: 0 } : { duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>
