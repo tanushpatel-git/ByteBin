@@ -19,7 +19,7 @@ export default function SmoothScroll({
     const lenis = new Lenis({
       duration: 0.85,
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
     });
 
     lenis.on("scroll", ScrollTrigger.update);
