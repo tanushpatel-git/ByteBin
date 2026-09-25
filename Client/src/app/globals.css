@@ -16,3 +16,4 @@
 @media(max-width:800px){.bb-preview-stage{height:65vh;min-height:480px}}
 @media(max-width:500px){.bb-preview-stage{height:58vh;min-height:420px}}
 @media(min-width:801px){.bb-hero{padding-left:7vw;padding-right:7vw}.bb-window{width:min(100%,1050px)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
