@@ -112,5 +112,13 @@ export default function HomeTemplate() {
     };
   }, [menuOpen]);
 
-  return <main className="bb-page" id="home" />;
+  return (
+    <main className="bb-page" id="home">
+      <div className={`bb-float-nav${showFloatNav ? " is-visible" : ""}${menuOpen ? " is-menu-open" : ""}`}>
+        <button className="bb-menu-button" type="button" aria-label={menuOpen ? "Close page navigation" : "Open page navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <X size={17} /> : <Menu size={17} />}
+        </button>
+      </div>
+    </main>
+  );
 }
