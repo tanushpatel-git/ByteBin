@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TaskGo",
-  description: "Task management made simple",
+  title: "ByteBin — Make Code Move",
+  description: "A friendly toolbox for finding, changing, and sharing code.",
 };
 
 export default function RootLayout({
