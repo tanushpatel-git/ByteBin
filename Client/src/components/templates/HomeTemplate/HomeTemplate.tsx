@@ -181,6 +181,8 @@ export default function HomeTemplate() {
         <Reveal><div className="tools-heading"><div><span className="section-number">02 / THE TOOLKIT</span><h2>A FEW GOOD<br />WAYS TO <span>GET THERE.</span></h2></div><p>Pick up the tool you need. Put your attention back on the idea.</p></div></Reveal>
         <div className="tool-list">{tools.map((tool, i) => <motion.a className="tool-row" href="#updates" key={tool} initial={reduceMotion ? false : { opacity: 0, x: -14 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.5 }} transition={reduceMotion ? { duration: 0 } : { duration: 0.4, delay: i * 0.05 }}><span className="tool-index">0{i + 1}</span><strong>{tool}</strong><span className="tool-note">{["Find your way around a repository.", "Send code changes without the ceremony.", "Get a hand when the blank page bites.", "Share what you’ve been making."][i]}</span><ArrowUpRight className="tool-arrow" size={18} /></motion.a>)}</div>
       </section>
+
+      <section className="bb-note" id="updates"><Reveal className="note-content"><div className="note-stamp">A NOTE<br />TO MAKERS</div><div><span className="section-number">03 / A FRIENDLY REMINDER</span><h2>“IT DOESN’T<br />HAVE TO BE<br /><span>PERFECT.</span>”</h2><p>Make the thing. Share the thing. Learn a thing. Then do it again.</p></div></Reveal><div className="note-doodle" aria-hidden="true">✳<small>MAKE<br />SOMETHING</small></div></section>
     </main>
   );
 }
