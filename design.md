@@ -41,3 +41,18 @@ Use CSS custom properties in `client/src/app/globals.css` as the implementation 
 - Pixel art should be CSS-built or vector/simple glyph decoration where possible. Keep it sparse and away from critical text.
 - On small screens, stack columns, preserve generous spacing, and make every navigation item and action usable without hover.
 
+## Interaction and accessibility
+
+- Use native links for navigation and meaningful section targets.
+- Maintain strong contrast for body text and controls against blue and paper surfaces.
+- Provide visible keyboard focus styles when adding custom interactive elements.
+- Respect `prefers-reduced-motion`; avoid motion that is required to understand content.
+- Use Framer Motion for brief, one-time content reveals and the navigation drawer. Keep travel distances small and disable entrance movement when reduced motion is requested.
+- Use Lenis for smooth wheel scrolling and anchor navigation while leaving touch scrolling native. Do not initialize it when reduced motion is requested, and pause it while the navigation drawer is open.
+- Keep the hero copy and workspace preview centered on the same page axis. Begin the preview scroll sequence when its top reaches about 40% of the viewport. First expand it to 80% of viewport height while it moves upward; then continue its upward movement on its own. Skip the sequence for reduced-motion users.
+- Decorative motifs must be hidden from assistive technology. Avoid communicating state through color alone.
+
+## Content direction
+
+Write in a friendly, direct maker voice. Describe ByteBin as a practical set of tools for working with repositories, code updates, AI assistance, and publishing. Avoid generic productivity claims, inflated promises, and filler marketing language.
+
