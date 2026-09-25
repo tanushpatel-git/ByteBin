@@ -23,43 +23,56 @@ This guide defines the current ByteBin homepage visual system and interaction pa
 | Muted slate | `#617089` | Supporting copy and metadata |
 
 Tokens and page-level styling live in `client/src/app/landing.css`; global resets live in `client/src/app/globals.css`.
-## Type and hierarchy
 
-- Use the existing Geist Sans / Geist Mono fonts where practical, with system sans fallbacks.
-- Display headlines are uppercase, very bold, tightly tracked, and set on short lines. Use `clamp()` so their size responds to the viewport.
-- Use the mono face for navigation, section labels, metadata, status indicators, and tiny interface labels. Keep these labels readable and avoid using all caps for body copy.
-- Body copy should be short, conversational, and comfortably line-spaced.
+## Typography
 
-## Layout and components
+- Use Geist Sans for body copy and interface labels.
+- Use a heavy condensed system fallback for the large uppercase display headings.
+- Keep headlines short and broken into deliberate lines. Scale them responsively with `clamp()`.
+- Keep paragraph measure moderate and line height generous. Use small labels sparingly for section markers and metadata.
 
-- Favor open page-width sections, a restrained content width, and thin ink rules over rounded cards and gradients.
-- Build an editorial rhythm: blue hero, warm paper story, muted toolkit list, and a final note panel.
-- Product previews may use a framed desktop window, subtle rotation, and a crisp offset shadow. Keep preview text illustrative and non-interactive unless it represents a real control.
-- Tool rows should have a clear title, short explanatory text, and a visible hover/focus affordance.
-- Keep page navigation available after scrolling 100px with the fixed top-right menu. Open navigation as a full-height drawer that slides in from the right, dims the page behind it, and closes by the close button, backdrop, Escape, or link selection.
-- Pixel art should be CSS-built or vector/simple glyph decoration where possible. Keep it sparse and away from critical text.
-- On small screens, stack columns, preserve generous spacing, and make every navigation item and action usable without hover.
+## Page structure
+
+The homepage is composed from focused section components in `client/src/components/organisms/Landing/`, assembled by `client/src/components/templates/HomeTemplate/HomeTemplate.tsx`:
+
+1. Sticky navigation with a compact mobile menu
+2. Two-column hero with product preview and product facts
+3. Four-step workflow panel
+4. Five feature cards
+5. AI code review explanation and UI preview
+6. Developer article cards
+7. Testimonials
+8. Pricing plans with a monthly/yearly toggle
+9. Native expandable FAQ rows
+10. Lime call to action and footer
+
+Use centered max-width containers. The desktop hero places copy left and the product preview right; later sections follow the reference's centered editorial grid. On narrow screens, stack columns and reduce card density while keeping all content readable.
+
+## Motion and scrolling
+
+- Framer Motion handles the first-load hero entrance, one-time section reveals, and small card interactions.
+- Lenis provides smooth wheel and anchor scrolling while touch scrolling stays native.
+- Respect `prefers-reduced-motion`: remove entrance travel and skip smooth scrolling when requested.
+- Keep motion short and functional. Do not delay access to content or controls.
 
 ## Interaction and accessibility
 
-- Use native links for navigation and meaningful section targets.
-- Maintain strong contrast for body text and controls against blue and paper surfaces.
-- Provide visible keyboard focus styles when adding custom interactive elements.
-- Respect `prefers-reduced-motion`; avoid motion that is required to understand content.
-- Use Framer Motion for brief, one-time content reveals and the navigation drawer. Keep travel distances small and disable entrance movement when reduced motion is requested.
-- Use Lenis for smooth wheel scrolling and anchor navigation while leaving touch scrolling native. Do not initialize it when reduced motion is requested, and pause it while the navigation drawer is open.
-- Keep the hero copy and workspace preview centered on the same page axis. Begin the preview scroll sequence when its top reaches about 40% of the viewport. First expand it to 80% of viewport height while it moves upward; then continue its upward movement on its own. Skip the sequence for reduced-motion users.
-- Decorative motifs must be hidden from assistive technology. Avoid communicating state through color alone.
+- Use native links for section navigation, buttons for state changes, and `<details>/<summary>` for FAQ disclosure.
+- Keep keyboard focus visible, controls labeled, and contrast strong on bright card surfaces.
+- Keep pricing billing selection exposed through `aria-pressed`.
+- Treat the code editor and code review as illustrative previews unless a control is explicitly wired to real behavior.
+- Avoid unsupported customer counts, uptime figures, or performance claims. Use product facts rather than invented metrics.
 
-## Content direction
+## Content voice
 
-Write in a friendly, direct maker voice. Describe ByteBin as a practical set of tools for working with repositories, code updates, AI assistance, and publishing. Avoid generic productivity claims, inflated promises, and filler marketing language.
+Write for developers in a direct, encouraging voice. Describe repository exploration, code updates, AI assistance, and learning content concretely. Avoid inflated promises and filler marketing language.
 
 ## Implementation map
 
 - Homepage composition: `client/src/components/templates/HomeTemplate/HomeTemplate.tsx`
-- Theme tokens, typography, responsive layout, and component styling: `client/src/app/globals.css`
-- Root metadata and font setup: `client/src/app/layout.tsx`
-- Public assets: `client/public/assets/`
-
-When extending the site, update this guide if the palette, typography, interaction patterns, or brand direction materially changes.
+- Homepage sections: `client/src/components/organisms/Landing/`
+- Framer Motion reveal: `client/src/components/organisms/Landing/Reveal.tsx`
+- Global reset: `client/src/app/globals.css`
+- Homepage design system and responsive rules: `client/src/app/landing.css`
+- Lenis setup: `client/src/components/providers/SmoothScroll/SmoothScroll.tsx`
+- Metadata, fonts, and global style imports: `client/src/app/layout.tsx`
