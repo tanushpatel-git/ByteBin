@@ -183,6 +183,8 @@ export default function HomeTemplate() {
       </section>
 
       <section className="bb-note" id="updates"><Reveal className="note-content"><div className="note-stamp">A NOTE<br />TO MAKERS</div><div><span className="section-number">03 / A FRIENDLY REMINDER</span><h2>“IT DOESN’T<br />HAVE TO BE<br /><span>PERFECT.</span>”</h2><p>Make the thing. Share the thing. Learn a thing. Then do it again.</p></div></Reveal><div className="note-doodle" aria-hidden="true">✳<small>MAKE<br />SOMETHING</small></div></section>
+
+      <footer className="bb-footer"><a className="bb-mark" href="#home"><span>BB</span> BYTEBIN</a><p>MADE FOR THE JOY OF MAKING THINGS.</p><a href="#home">BACK TO TOP ↑</a><small>© 2026 BYTEBIN</small></footer>
     </main>
   );
 }
