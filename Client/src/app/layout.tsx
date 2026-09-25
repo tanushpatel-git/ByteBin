@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ByteBin — Make Code Move",
-  description: "A friendly toolbox for finding, changing, and sharing code.",
+  title: "ByteBin — Build Better, Together",
+  description: "Explore repositories, understand code, and make your next idea real with ByteBin.",
 };
 
 export default function RootLayout({
