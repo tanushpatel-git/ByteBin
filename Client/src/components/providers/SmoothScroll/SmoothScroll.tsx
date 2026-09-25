@@ -17,7 +17,7 @@ export default function SmoothScroll({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.85,
       smoothWheel: true,
       syncTouch: true,
     });
