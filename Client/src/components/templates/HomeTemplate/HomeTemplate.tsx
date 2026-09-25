@@ -167,6 +167,15 @@ export default function HomeTemplate() {
         <span className="bb-orbit orbit-one" aria-hidden="true">✳</span><span className="bb-orbit orbit-two" aria-hidden="true">✣</span>
         <div className="bb-hero-bottom"><span>LESS SETUP. MORE MAKING.</span><span>SCROLL A LITTLE <ArrowDownRight size={13} /></span></div>
       </section>
+
+      <section className="bb-story" id="story">
+        <Reveal><div className="story-label"><span>01 / THE IDEA</span><span>BUILT FOR THE IN-BETWEEN</span></div></Reveal>
+        <Reveal delay={0.06}><div className="story-grid">
+          <h2>YOU HAD<br />A <span>GOOD IDEA.</span></h2>
+          <div className="story-copy"><p className="story-lead">The bit between “this could be cool” and “it’s out there” shouldn’t be the hard part.</p><p>ByteBin brings the everyday GitHub jobs into one friendly place: find what you need, make a change, and get it out the door. Less tab juggling. More little wins.</p><a href="#tools" className="text-link">MEET YOUR NEW TOOLBOX <ArrowUpRight size={14} /></a></div>
+        </div></Reveal>
+        <div className="pixel-sun" aria-hidden="true"><span>✳</span></div>
+      </section>
     </main>
   );
 }
