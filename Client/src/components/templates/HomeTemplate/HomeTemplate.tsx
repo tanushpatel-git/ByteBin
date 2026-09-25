@@ -176,6 +176,11 @@ export default function HomeTemplate() {
         </div></Reveal>
         <div className="pixel-sun" aria-hidden="true"><span>✳</span></div>
       </section>
+
+      <section className="bb-tools" id="tools">
+        <Reveal><div className="tools-heading"><div><span className="section-number">02 / THE TOOLKIT</span><h2>A FEW GOOD<br />WAYS TO <span>GET THERE.</span></h2></div><p>Pick up the tool you need. Put your attention back on the idea.</p></div></Reveal>
+        <div className="tool-list">{tools.map((tool, i) => <motion.a className="tool-row" href="#updates" key={tool} initial={reduceMotion ? false : { opacity: 0, x: -14 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.5 }} transition={reduceMotion ? { duration: 0 } : { duration: 0.4, delay: i * 0.05 }}><span className="tool-index">0{i + 1}</span><strong>{tool}</strong><span className="tool-note">{["Find your way around a repository.", "Send code changes without the ceremony.", "Get a hand when the blank page bites.", "Share what you’ve been making."][i]}</span><ArrowUpRight className="tool-arrow" size={18} /></motion.a>)}</div>
+      </section>
     </main>
   );
 }
