@@ -20,6 +20,7 @@ export default function SmoothScroll({
       duration: 0.85,
       smoothWheel: true,
       syncTouch: false,
+      anchors: true,
     });
 
     lenis.on("scroll", ScrollTrigger.update);
