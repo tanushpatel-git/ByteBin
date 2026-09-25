@@ -92,5 +92,25 @@ export default function HomeTemplate() {
     return () => window.removeEventListener("scroll", updateFloatNav);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    const detachLenis = onLenis((lenis) => {
+      lenis.stop();
+      return () => lenis.start();
+    });
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", closeOnEscape);
+      detachLenis();
+    };
+  }, [menuOpen]);
+
   return <main className="bb-page" id="home" />;
 }
