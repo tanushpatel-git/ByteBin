@@ -27,5 +27,11 @@ function Reveal({ children, className = "", delay = 0 }: { children: React.React
 }
 
 export default function HomeTemplate() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showFloatNav, setShowFloatNav] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const previewStageRef = useRef<HTMLDivElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
+
   return <main className="bb-page" id="home" />;
 }
