@@ -13,3 +13,21 @@
   --lm-display: Impact, "Arial Narrow", "Franklin Gothic Condensed", sans-serif;
 }
 
+.lm-page {
+  overflow: clip;
+  background: var(--lm-bg);
+  color: var(--lm-ink);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: 14px;
+}
+
+.lm-page * { box-sizing: border-box; }
+.lm-page a { color: inherit; text-decoration: none; }
+.lm-page button { color: inherit; font: inherit; }
+.lm-page a:focus-visible,
+.lm-page button:focus-visible,
+.lm-page summary:focus-visible { outline: 3px solid var(--lm-purple); outline-offset: 4px; }
+.lm-shell { width: min(100% - 64px, 1280px); margin-inline: auto; }
+.lm-page section[id] { scroll-margin-top: 88px; }
+.lm-page .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
