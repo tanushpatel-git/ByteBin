@@ -1,0 +1,15 @@
+:root {
+  --lm-bg: #fbfaf5;
+  --lm-paper: #fffefa;
+  --lm-ink: #091d43;
+  --lm-muted: #617089;
+  --lm-lime: #d7ff35;
+  --lm-lime-deep: #c5f522;
+  --lm-lavender: #e9e3ff;
+  --lm-purple: #7658f6;
+  --lm-coral: #ff9079;
+  --lm-line: #e9e8e1;
+  --lm-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --lm-display: Impact, "Arial Narrow", "Franklin Gothic Condensed", sans-serif;
+}
+
