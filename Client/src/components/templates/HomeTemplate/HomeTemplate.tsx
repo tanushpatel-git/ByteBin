@@ -142,6 +142,14 @@ export default function HomeTemplate() {
         <a className="bb-nav-cta" href="#tools">OPEN THE TOOLKIT <ArrowUpRight size={14} /></a>
       </header>
 
+      <section className="bb-hero" aria-labelledby="hero-title">
+        <motion.div className="bb-hero-copy" initial={reduceMotion ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={reduceMotion ? { duration: 0 } : { duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>
+          <p className="bb-kicker"><span className="status-dot" /> A SMALL TOOLBOX FOR BIG IDEAS</p>
+          <h1 id="hero-title">MAKE<br />CODE <span>MOVE.</span></h1>
+          <p className="bb-intro">Your ideas are already somewhere between a GitHub repo and “I’ll do it later.” ByteBin helps you bring them to life.</p>
+          <a className="bb-button" href="#tools">EXPLORE BYTEBIN <ArrowDownRight size={16} /></a>
+        </motion.div>
+      </section>
     </main>
   );
 }
