@@ -119,6 +119,11 @@ export default function HomeTemplate() {
           {menuOpen ? <X size={17} /> : <Menu size={17} />}
         </button>
       </div>
+      <AnimatePresence>
+      {menuOpen && <motion.div key="menu-backdrop" className="bb-drawer-backdrop" aria-hidden="true" onClick={() => setMenuOpen(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.28 }} />}
+      {menuOpen && <motion.nav key="menu-drawer" className="bb-menu-drawer" aria-label="Quick navigation" aria-modal="true" role="dialog" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={reduceMotion ? { duration: 0 } : { duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
+      </motion.nav>}
+      </AnimatePresence>
     </main>
   );
 }
