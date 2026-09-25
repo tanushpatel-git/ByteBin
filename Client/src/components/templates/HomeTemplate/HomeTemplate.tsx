@@ -80,5 +80,17 @@ export default function HomeTemplate() {
     setMenuOpen(false);
   };
 
+  useEffect(() => {
+    const updateFloatNav = () => {
+      const shouldShow = window.scrollY >= 100;
+      setShowFloatNav(shouldShow);
+      if (!shouldShow) setMenuOpen(false);
+    };
+
+    updateFloatNav();
+    window.addEventListener("scroll", updateFloatNav, { passive: true });
+    return () => window.removeEventListener("scroll", updateFloatNav);
+  }, []);
+
   return <main className="bb-page" id="home" />;
 }
