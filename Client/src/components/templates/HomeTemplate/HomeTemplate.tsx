@@ -2,12 +2,8 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowDownRight, ArrowUpRight, Code2, GitBranch, Menu, Terminal, X } from "lucide-react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef, useState } from "react";
 import { onLenis } from "@/lib/lenis";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const tools = ["REPO EXPLORER", "CODE PUSH", "AI ASSIST", "BLOG ENGINE"];
 
@@ -32,44 +28,6 @@ export default function HomeTemplate() {
   const reduceMotion = useReducedMotion();
   const previewStageRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const stage = previewStageRef.current;
-    const preview = previewRef.current;
-    if (!stage || !preview || reduceMotion) return;
-
-    const context = gsap.context(() => {
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: preview,
-          start: "top 40%",
-          end: () => `+=${Math.round(window.innerHeight * 0.65)}`,
-          pin: stage,
-          pinSpacing: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      timeline
-        .to(preview, {
-          width: () => Math.min(stage.clientWidth, window.innerWidth * 0.95, 1300),
-          height: () => window.innerHeight * 0.8,
-          maxWidth: "none",
-          y: () => -window.innerHeight * 0.18,
-          duration: 0.65,
-          ease: "none",
-        }, 0)
-        .to(preview, {
-          y: () => -window.innerHeight * 0.72,
-          duration: 0.35,
-          ease: "none",
-        });
-    }, stage);
-
-    return () => context.revert();
-  }, [reduceMotion]);
 
   const closeMenu = () => {
     const detachLenis = onLenis((lenis) => {
