@@ -122,6 +122,16 @@ export default function HomeTemplate() {
       <AnimatePresence>
       {menuOpen && <motion.div key="menu-backdrop" className="bb-drawer-backdrop" aria-hidden="true" onClick={() => setMenuOpen(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.28 }} />}
       {menuOpen && <motion.nav key="menu-drawer" className="bb-menu-drawer" aria-label="Quick navigation" aria-modal="true" role="dialog" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={reduceMotion ? { duration: 0 } : { duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
+        <div className="drawer-topline"><a className="bb-mark" href="#home" onClick={closeMenu}><span>BB</span> BYTEBIN</a><span>MENU / 01</span></div>
+        <p className="drawer-kicker">A LITTLE DIRECTION</p>
+        <h2>WHERE TO<br />NEXT<span>?</span></h2>
+        <div className="drawer-links">
+          <a href="#home" onClick={closeMenu}><span>01</span> HOME <ArrowUpRight size={18}/></a>
+          <a href="#story" onClick={closeMenu}><span>02</span> OUR IDEA <ArrowUpRight size={18}/></a>
+          <a href="#tools" onClick={closeMenu}><span>03</span> THE TOOLKIT <ArrowUpRight size={18}/></a>
+          <a href="#updates" onClick={closeMenu}><span>04</span> A NOTE TO MAKERS <ArrowUpRight size={18}/></a>
+        </div>
+        <p className="drawer-footnote">GO MAKE SOMETHING GOOD. <span>✳</span></p>
       </motion.nav>}
       </AnimatePresence>
     </main>
