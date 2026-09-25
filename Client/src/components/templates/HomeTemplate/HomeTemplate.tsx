@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowDownRight, ArrowUpRight, Code2, GitBranch, Terminal } from "lucide-react";
-import { useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
 import Header from "@/components/organisms/Landing/Header";
+import Hero from "@/components/organisms/Landing/Hero";
 
 const tools = ["REPO EXPLORER", "CODE PUSH", "AI ASSIST", "BLOG ENGINE"];
 
@@ -24,38 +24,12 @@ function Reveal({ children, className = "", delay = 0 }: { children: React.React
 
 export default function HomeTemplate() {
   const reduceMotion = useReducedMotion();
-  const previewStageRef = useRef<HTMLDivElement>(null);
-  const previewRef = useRef<HTMLDivElement>(null);
 
   return (
     <main className="bb-page" id="home">
       <Header />
 
-      <section className="bb-hero" aria-labelledby="hero-title">
-        <motion.div className="bb-hero-copy" initial={reduceMotion ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={reduceMotion ? { duration: 0 } : { duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>
-          <p className="bb-kicker"><span className="status-dot" /> A SMALL TOOLBOX FOR BIG IDEAS</p>
-          <h1 id="hero-title">MAKE<br />CODE <span>MOVE.</span></h1>
-          <p className="bb-intro">Your ideas are already somewhere between a GitHub repo and “I’ll do it later.” ByteBin helps you bring them to life.</p>
-          <a className="bb-button" href="#tools">EXPLORE BYTEBIN <ArrowDownRight size={16} /></a>
-        </motion.div>
-
-        <div className="bb-preview-stage" ref={previewStageRef}>
-        <div className="bb-window" ref={previewRef} aria-label="ByteBin code workspace preview">
-          <div className="bb-window-bar"><span className="window-lights">● ● ●</span><span>bytebin / workspace</span><Code2 size={15} /></div>
-          <div className="bb-window-content">
-            <div className="bb-window-aside"><span>⌂</span><span>⌘</span><span>⑂</span><span>＋</span></div>
-            <div className="bb-window-main">
-              <div className="bb-window-heading"><div><small>YOUR WORKSPACE</small><h2>Good things<br />are in progress.</h2></div><span className="pixel-star">✳</span></div>
-              <div className="repo-card"><div className="repo-icon"><GitBranch size={16} /></div><div><strong>little-project</strong><small>main · updated just now</small></div><span className="repo-live">● LIVE</span></div>
-              <div className="code-card"><div className="code-top"><span><Terminal size={13} /> quick-push.js</span><span>•••</span></div><pre><code><i>01</i> <b>const</b> idea = <em>&quot;something good&quot;</em>;<br /><i>02</i> <b>await</b> bytebin.push(idea);<br /><i>03</i> <label>{"// ship it, see what happens"}</label></code></pre></div>
-              <div className="window-footer"><span>✦ &nbsp; READY WHEN YOU ARE</span><span>⌘ K</span></div>
-            </div>
-          </div>
-        </div>
-        </div>
-        <span className="bb-orbit orbit-one" aria-hidden="true">✳</span><span className="bb-orbit orbit-two" aria-hidden="true">✣</span>
-        <div className="bb-hero-bottom"><span>LESS SETUP. MORE MAKING.</span><span>SCROLL A LITTLE <ArrowDownRight size={13} /></span></div>
-      </section>
+      <Hero />
 
       <section className="bb-story" id="story">
         <Reveal><div className="story-label"><span>01 / THE IDEA</span><span>BUILT FOR THE IN-BETWEEN</span></div></Reveal>
