@@ -193,3 +193,17 @@
 .lm-ai-apply,.lm-suggestion-apply { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; margin-top: 10px; padding: 8px; border-radius: 5px; background: var(--lm-lime); color: var(--lm-ink); font-size: 8px; font-weight: 800; }
 .lm-suggestion-close { color: #7a8292; font-size: 14px; line-height: 1; }
 .lm-quote-symbol { height: 15px; color: var(--lm-purple); font-family: Georgia, serif; font-size: 25px; font-weight: 900; line-height: 1; }
+
+/* Dark CodeMind-inspired theme */
+:root {
+  --lm-bg: #050b14;
+  --lm-paper: #0b1422;
+  --lm-ink: #f3f6ff;
+  --lm-muted: #9aaac4;
+  --lm-lime: #cfff2e;
+  --lm-lime-deep: #b9f21e;
+  --lm-lavender: #261b56;
+  --lm-purple: #a56bff;
+  --lm-coral: #ff9079;
+  --lm-line: #1b2a40;
+}
