@@ -1,5 +1,6 @@
 import { ArrowRight, Plus } from "lucide-react";
 import Reveal from "./Reveal";
+import Artwork from "./Artwork";
 
 const questions = [
   ["What is ByteBin?", "ByteBin is a friendly workspace for exploring GitHub repositories, understanding code, and making small code updates."],
@@ -12,9 +13,9 @@ const questions = [
 export default function FAQ() {
   return (
     <section className="lm-faq lm-shell" id="faq">
-      <Reveal className="lm-faq-intro"><span className="lm-sticker lm-sticker-blue">GOOD QUESTIONS</span><h2>THE SHORT<br/>ANSWERS.</h2><p>Still curious? We’re happy to help you find your way.</p><a href="mailto:hello@bytebin.dev">Talk to a human <ArrowRight size={14}/></a></Reveal>
+      <Reveal className="lm-faq-intro"><span className="lm-sticker lm-sticker-blue">FAQS</span><h2>Frequently asked<br/>questions.</h2><p>Have questions? We’ve got answers. If you don’t find what you’re looking for, reach out.</p><a href="mailto:hello@bytebin.dev">Contact support <ArrowRight size={14}/></a></Reveal>
       <div className="lm-faq-list">{questions.map(([question,answer],index)=><Reveal delay={index*.035} key={question}><details className="lm-faq-item"><summary><span><i>0{index+1}</i>{question}</span><Plus size={17}/></summary><p>{answer}</p></details></Reveal>)}</div>
-      <aside className="lm-faq-aside"><strong>Still have a question?</strong><br/>We’re around to help you get started.<a href="mailto:hello@bytebin.dev">Contact support <ArrowRight size={13}/></a></aside>
+      <aside className="lm-faq-aside"><Artwork crop="botLearn" label="ByteBin helper bot" /><strong>Still have a question?</strong><br/>We’re around to help you get started.<a href="mailto:hello@bytebin.dev">Contact support <ArrowRight size={13}/></a></aside>
     </section>
   );
 }
