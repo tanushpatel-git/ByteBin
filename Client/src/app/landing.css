@@ -315,3 +315,25 @@
 .lm-cta-spark { position: relative; overflow: hidden; }
 .lm-cta-spark { width: 112px; height: 86px; border: 0; border-radius: 0; }
 .lm-cta-spark .lm-art-sprite { position: absolute; inset: 0; }
+
+@media (max-width: 760px) {
+  .lm-hero-image-frame { height: clamp(220px, 62vw, 320px); }
+  .lm-review-copy { padding-bottom: 96px; }
+  .lm-review-mascot { width: 158px; height: 104px; }
+  .lm-cta-spark { width: 72px; height: 60px; }
+  .lm-nav { border-color: #26364f; }
+}
+
+/* CodeNest-inspired light landing page */
+:root {
+  --lm-bg: #fffefa;
+  --lm-paper: #ffffff;
+  --lm-ink: #10131b;
+  --lm-muted: #596274;
+  --lm-lime: #d9ff84;
+  --lm-lime-deep: #c6f36c;
+  --lm-lavender: #f0edff;
+  --lm-purple: #9650f3;
+  --lm-coral: #ff9d6e;
+  --lm-line: #e5e6e9;
+}
