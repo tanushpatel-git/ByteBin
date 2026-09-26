@@ -1,26 +1,25 @@
 # ByteBin website design
 
-This guide defines the current ByteBin homepage visual system and interaction patterns. The page follows the supplied developer-platform reference: a warm light canvas, bold navy display type, bright lime accents, lavender UI panels, and compact product interface previews. It keeps ByteBin's identity and product story.
+This guide defines the current ByteBin homepage visual system and interaction patterns. The page follows the supplied CodeNest-style reference: a warm white canvas, black product typography, soft lavender panels, small lime labels, dark product previews, and expressive transparent illustrations from `client/public/assets`. It keeps ByteBin's identity and product story.
 
 ## Brand direction
 
 - **Clear, capable, and maker-friendly.** Explain useful code tools in plain language.
-- **Bold but approachable.** Use expressive headings and vivid accents, balanced with calm surfaces and readable body text.
+- **Bright and capable.** Use generous light space, dark text, quiet borders, and vivid accents.
 - **Product first.** Show the repo, code, and review workflow directly in interface previews.
 
 ## Color tokens
 
 | Token | Value | Use |
 | --- | --- | --- |
-| Warm canvas | `#FBFAF5` | Main page background |
-| Navy ink | `#091D43` | Headings, controls, and primary text |
-| Lime | `#D7FF35` | Primary actions and emphasis |
-| Lavender | `#E9E3FF` | Workflow panels and soft UI backgrounds |
-| Purple | `#7658F6` | AI details and secondary accents |
-| Coral | `#FF9079` | Feature-card variation |
-| Preview navy | `#071A3B` | Code editor preview |
-| Warm white | `#FFFEFA` | Card and interface surfaces |
-| Muted slate | `#617089` | Supporting copy and metadata |
+| Warm canvas | `#FFFEFA` | Main page background |
+| White surface | `#FFFFFF` | Feature, article, and pricing cards |
+| Ink | `#10131B` | Headings, controls, and primary text |
+| Muted slate | `#596274` | Supporting copy and metadata |
+| Soft lime | `#D9FF84` | Labels and small highlights |
+| Lavender | `#F1EFFF` | AI workspace and FAQ panels |
+| Violet | `#9650F3` | AI details and pricing emphasis |
+| Preview navy | `#0D111D` | Code editor preview |
 
 Tokens and page-level styling live in `client/src/app/landing.css`; global resets live in `client/src/app/globals.css`.
 
@@ -36,17 +35,14 @@ Tokens and page-level styling live in `client/src/app/landing.css`; global reset
 The homepage is composed from focused section components in `client/src/components/organisms/Landing/`, assembled by `client/src/components/templates/HomeTemplate/HomeTemplate.tsx`:
 
 1. Sticky navigation with a compact mobile menu
-2. Two-column hero with product preview and product facts
-3. Four-step workflow panel
-4. Five feature cards
-5. AI code review explanation and UI preview
-6. Developer article cards
-7. Testimonials
-8. Pricing plans with a monthly/yearly toggle
-9. Native expandable FAQ rows
-10. Lime call to action and footer
+2. Two-column hero with transparent product artwork and quick links to core tools
+3. Six feature cards with supplied image assets
+4. AI code review explanation and dark workspace preview
+5. Developer article cards with supplied illustrations
+6. Pricing cards and native expandable FAQ rows
+7. Dark community call to action and multi-column footer
 
-Use centered max-width containers. The desktop hero places copy left and the product preview right; later sections follow the reference's centered editorial grid. On narrow screens, stack columns and reduce card density while keeping all content readable.
+Use centered max-width containers on a warm white background. The desktop hero places copy left and the supplied robot/code illustration right; the features section pairs an intro with a three-column card grid. The AI workspace uses a lavender band and dark interface preview. On narrow screens, stack columns and reduce card density while keeping all content readable.
 
 ## Motion and scrolling
 
