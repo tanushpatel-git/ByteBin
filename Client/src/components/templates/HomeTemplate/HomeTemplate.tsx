@@ -6,9 +6,7 @@ import Features from "@/components/organisms/Landing/Features";
 import Footer from "@/components/organisms/Landing/Footer";
 import Header from "@/components/organisms/Landing/Header";
 import Hero from "@/components/organisms/Landing/Hero";
-import HowItWorks from "@/components/organisms/Landing/HowItWorks";
 import Pricing from "@/components/organisms/Landing/Pricing";
-import Testimonials from "@/components/organisms/Landing/Testimonials";
 
 export default function HomeTemplate() {
   return (
@@ -16,11 +14,9 @@ export default function HomeTemplate() {
       <Header />
       <main>
         <Hero />
-        <HowItWorks />
         <Features />
         <CodeReview />
         <Blog />
-        <Testimonials />
         <Pricing />
         <FAQ />
         <CallToAction />
